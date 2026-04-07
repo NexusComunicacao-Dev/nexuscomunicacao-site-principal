@@ -139,8 +139,9 @@ nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
 ────────────────────────────────────────── */
 .iphone-wrap {
   display:flex; justify-content:center; align-items:center;
-  perspective:1100px; padding:40px 20px;
+  perspective:1100px; padding:20px 20px;
 }
+@media(min-width:640px){ .iphone-wrap { padding:40px 20px; } }
 .iphone {
   position:relative; width:240px; height:500px;
   transform-style:preserve-3d;
@@ -274,9 +275,10 @@ nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
 }
 .hero-ctas { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-bottom:40px; }
 .hero-pills {
-  display:grid; grid-template-columns:1fr 1fr;
+  display:grid; grid-template-columns:1fr;
   gap:10px; text-align:left;
 }
+@media(min-width:400px){ .hero-pills { grid-template-columns:1fr 1fr; } }
 .pill {
   display:flex; align-items:flex-start; gap:10px;
   padding:12px 14px; background:rgba(255,255,255,.04);
@@ -342,9 +344,14 @@ nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
   z-index:10;
 }
 .fv { font-size:19px; font-weight:900; color:var(--orange); display:block; line-height:1.2; }
-.pf1 { top:50px; right:-42px; animation-delay:0s; }
-.pf2 { top:220px; left:-56px; animation-delay:.9s; }
-.pf3 { bottom:90px; right:-44px; animation-delay:1.7s; }
+.pf1 { top:50px; right:-12px; animation-delay:0s; }
+.pf2 { top:220px; left:-12px; animation-delay:.9s; }
+.pf3 { bottom:90px; right:-12px; animation-delay:1.7s; }
+@media(min-width:640px){
+  .pf1 { right:-42px; }
+  .pf2 { left:-56px; }
+  .pf3 { right:-44px; }
+}
 @keyframes floatBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
 
 /* ──────────────────────────────────────────
@@ -360,6 +367,7 @@ nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
   max-width:100%; /* full-width faixa, conteúdo limitado pelo padding */
 }
 .stat-item { text-align:center; }
+.stat-item:last-child { grid-column:span 2; } /* 5th item full-width on mobile 2-col grid */
 .stat-num { font-size:24px; font-weight:900; color:var(--orange); display:block; }
 .stat-lbl { font-size:11px; color:rgba(255,255,255,.42); margin-top:3px; line-height:1.3; }
 
@@ -413,7 +421,7 @@ nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
 /* Channel phone */
 .channel-phone-zone {
   display:flex; justify-content:center;
-  width:100%;
+  width:100%; order:-1; /* phone first on mobile so it's visible when tapping tabs */
 }
 #chPhone { width:220px; height:464px; }
 
@@ -810,6 +818,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
   #hero { padding:100px 40px 70px; }
   .hero-pills { grid-template-columns:1fr 1fr; }
   .stats-bar { grid-template-columns:repeat(5,1fr); padding:28px 40px; }
+  .stat-item:last-child { grid-column:auto; }
   .banner-wrap { padding:0 40px; }
   .banner-inner { flex-direction:row; align-items:center; padding:56px 48px; }
   .banner-btn { align-self:auto; }
@@ -868,7 +877,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
     flex-direction:unset; /* neutraliza o flex mobile */
   }
   .channel-text { width:auto; } /* deixa o grid definir a largura */
-  .channel-phone-zone { position:sticky; top:110px; align-self:flex-start; }
+  .channel-phone-zone { order:0; position:sticky; top:110px; align-self:flex-start; }
   #chPhone { width:260px; height:542px; }
 
   /* Geo */
@@ -919,6 +928,10 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
       Ver WhatsApp
       <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
     </a>
+    <a href="push.html" class="nav-switch">
+      Ver Push Ads
+      <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </a>
     <button class="btn-nav" onclick="document.getElementById('lead-form').scrollIntoView({behavior:'smooth'})">Falar com Consultor</button>
   </div>
   <button class="nav-ham" id="navHam" aria-label="Menu" onclick="toggleDrawer()">
@@ -932,6 +945,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
   <a href="#faq" onclick="closeDrawer()">Suporte</a>
   <a href="rcs.html">Ver RCS →</a>
   <a href="whatsapp.html">Ver WhatsApp →</a>
+  <a href="push.html">Ver Push Ads →</a>
   <button class="btn-nav drawer-cta" onclick="closeDrawer();setTimeout(()=>document.getElementById('lead-form').scrollIntoView({behavior:'smooth'}),200)">Falar com Consultor</button>
 </div>
 
