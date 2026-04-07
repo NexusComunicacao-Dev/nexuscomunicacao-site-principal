@@ -767,9 +767,48 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
 .fab svg { width:26px; height:26px; fill:#fff; }
 
 /* ──────────────────────────────────────────
+   HAMBURGER / MOBILE DRAWER
+────────────────────────────────────────── */
+.nav-ham {
+  display:flex; flex-direction:column; justify-content:center; gap:5px;
+  width:40px; height:40px; padding:6px;
+  background:transparent; border:none; cursor:pointer; z-index:1002; flex-shrink:0;
+}
+.nav-ham span {
+  display:block; width:22px; height:2px;
+  background:rgba(255,255,255,.85); border-radius:2px;
+  transition:all .28s cubic-bezier(.22,1,.36,1); transform-origin:center;
+}
+.nav-ham.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+.nav-ham.open span:nth-child(2) { opacity:0; width:0; }
+.nav-ham.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+.nav-drawer {
+  position:fixed; top:0; left:0; right:0; bottom:0; z-index:1001;
+  background:rgba(42,42,42,.98); backdrop-filter:blur(20px);
+  display:flex; flex-direction:column; align-items:flex-start;
+  padding:84px 32px 48px; gap:0;
+  transform:translateX(100%); transition:transform .35s cubic-bezier(.22,1,.36,1);
+  pointer-events:none; overflow-y:auto;
+}
+.nav-drawer.open { transform:none; pointer-events:auto; }
+.nav-drawer a {
+  display:block; color:rgba(255,255,255,.78); font-size:20px; font-weight:700;
+  padding:16px 0; width:100%; border-bottom:1px solid rgba(255,255,255,.08); transition:color .2s;
+}
+.nav-drawer a:last-of-type { border-bottom:none; }
+.nav-drawer a:hover { color:var(--orange); }
+.drawer-cta {
+  margin-top:28px !important; width:100%; font-size:16px !important;
+  padding:16px !important; text-align:center; justify-content:center;
+  border-radius:12px !important; border:none !important; cursor:pointer; font-family:inherit !important;
+}
+
+/* ──────────────────────────────────────────
    TABLET  ≥ 640px
 ────────────────────────────────────────── */
 @media(min-width:640px) {
+  .nav-ham { display:none; }
+  .nav-drawer { display:none; }
   :root { --px: 40px; --py: 96px; }
   nav { padding:16px 40px; }
   nav.scrolled { padding:10px 40px; }
@@ -881,7 +920,20 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
     </a>
     <button class="btn-nav" onclick="document.getElementById('lead-form').scrollIntoView({behavior:'smooth'})">Falar com Consultor</button>
   </div>
+  <button class="nav-ham" id="navHam" aria-label="Menu" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- ── MOBILE DRAWER ── -->
+<div class="nav-drawer" id="navDrawer">
+  <a href="#channel" onclick="closeDrawer()">Como funciona</a>
+  <a href="#comparativo" onclick="closeDrawer()">RCS vs SMS</a>
+  <a href="#faq" onclick="closeDrawer()">Suporte</a>
+  <a href="index.html">Ver SMS →</a>
+  <a href="whatsapp.html">Ver WhatsApp →</a>
+  <button class="btn-nav drawer-cta" onclick="closeDrawer();setTimeout(()=>document.getElementById('lead-form').scrollIntoView({behavior:'smooth'}),200)">Falar com Consultor</button>
+</div>
 
 <!-- ── HERO ── -->
 <section id="hero">
@@ -971,6 +1023,39 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
   <div class="stat-item rv rv2"><span class="stat-num">7x</span><div class="stat-lbl">CTR vs. e-mail</div></div>
   <div class="stat-item rv rv3"><span class="stat-num">8.000</span><div class="stat-lbl">Caracteres por mensagem</div></div>
   <div class="stat-item rv rv4"><span class="stat-num">20%</span><div class="stat-lbl">A mais em conversão</div></div>
+</div>
+
+<!-- ── CLIENTES ── -->
+<style>
+.cs-strip { background:var(--dark3,#565656); padding:44px var(--px) 40px; overflow:hidden; }
+.cs-label { text-align:center; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:30px; }
+.cs-wrap { overflow:hidden; mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); -webkit-mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); }
+.cs-track { display:flex; align-items:center; gap:72px; width:max-content; animation:csMarquee 30s linear infinite; }
+.cs-track:hover { animation-play-state:paused; }
+@keyframes csMarquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.cs-logo { display:flex; align-items:center; justify-content:center; flex-shrink:0; height:52px; opacity:.45; transition:opacity .3s ease; cursor:default; }
+.cs-logo:hover { opacity:1; }
+.cs-logo img { height:46px; width:auto; max-width:160px; object-fit:contain; }
+</style>
+<div class="cs-strip">
+  <div class="cs-label">Empresas que confiam na Nexus</div>
+  <div class="cs-wrap">
+    <div class="cs-track">
+      <div class="cs-logo"><img src="logo-lavoisier.png" alt="Lavoisier"></div>
+      <div class="cs-logo"><img src="logo-onodera.png" alt="Onodera"></div>
+      <div class="cs-logo"><img src="logo-hope.png" alt="HOPE"></div>
+      <div class="cs-logo"><img src="logo-cury.png" alt="Cury"></div>
+      <div class="cs-logo"><img src="logo-bobstore.png" alt="Bobstore"></div>
+      <!-- duplicatas para loop contínuo -->
+      <div class="cs-logo"><img src="logo-lavoisier.png" alt="Lavoisier"></div>
+      <div class="cs-logo"><img src="logo-onodera.png" alt="Onodera"></div>
+      <div class="cs-logo"><img src="logo-hope.png" alt="HOPE"></div>
+      <div class="cs-logo"><img src="logo-cury.png" alt="Cury"></div>
+      <div class="cs-logo"><img src="logo-bobstore.png" alt="Bobstore"></div>
+    </div>
+  </div>
+</div>
+
 </div>
 
 <!-- ── CHANNEL / USOS ── -->
@@ -1335,6 +1420,77 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
   </div>
 </section>
 
+<!-- ── DEPOIMENTOS ── -->
+<style>
+#depoimentos { background:#444; padding:var(--py) var(--px); text-align:center; position:relative; overflow:hidden; }
+.dep-inner { max-width:820px; margin:0 auto; position:relative; z-index:1; }
+.dep-tag-lbl { font-size:11px; font-weight:700; letter-spacing:.18em; color:var(--orange); text-transform:uppercase; margin-bottom:36px; }
+.dep-quote-mark { font-size:88px; line-height:.9; color:rgba(255,255,255,.13); font-family:Georgia,'Times New Roman',serif; margin-bottom:20px; font-weight:900; }
+.dep-slides { display:grid; grid-template-columns:1fr; grid-template-rows:1fr; }
+.dep-slide { grid-area:1/1; opacity:0; transition:opacity .55s ease, transform .55s ease; pointer-events:none; transform:translateY(10px); }
+.dep-slide.dep-active { opacity:1; pointer-events:auto; transform:none; }
+.dep-text { font-size:clamp(17px,2.6vw,26px); font-weight:800; line-height:1.45; color:#fff; margin-bottom:28px; letter-spacing:-.02em; }
+.dep-name { font-size:15px; font-weight:700; color:#fff; margin-bottom:5px; }
+.dep-role { font-size:13px; color:rgba(255,255,255,.48); }
+.dep-avatars { display:flex; gap:14px; justify-content:center; margin-top:40px; flex-wrap:wrap; }
+.dep-av-btn { width:56px; height:56px; border-radius:50%; border:2.5px solid transparent; padding:2px; background:transparent; cursor:pointer; transition:border-color .25s; flex-shrink:0; }
+.dep-av-btn.dep-active { border-color:var(--orange); }
+.dep-av { width:100%; height:100%; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; color:#fff; letter-spacing:.02em; overflow:hidden; user-select:none; transition:background .25s; }
+.dep-av-btn:not(.dep-active) .dep-av { background:rgba(255,255,255,.16); filter:grayscale(1); }
+.dep-av-btn.dep-active   .dep-av { background:var(--orange); filter:none; }
+</style>
+<section id="depoimentos">
+  <div class="dep-inner">
+    <div class="dep-tag-lbl rv">Depoimentos</div>
+    <div class="dep-quote-mark rv rv1">"</div>
+    <div class="dep-slides rv rv2">
+      <div class="dep-slide dep-active">
+        <p class="dep-text">"Depois que conheci os serviços da Nexus Comunicação, meu negócio só decolou! Eles proporcionam sempre o melhor serviço de SMS para mim e meu negócio. Sou muito grata a eles por isso!!!"</p>
+        <div class="dep-name">Jéssica Alves</div>
+        <div class="dep-role">CEO, Mind Software House</div>
+      </div>
+      <div class="dep-slide">
+        <p class="dep-text">"Trabalhar com a empresa foi uma experiência excepcional. Eles não apenas entregaram resultados de alta qualidade, mas também demonstraram um compromisso genuíno em entender nossas necessidades e superar expectativas."</p>
+        <div class="dep-name">Carlos Santos</div>
+        <div class="dep-role">Gerente de Projetos, Tech Innovate</div>
+      </div>
+      <div class="dep-slide">
+        <p class="dep-text">"A empresa se destacou pela sua capacidade de inovação e pela qualidade dos seus produtos. Estou muito satisfeito com a parceria estabelecida e ansioso para colaborar novamente no futuro."</p>
+        <div class="dep-name">Maria Oliveira</div>
+        <div class="dep-role">Diretora de Operações, GlobalTech Solutions</div>
+      </div>
+      <div class="dep-slide">
+        <p class="dep-text">"Os serviços prestados pela empresa superaram todas as nossas expectativas. A equipe demonstrou expertise e comprometimento em fornecer soluções eficientes e personalizadas para o nosso negócio."</p>
+        <div class="dep-name">João Pereira</div>
+        <div class="dep-role">CEO, Inovação Digital Ltda</div>
+      </div>
+    </div>
+    <div class="dep-avatars rv rv3">
+      <button class="dep-av-btn dep-active" onclick="depGoTo(0)" aria-label="Jéssica Alves"><div class="dep-av">JA</div></button>
+      <button class="dep-av-btn" onclick="depGoTo(1)" aria-label="Carlos Santos"><div class="dep-av">CS</div></button>
+      <button class="dep-av-btn" onclick="depGoTo(2)" aria-label="Maria Oliveira"><div class="dep-av">MO</div></button>
+      <button class="dep-av-btn" onclick="depGoTo(3)" aria-label="João Pereira"><div class="dep-av">JP</div></button>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  let cur=0, timer;
+  const slides=document.querySelectorAll('.dep-slide');
+  const btns=document.querySelectorAll('.dep-av-btn');
+  window.depGoTo=function(n){
+    slides[cur].classList.remove('dep-active');
+    btns[cur].classList.remove('dep-active');
+    cur=n;
+    slides[cur].classList.add('dep-active');
+    btns[cur].classList.add('dep-active');
+    clearInterval(timer);
+    timer=setInterval(()=>depGoTo((cur+1)%slides.length),5500);
+  };
+  timer=setInterval(()=>depGoTo((cur+1)%slides.length),5500);
+})();
+</script>
+
 <!-- ── LEAD FORM ── -->
 <section id="lead-form">
   <div class="lf-glow"></div>
@@ -1424,6 +1580,21 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
 </a>
 
 <script>
+/* ── MOBILE DRAWER ── */
+function toggleDrawer() {
+  const d = document.getElementById('navDrawer');
+  const h = document.getElementById('navHam');
+  const open = d.classList.toggle('open');
+  h.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeDrawer() {
+  document.getElementById('navDrawer').classList.remove('open');
+  document.getElementById('navHam').classList.remove('open');
+  document.body.style.overflow = '';
+}
+window.addEventListener('resize', () => { if(window.innerWidth >= 640) closeDrawer(); });
+
 /* ── NAV scroll ── */
 const nav = document.getElementById('nav');
 addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
