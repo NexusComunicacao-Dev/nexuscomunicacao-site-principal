@@ -229,15 +229,24 @@ section { padding:var(--py) var(--px); }
 .lf-trust { display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
 .trust-it { padding:6px 14px; background:#fff; border:1px solid rgba(0,0,0,.09); border-radius:100px; font-size:12px; font-weight:600; color:#555; }
 .trust-it::before { content:'✓ '; color:var(--orange); font-weight:900; }
-.lf-card { background:#fff; border-radius:20px; padding:32px 24px; box-shadow:0 12px 40px rgba(0,0,0,.1); }
-.lf-card h3 { font-size:20px; font-weight:800; color:#111; margin-bottom:6px; }
-.lf-card p { font-size:14px; color:#888; margin-bottom:24px; }
+.lf-card { background:#fff; border-radius:20px; padding:36px 28px; box-shadow:0 12px 40px rgba(0,0,0,.1); border-top:3px solid var(--orange); }
+.lf-card h3 { font-size:22px; font-weight:800; color:#111; margin-bottom:6px; }
+.lf-card p { font-size:14px; color:#888; margin-bottom:28px; }
 .frow { display:grid; grid-template-columns:1fr; gap:14px; }
-.fg { display:flex; flex-direction:column; gap:6px; }
-.fg label { font-size:12px; font-weight:600; color:#666; letter-spacing:.03em; }
-.fi { width:100%; padding:13px 14px; border:1.5px solid rgba(0,0,0,.12); border-radius:10px; font-size:14px; color:#111; font-family:inherit; background:#fafafa; transition:all .2s; outline:none; }
+.fg { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
+.fg label { font-size:11.5px; font-weight:700; color:#555; letter-spacing:.05em; text-transform:uppercase; }
+.fi { width:100%; padding:14px 16px; border:1.5px solid rgba(0,0,0,.12); border-radius:10px; font-size:14.5px; color:#111; font-family:inherit; background:#fafafa; transition:all .2s; outline:none; }
 .fi:focus { border-color:var(--orange); background:#fff; box-shadow:0 0 0 3px rgba(255,124,26,.1); }
-.btn-lead { width:100%; padding:16px; margin-top:20px; background:var(--orange); color:#fff; border:none; border-radius:12px; font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 8px 28px rgba(255,124,26,.4); transition:all .22s; }
+.fi.error { border-color:#e53935 !important; box-shadow:0 0 0 3px rgba(229,57,53,.12) !important; }
+select.fi { -webkit-appearance:none; cursor:pointer; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='rgba(0,0,0,0.3)' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; padding-right:40px; background-color:#fafafa; }
+/* Solution chips – light theme */
+.sol-chips { display:flex; flex-wrap:wrap; gap:8px; }
+.sol-chip { flex:1 1 calc(33.33% - 6px); padding:11px 10px; border:1.5px solid rgba(0,0,0,.12); border-radius:10px; background:#f5f5f5; color:#555; font-size:12.5px; font-weight:600; cursor:pointer; transition:all .2s; text-align:center; user-select:none; font-family:inherit; line-height:1.3; white-space:nowrap; }
+.sol-chip:hover { border-color:rgba(255,124,26,.5); color:#111; background:rgba(255,124,26,.06); }
+.sol-chip.selected { border-color:var(--orange); background:rgba(255,124,26,.1); color:#111; font-weight:700; box-shadow:0 0 0 2px rgba(255,124,26,.18); }
+.sol-chips.chips-error .sol-chip:not(.selected) { border-color:rgba(229,57,53,.4); }
+.sol-chips.chips-error::after { content:'Selecione uma opção'; display:block; width:100%; font-size:11px; color:#e53935; margin-top:4px; font-weight:600; }
+.btn-lead { width:100%; padding:16px; margin-top:8px; background:var(--orange); color:#fff; border:none; border-radius:12px; font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 8px 28px rgba(255,124,26,.4); transition:all .22s; }
 .btn-lead:hover { background:var(--orange-l); transform:translateY(-2px); }
 .lf-priv { font-size:11.5px; color:#aaa; text-align:center; margin-top:14px; }
 
@@ -728,16 +737,27 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
       <h3>Solicite uma proposta gratuita</h3>
       <p>Nosso time responde em até 2 horas úteis</p>
       <div class="frow">
-        <div class="fg"><label>Nome completo</label><input id="push-nome" type="text" class="fi" placeholder="Seu nome"></div>
-        <div class="fg"><label>Empresa</label><input id="push-empresa" type="text" class="fi" placeholder="Nome da empresa"></div>
+        <div class="fg"><label>Nome completo</label><input id="push-nome" type="text" class="fi" placeholder="Seu nome" required></div>
+        <div class="fg"><label>Empresa</label><input id="push-empresa" type="text" class="fi" placeholder="Nome da empresa" required></div>
       </div>
       <div class="frow">
-        <div class="fg"><label>WhatsApp / Telefone</label><input id="push-telefone" type="tel" class="fi" placeholder="(00) 00000-0000"></div>
-        <div class="fg"><label>E-mail</label><input id="push-email" type="email" class="fi" placeholder="seu@email.com"></div>
+        <div class="fg"><label>WhatsApp / Telefone</label><input id="push-telefone" type="tel" class="fi" placeholder="(00) 00000-0000" required maxlength="15" autocomplete="tel-national"></div>
+        <div class="fg"><label>E-mail</label><input id="push-email" type="email" class="fi" placeholder="seu@email.com" required></div>
+      </div>
+      <div class="fg">
+        <label>Qual solução te interessa?</label>
+        <div class="sol-chips" id="push-sol-chips">
+          <button type="button" class="sol-chip" onclick="selectSol(this,'push','SMS')">SMS</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'push','RCS')">RCS</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'push','WhatsApp')">WhatsApp</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'push','Proximidade')">Proximidade</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'push','Indefinido')">Indefinido</button>
+        </div>
+        <input type="hidden" id="push-solucao" value="">
       </div>
       <div class="fg">
         <label>Segmento da empresa</label>
-        <select id="push-segmento" class="fi">
+        <select id="push-segmento" class="fi" required>
           <option value="" disabled selected>Selecione seu segmento</option>
           <option>Varejo / Redes de Lojas</option><option>Restaurantes / Food Service</option>
           <option>Shoppings / Centros Comerciais</option><option>Imobiliário</option>
@@ -747,7 +767,7 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
       </div>
       <div class="fg">
         <label>Investimento estimado</label>
-        <select id="push-investimento" class="fi">
+        <select id="push-investimento" class="fi" required>
           <option value="" disabled selected>Selecione o investimento</option>
           <option>R$1.000 a R$3.000</option><option>R$3.000 a R$10.000</option>
           <option>R$10.000 a R$30.000</option><option>Acima de R$30.000</option>
@@ -869,11 +889,43 @@ document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
 <script>
 const WEBHOOK_URL='https://midas-n8n.zn6ejt.easypanel.host/webhook/d05cec8a-1849-400a-bd61-09555631f83c';
 function brasiliaTimestamp(){return new Date().toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});}
+/* ── Phone mask & form validation ── */
+function phoneMask(e){
+  let v=e.target.value.replace(/\D/g,'').slice(0,11);
+  if(v.length>6)      v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);
+  else if(v.length>2) v='('+v.slice(0,2)+') '+v.slice(2);
+  else if(v.length)   v='('+v;
+  e.target.value=v;
+}
+function markErr(id){const el=document.getElementById(id);if(el){el.classList.add('error');el.focus();}}
+function selectSol(btn,prefix,val){
+  document.querySelectorAll('#'+prefix+'-sol-chips .sol-chip').forEach(c=>c.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById(prefix+'-solucao').value=val;
+  document.getElementById(prefix+'-sol-chips').classList.remove('chips-error');
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const tel=document.getElementById('push-telefone');
+  if(tel) tel.addEventListener('input',phoneMask);
+  document.querySelectorAll('.fi').forEach(el=>
+    el.addEventListener('input',()=>el.classList.remove('error'))
+  );
+});
+
 async function enviarLeadPush(btn){
-  const nome=document.getElementById('push-nome').value.trim(),empresa=document.getElementById('push-empresa').value.trim(),telefone=document.getElementById('push-telefone').value.trim(),email=document.getElementById('push-email').value.trim(),segmento=document.getElementById('push-segmento').value,investimento=document.getElementById('push-investimento').value;
-  if(!nome||!telefone){document.getElementById('push-nome').focus();return;}
+  const nome=document.getElementById('push-nome').value.trim(),empresa=document.getElementById('push-empresa').value.trim(),telefone=document.getElementById('push-telefone').value.trim(),email=document.getElementById('push-email').value.trim(),solucao=document.getElementById('push-solucao').value,segmento=document.getElementById('push-segmento').value,investimento=document.getElementById('push-investimento').value;
+  document.querySelectorAll('.fi.error').forEach(el=>el.classList.remove('error'));
+  document.querySelectorAll('.sol-chips').forEach(el=>el.classList.remove('chips-error'));
+  if(!nome)                             {markErr('push-nome');return;}
+  if(!empresa)                          {markErr('push-empresa');return;}
+  const telDigits=telefone.replace(/\D/g,'');
+  if(telDigits.length!==11)             {markErr('push-telefone');return;}
+  if(!email)                            {markErr('push-email');return;}
+  if(!solucao)                          {document.getElementById('push-sol-chips').classList.add('chips-error');document.getElementById('push-sol-chips').scrollIntoView({behavior:'smooth',block:'center'});return;}
+  if(!segmento)                         {markErr('push-segmento');return;}
+  if(!investimento)                     {markErr('push-investimento');return;}
   btn.disabled=true;btn.textContent='Enviando…';
-  const payload={origem:'LP Push Ads · Marketing de Proximidade',nome,empresa,telefone,email,segmento,investimento_estimado:investimento,data_hora_brasilia:brasiliaTimestamp()};
+  const payload={origem:'LP Push Ads · Marketing de Proximidade',nome,empresa,telefone,email,solucao_interesse:solucao,segmento,investimento_estimado:investimento,data_hora_brasilia:brasiliaTimestamp()};
   try{await Promise.race([fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}),new Promise((_,reject)=>setTimeout(()=>reject(new Error('timeout')),8000))]);}catch(e){}
   window.location.href='obrigado.html';
 }

@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS Comunicação — Plataforma de Marketing Digital</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-328024362"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-328024362');
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ─── TOKENS ─── */
+:root {
+  --orange: #ff7c1a;
+  --orange-d: #e06010;
+  --orange-l: #ff9a4a;
+  --dark: #4a4a4a;
+  --dark2: #3d3d3d;
+  --dark3: #565656;
+  --light: #f7f7f7;
+  --light2: #ffffff;
+  --cw: 1200px;
+  --px: 24px;
+  --py: 80px;
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; -webkit-tap-highlight-color:transparent; }
+body { font-family:'Inter',sans-serif; background:var(--dark); color:#fff; overflow-x:hidden; }
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-thumb { background:var(--orange); border-radius:2px; }
+img, svg { display:block; max-width:100%; }
+a { text-decoration:none; }
+
+/* ─── CONTAINER ─── */
+.wrap {
+  max-width: var(--cw);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+.footer-grid, .footer-bottom { max-width:var(--cw); margin:0 auto; width:100%; }
+
+/* ─── UTILITIES ─── */
+.btn-primary {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 28px; background:var(--orange); color:#fff;
+  border:none; border-radius:10px; font-size:15px; font-weight:700;
+  cursor:pointer; font-family:inherit;
+  box-shadow:0 6px 24px rgba(255,124,26,.4); transition:all .22s;
+}
+.btn-primary:hover { background:var(--orange-l); transform:translateY(-2px); box-shadow:0 10px 36px rgba(255,124,26,.55); }
+
+.btn-ghost {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 28px; background:transparent; color:#fff;
+  border:1.5px solid rgba(255,255,255,.22); border-radius:10px;
+  font-size:15px; font-weight:600; cursor:pointer; font-family:inherit;
+  transition:all .22s;
+}
+.btn-ghost:hover { border-color:var(--orange); color:var(--orange); background:rgba(255,124,26,.05); }
+
+.tag {
+  display:inline-block; padding:5px 14px;
+  background:rgba(255,124,26,.1); border:1px solid rgba(255,124,26,.28);
+  border-radius:100px; font-size:11px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--orange); margin-bottom:18px;
+}
+.tag.dark { background:rgba(255,124,26,.12); }
+.tag.light { background:rgba(255,124,26,.1); border-color:rgba(255,124,26,.28); }
+
+.h2 { font-size:clamp(28px,4vw,50px); font-weight:900; letter-spacing:-.03em; line-height:1.08; }
+.sub { font-size:clamp(15px,1.8vw,17px); color:rgba(255,255,255,.5); line-height:1.8; margin-top:16px; }
+.sub.light-text { color:#666; }
+
+/* reveal */
+.rv { opacity:0; transform:translateY(28px); transition:opacity .7s ease,transform .7s ease; }
+.rv.on { opacity:1; transform:none; }
+.rv1 { transition-delay:.1s; } .rv2 { transition-delay:.2s; }
+.rv3 { transition-delay:.3s; } .rv4 { transition-delay:.4s; }
+
+/* ─── NAV ─── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 20px;
+  background:rgba(45,45,45,.92); backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,124,26,.1); transition:all .3s;
+}
+nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
+.nav-logo svg { height:30px; }
+.nav-links { display:none; align-items:center; gap:28px; }
+.nav-links a { color:rgba(255,255,255,.72); font-size:14px; font-weight:500; transition:color .2s; }
+.nav-links a:hover { color:var(--orange); }
+.btn-nav {
+  padding:9px 18px; background:var(--orange); color:#fff; border:none;
+  border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;
+  font-family:inherit; box-shadow:0 4px 18px rgba(255,124,26,.35);
+  transition:all .2s; white-space:nowrap;
+}
+.btn-nav:hover { background:var(--orange-l); transform:translateY(-1px); }
+
+/* hamburger */
+.nav-ham {
+  display:flex; flex-direction:column; justify-content:center; gap:5px;
+  width:40px; height:40px; padding:6px;
+  background:transparent; border:none; cursor:pointer; z-index:1002; flex-shrink:0;
+}
+.nav-ham span {
+  display:block; width:22px; height:2px;
+  background:rgba(255,255,255,.85); border-radius:2px;
+  transition:all .28s cubic-bezier(.22,1,.36,1); transform-origin:center;
+}
+.nav-ham.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+.nav-ham.open span:nth-child(2) { opacity:0; width:0; }
+.nav-ham.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+/* drawer */
+.nav-drawer {
+  position:fixed; top:0; left:0; right:0; bottom:0; z-index:1001;
+  background:rgba(42,42,42,.98); backdrop-filter:blur(20px);
+  display:flex; flex-direction:column; align-items:flex-start;
+  padding:84px 32px 48px; gap:0;
+  transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.22,1,.36,1);
+  pointer-events:none; overflow-y:auto;
+}
+.nav-drawer.open { transform:none; pointer-events:auto; }
+.nav-drawer a {
+  display:block; color:rgba(255,255,255,.78); font-size:20px; font-weight:700;
+  padding:16px 0; width:100%; border-bottom:1px solid rgba(255,255,255,.08); transition:color .2s;
+}
+.nav-drawer a:last-of-type { border-bottom:none; }
+.nav-drawer a:hover { color:var(--orange); }
+.drawer-cta {
+  margin-top:28px !important; width:100%; font-size:16px !important;
+  padding:16px !important; text-align:center; justify-content:center;
+  border-radius:12px !important; border:none !important; cursor:pointer; font-family:inherit !important;
+}
+
+/* ─── iPhone FRAME ─── */
+.iphone-wrap { display:flex; justify-content:center; align-items:center; perspective:1100px; padding:20px; }
+.iphone {
+  position:relative; width:220px; height:464px;
+  transform-style:preserve-3d; transition:transform .08s ease-out; cursor:grab; flex-shrink:0;
+}
+.iphone-frame {
+  position:absolute; inset:0; border-radius:46px;
+  background:linear-gradient(158deg,#484848 0%,#363636 25%,#1e1e1e 55%,#363636 80%,#484848 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),inset 0 0 0 2.5px rgba(0,0,0,.75),0 40px 90px rgba(0,0,0,.85),0 16px 40px rgba(0,0,0,.55),0 0 50px rgba(255,124,26,.07);
+}
+.iphone-frame::after {
+  content:''; position:absolute; top:0; left:12%; right:12%;
+  height:1px; background:rgba(255,255,255,.3); border-radius:100%;
+}
+.iphone-screen {
+  position:absolute; top:9px; left:9px; right:9px; bottom:9px;
+  border-radius:38px; background:#050508; overflow:hidden;
+  box-shadow:inset 0 0 0 .5px rgba(255,255,255,.07);
+}
+.iphone-screen::before {
+  content:''; position:absolute; inset:0; z-index:100; pointer-events:none; border-radius:38px;
+  background:linear-gradient(130deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.02) 35%,transparent 65%);
+}
+.di {
+  position:absolute; top:11px; left:50%; transform:translateX(-50%);
+  width:96px; height:27px; background:#000; border-radius:18px; z-index:50;
+  box-shadow:0 0 0 .5px rgba(255,255,255,.06);
+  display:flex; align-items:center; justify-content:flex-end; padding-right:10px;
+}
+.di-dot { width:9px; height:9px; border-radius:50%; background:#1a1a22; border:1px solid rgba(255,255,255,.1); }
+.hw-action  { position:absolute; left:-3px; top:86px;  width:3px; height:20px; border-radius:3px 0 0 3px; background:linear-gradient(to right,#222,#3a3a3a); }
+.hw-vol-up  { position:absolute; left:-3px; top:120px; width:3px; height:40px; border-radius:3px 0 0 3px; background:linear-gradient(to right,#222,#3a3a3a); }
+.hw-vol-down{ position:absolute; left:-3px; top:170px; width:3px; height:40px; border-radius:3px 0 0 3px; background:linear-gradient(to right,#222,#3a3a3a); }
+.hw-power   { position:absolute; right:-3px;top:135px; width:3px; height:56px; border-radius:0 3px 3px 0; background:linear-gradient(to left,#222,#3a3a3a); }
+.screen-inner { position:absolute; inset:0; overflow:hidden; display:flex; flex-direction:column; }
+.status-bar {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:46px 18px 0; font-size:11px; font-weight:700; color:#fff; flex-shrink:0;
+}
+.status-icons { display:flex; align-items:center; gap:4px; }
+
+/* ─── CHANNEL SCREENS inside phone ─── */
+.ch-screen {
+  position:absolute; inset:0;
+  opacity:0; pointer-events:none;
+  transition:opacity .6s ease;
+}
+.ch-screen.active { opacity:1; pointer-events:auto; }
+
+/* SMS screen */
+.sms-screen { background:#050508; }
+.sms-header {
+  display:flex; align-items:center; gap:9px;
+  padding:7px 12px; border-bottom:1px solid rgba(255,255,255,.07); margin:0; flex-shrink:0;
+}
+.sms-av { width:28px; height:28px; border-radius:50%; background:var(--orange); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#fff; flex-shrink:0; }
+.sms-name { font-size:11px; font-weight:700; color:#fff; }
+.sms-name small { display:block; font-size:9px; color:rgba(255,255,255,.38); font-weight:400; }
+.sms-body { padding:10px 12px; display:flex; flex-direction:column; gap:8px; flex:1; overflow:hidden; }
+.sms-bubble {
+  max-width:85%; padding:8px 11px; border-radius:14px;
+  font-size:10.5px; line-height:1.55; animation:bubIn .4s ease both;
+}
+.sms-bubble.in { background:rgba(255,255,255,.09); color:rgba(255,255,255,.85); border-bottom-left-radius:3px; align-self:flex-start; }
+.sms-bubble.out { background:var(--orange); color:#fff; border-bottom-right-radius:3px; align-self:flex-end; }
+@keyframes bubIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+
+/* RCS screen */
+.rcs-screen { background:#f0f0f5; }
+.rcs-header { display:flex; align-items:center; gap:8px; padding:50px 12px 8px; border-bottom:1px solid rgba(0,0,0,.08); flex-shrink:0; }
+.rcs-av { width:28px; height:28px; border-radius:50%; background:var(--orange); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#fff; position:relative; flex-shrink:0; }
+.rcs-av::after { content:'✓'; position:absolute; bottom:-2px; right:-2px; width:11px; height:11px; background:#4FC3F7; border-radius:50%; border:1.5px solid #f0f0f5; font-size:6px; color:#fff; font-weight:900; display:flex; align-items:center; justify-content:center; }
+.rcs-name { font-size:11px; font-weight:700; color:#111; }
+.rcs-name small { display:block; font-size:8.5px; color:#4FC3F7; font-weight:600; }
+.rcs-body { padding:10px 10px; display:flex; flex-direction:column; gap:7px; flex:1; overflow:hidden; }
+.rcs-card { background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.1); }
+.rcs-card-img { height:48px; background:linear-gradient(135deg,rgba(255,124,26,.5),rgba(255,80,10,.3)); display:flex; align-items:center; justify-content:center; font-size:18px; }
+.rcs-card-body { padding:7px 9px; }
+.rcs-card-title { font-size:9.5px; font-weight:700; color:#111; }
+.rcs-card-sub { font-size:8.5px; color:#888; margin-top:1px; }
+.rcs-card-btns { display:flex; gap:4px; padding:5px 9px 7px; }
+.rcs-card-btn { flex:1; padding:4px; background:var(--orange); border-radius:6px; font-size:8px; font-weight:700; color:#fff; text-align:center; }
+
+/* WhatsApp screen */
+.wa-screen { background:#0b1014; }
+.wa-header { display:flex; align-items:center; gap:8px; padding:50px 12px 8px; background:#1f2c34; flex-shrink:0; }
+.wa-av { width:28px; height:28px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#fff; flex-shrink:0; }
+.wa-name { font-size:11px; font-weight:700; color:#fff; }
+.wa-name small { display:block; font-size:8.5px; color:rgba(255,255,255,.5); }
+.wa-body { padding:10px 10px; display:flex; flex-direction:column; gap:7px; flex:1; overflow:hidden; background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+.wa-bubble { max-width:85%; padding:7px 10px; border-radius:12px; font-size:9.5px; line-height:1.5; color:#fff; }
+.wa-bubble.in { background:#1f2c34; border-bottom-left-radius:2px; align-self:flex-start; }
+.wa-bubble.out { background:#005c4b; border-bottom-right-radius:2px; align-self:flex-end; }
+
+/* Push screen */
+.push-screen { background:linear-gradient(165deg,#0e1f3a 0%,#1a3a5c 40%,#0a1628 100%); }
+.push-status { display:flex; justify-content:space-between; align-items:center; padding:46px 18px 8px; font-size:10px; font-weight:700; color:#fff; flex-shrink:0; }
+.push-time { font-size:22px; font-weight:300; color:#fff; text-align:center; padding:0 18px 12px; }
+.push-notif { margin:0 10px; background:rgba(255,255,255,.12); backdrop-filter:blur(12px); border-radius:14px; padding:10px 12px; border:1px solid rgba(255,255,255,.1); }
+.push-notif-hdr { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
+.push-notif-ico { width:14px; height:14px; border-radius:4px; background:var(--orange); display:flex; align-items:center; justify-content:center; font-size:6px; font-weight:900; color:#fff; flex-shrink:0; }
+.push-notif-app { font-size:8px; color:rgba(255,255,255,.55); font-weight:600; }
+.push-notif-title { font-size:10px; font-weight:700; color:#fff; margin-bottom:2px; }
+.push-notif-body { font-size:8.5px; color:rgba(255,255,255,.65); line-height:1.35; }
+.push-loc { display:flex; align-items:center; gap:4px; margin-top:5px; }
+.push-loc-txt { font-size:7.5px; color:rgba(255,124,26,.9); font-weight:600; }
+
+/* channel label badge */
+.ch-label {
+  position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
+  background:rgba(255,255,255,.12); backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.18); border-radius:20px;
+  padding:4px 12px; font-size:9px; font-weight:700; color:#fff;
+  white-space:nowrap; z-index:50; letter-spacing:.06em; text-transform:uppercase;
+  transition:opacity .4s;
+}
+
+/* ─── HERO ─── */
+#hero {
+  min-height:100svh; display:flex; flex-direction:column;
+  padding:90px var(--px) 60px;
+  position:relative; overflow:hidden; align-items:center; gap:40px;
+}
+.hero-glow {
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 90% 60% at 50% 30%,rgba(255,124,26,.07) 0%,transparent 60%),
+             radial-gradient(ellipse 60% 40% at 80% 70%,rgba(255,124,26,.04) 0%,transparent 50%);
+}
+.hero-grid-bg {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:linear-gradient(rgba(255,124,26,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,124,26,.04) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
+}
+.hero-text { position:relative; z-index:2; text-align:center; max-width:620px; }
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 14px; border-radius:100px; margin-bottom:22px;
+  background:rgba(255,124,26,.12); border:1px solid rgba(255,124,26,.3);
+  font-size:12px; font-weight:700; color:var(--orange); letter-spacing:.08em; text-transform:uppercase;
+}
+.hero-badge-dot { width:6px; height:6px; border-radius:50%; background:var(--orange); animation:pulseDot 1.6s ease-in-out infinite; }
+@keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+.hero-title { font-size:clamp(40px,9vw,80px); font-weight:900; letter-spacing:-.04em; line-height:.98; margin-bottom:20px; }
+.hero-title .accent { color:var(--orange); }
+.hero-sub-txt { font-size:clamp(15px,2vw,18px); color:rgba(255,255,255,.5); line-height:1.75; margin-bottom:32px; }
+.hero-ctas { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+
+.hero-phone-zone {
+  position:relative; z-index:2;
+  display:flex; justify-content:center; align-items:center; width:100%;
+}
+
+/* channel indicator dots */
+.ch-dots { display:flex; gap:6px; justify-content:center; margin-top:12px; }
+.ch-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.25); transition:all .4s; cursor:pointer; }
+.ch-dot.active { background:var(--orange); width:20px; border-radius:3px; }
+
+/* ─── STATS BAR ─── */
+.stats-bar {
+  background:var(--dark2);
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  padding:24px var(--px);
+  display:grid; grid-template-columns:repeat(2,1fr); gap:20px 12px;
+}
+.stat-item { text-align:center; }
+.stat-item:last-child { grid-column:span 2; }
+.stat-num { font-size:24px; font-weight:900; color:var(--orange); display:block; }
+.stat-lbl { font-size:11px; color:rgba(255,255,255,.42); margin-top:3px; line-height:1.3; }
+
+/* ─── PRODUCTS ─── */
+#produtos { background:var(--light); padding:var(--py) var(--px); }
+.prod-grid { display:grid; grid-template-columns:1fr; gap:16px; margin-top:40px; }
+.prod-card {
+  background:#fff; border-radius:20px; padding:28px 24px;
+  border:1.5px solid rgba(0,0,0,.06); box-shadow:0 4px 18px rgba(0,0,0,.06);
+  display:flex; flex-direction:column; gap:14px; transition:all .28s; position:relative; overflow:hidden;
+}
+.prod-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--orange),var(--orange-l));
+  transform:scaleX(0); transform-origin:left; transition:transform .28s;
+}
+.prod-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,.1); border-color:rgba(255,124,26,.25); }
+.prod-card:hover::before { transform:scaleX(1); }
+.prod-icon {
+  width:52px; height:52px; border-radius:14px;
+  background:rgba(255,124,26,.1); display:flex; align-items:center; justify-content:center;
+}
+.prod-icon svg { width:26px; height:26px; }
+.prod-tag { font-size:10px; font-weight:700; color:var(--orange); letter-spacing:.1em; text-transform:uppercase; }
+.prod-name { font-size:20px; font-weight:800; color:#111; line-height:1.15; }
+.prod-desc { font-size:14px; color:#666; line-height:1.65; flex:1; }
+.prod-link {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:13px; font-weight:700; color:var(--orange); margin-top:4px;
+  transition:gap .2s;
+}
+.prod-link:hover { gap:10px; }
+.prod-link svg { width:14px; height:14px; }
+
+/* ─── SOBRE ─── */
+#sobre { background:var(--dark2); padding:var(--py) var(--px); position:relative; overflow:hidden; }
+.sobre-layout { display:flex; flex-direction:column; gap:40px; }
+.sobre-text .h2 { color:#fff; }
+.sobre-text .sub { color:rgba(255,255,255,.55); max-width:560px; }
+.sobre-quote {
+  border-left:3px solid var(--orange); padding-left:20px;
+  font-size:clamp(16px,2.2vw,20px); font-weight:700; color:#fff; line-height:1.55;
+  margin-top:28px;
+}
+.sobre-pillars { display:flex; flex-direction:column; gap:14px; margin-top:28px; }
+.pillar {
+  display:flex; align-items:flex-start; gap:14px;
+  padding:16px 18px; background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07); border-radius:14px;
+  transition:all .22s;
+}
+.pillar:hover { border-color:rgba(255,124,26,.3); background:rgba(255,124,26,.04); }
+.pillar-icon {
+  width:38px; height:38px; border-radius:10px;
+  background:rgba(255,124,26,.12); display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.pillar-icon svg { width:19px; height:19px; }
+.pillar-title { font-size:14px; font-weight:700; color:#fff; margin-bottom:3px; }
+.pillar-desc { font-size:13px; color:rgba(255,255,255,.5); line-height:1.55; }
+
+/* sobre numbers */
+.sobre-numbers { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.snumber {
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+  border-radius:16px; padding:22px 18px; text-align:center;
+}
+.snumber-val { font-size:clamp(32px,6vw,48px); font-weight:900; color:var(--orange); letter-spacing:-.03em; line-height:1; display:block; }
+.snumber-lbl { font-size:12px; color:rgba(255,255,255,.42); margin-top:6px; line-height:1.4; }
+
+/* ─── CLIENT LOGOS ─── */
+.cs-strip { background:var(--dark3); padding:44px var(--px) 40px; overflow:hidden; }
+.cs-label { text-align:center; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:30px; }
+.cs-wrap { overflow:hidden; mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); -webkit-mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); }
+.cs-track { display:flex; gap:48px; width:max-content; animation:csMarquee 22s linear infinite; }
+.cs-track:hover { animation-play-state:paused; }
+@keyframes csMarquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.cs-logo { display:flex; align-items:center; justify-content:center; flex-shrink:0; height:52px; opacity:.45; transition:opacity .3s ease; cursor:default; }
+.cs-logo:hover { opacity:.75; }
+.cs-logo img { height:40px; width:auto; max-width:130px; object-fit:contain; filter:brightness(0) invert(1); }
+
+/* ─── PROX CTA (orange banner) ─── */
+#cta-banner { padding:var(--py) var(--px); background:var(--dark); }
+.cta-inner {
+  background:linear-gradient(130deg,var(--orange) 0%,#ff9a30 55%,var(--orange-d) 100%);
+  border-radius:24px; padding:52px 36px;
+  display:flex; flex-direction:column; gap:28px; align-items:flex-start;
+  position:relative; overflow:hidden;
+}
+.cta-inner::before {
+  content:''; position:absolute; top:-40%; right:-10%; width:400px; height:400px;
+  background:rgba(255,255,255,.07); border-radius:50%; pointer-events:none;
+}
+.cta-inner::after {
+  content:''; position:absolute; bottom:-60%; left:-5%; width:300px; height:300px;
+  background:rgba(255,255,255,.04); border-radius:50%; pointer-events:none;
+}
+.cta-eyebrow { font-size:11px; font-weight:700; letter-spacing:.15em; color:rgba(255,255,255,.7); text-transform:uppercase; }
+.cta-txt { font-size:clamp(22px,4vw,36px); font-weight:900; color:#fff; line-height:1.15; max-width:560px; position:relative; z-index:1; }
+.cta-btns { display:flex; gap:12px; flex-wrap:wrap; position:relative; z-index:1; }
+.btn-white {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 28px; background:#fff; color:var(--orange);
+  border:none; border-radius:10px; font-size:15px; font-weight:800;
+  cursor:pointer; font-family:inherit;
+  box-shadow:0 4px 18px rgba(0,0,0,.15); transition:all .22s;
+}
+.btn-white:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,0,0,.2); }
+.btn-white-ghost {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 28px; background:rgba(255,255,255,.15); color:#fff;
+  border:1.5px solid rgba(255,255,255,.4); border-radius:10px;
+  font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; transition:all .22s;
+}
+.btn-white-ghost:hover { background:rgba(255,255,255,.25); }
+
+/* ─── FOOTER ─── */
+footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); padding:56px var(--px) 32px; }
+.footer-grid { display:flex; flex-direction:column; gap:40px; margin-bottom:40px; }
+.footer-brand > p { font-size:13px; color:rgba(255,255,255,.35); line-height:1.7; margin-top:14px; max-width:240px; }
+.footer-socials { display:flex; gap:10px; margin-top:16px; }
+.soc {
+  width:34px; height:34px; background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1); border-radius:7px;
+  display:flex; align-items:center; justify-content:center;
+  color:rgba(255,255,255,.5); font-size:12px; font-weight:700; transition:all .2s;
+}
+.soc:hover { background:rgba(255,124,26,.15); border-color:var(--orange); color:var(--orange); }
+.footer-cols { display:grid; grid-template-columns:1fr 1fr; gap:32px 20px; }
+.fc h4 { font-size:11px; font-weight:700; color:rgba(255,255,255,.35); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; }
+.fc a { display:block; font-size:13px; color:rgba(255,255,255,.5); margin-bottom:9px; transition:color .2s; }
+.fc a:hover { color:var(--orange); }
+.fc-contact { font-size:13px; color:rgba(255,255,255,.5); margin-bottom:8px; line-height:1.5; }
+.footer-bottom {
+  border-top:1px solid rgba(255,255,255,.06); padding-top:24px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.footer-bottom p { font-size:11px; color:rgba(255,255,255,.22); }
+
+/* ─── MESH CANVAS ─── */
+.mesh-cvs { position:absolute; inset:0; width:100% !important; height:100% !important; z-index:0; pointer-events:none; }
+#hero, #sobre, footer { position:relative; overflow:hidden; }
+#hero > *:not(.mesh-cvs) { position:relative; z-index:1; }
+.hero-text, .hero-phone-zone { position:relative; z-index:2; }
+#sobre > *:not(.mesh-cvs) { position:relative; z-index:1; }
+footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
+
+/* ─── FAB ─── */
+.fab {
+  position:fixed; bottom:24px; right:20px; z-index:999;
+  width:52px; height:52px; background:#25D366; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 22px rgba(37,211,102,.4); transition:all .3s;
+}
+.fab:hover { transform:scale(1.1); box-shadow:0 10px 32px rgba(37,211,102,.6); }
+.fab svg { width:26px; height:26px; fill:#fff; }
+
+/* ─── RESPONSIVE ─── */
+@media(min-width:640px){
+  .nav-ham { display:none; }
+  .nav-drawer { display:none; }
+  :root { --px:40px; --py:96px; }
+  nav { padding:16px 40px; }
+  nav.scrolled { padding:10px 40px; }
+  .nav-links { display:flex; }
+  .stats-bar { grid-template-columns:repeat(4,1fr); padding:28px 40px; }
+  .stat-item:last-child { grid-column:auto; }
+  .prod-grid { grid-template-columns:1fr 1fr; }
+  .footer-grid { flex-direction:row; justify-content:space-between; align-items:flex-start; }
+  .footer-cols { grid-template-columns:repeat(3,1fr); gap:40px; }
+  .footer-bottom { flex-direction:row; justify-content:space-between; }
+  .iphone-wrap { padding:40px 20px; }
+  .iphone { width:240px; height:500px; }
+  .cta-inner { flex-direction:row; align-items:center; justify-content:space-between; padding:56px 52px; }
+  .cta-txt { max-width:420px; }
+  .cta-btns { flex-direction:column; }
+}
+@media(min-width:1024px){
+  :root { --px:max(40px,calc((100% - var(--cw)) / 2)); --py:112px; }
+  nav { padding:18px max(40px,calc((100% - var(--cw)) / 2)); }
+  nav.scrolled { padding:11px max(40px,calc((100% - var(--cw)) / 2)); }
+  #hero { flex-direction:row; align-items:center; padding:120px max(40px,calc((100% - var(--cw)) / 2)) 90px; gap:60px; min-height:100vh; }
+  .hero-text { text-align:left; flex:1; max-width:580px; }
+  .hero-ctas { justify-content:flex-start; }
+  .hero-phone-zone { flex:0 0 auto; }
+  .iphone { width:260px; height:542px; }
+  .prod-grid { grid-template-columns:repeat(4,1fr); }
+  .sobre-layout { flex-direction:row; gap:64px; align-items:flex-start; }
+  .sobre-text { flex:1; }
+  .sobre-right { flex:0 0 380px; }
+  .cta-inner { padding:64px 72px; }
+  .cta-btns { flex-direction:row; }
+  .fab { bottom:30px; right:30px; }
+  .stats-bar { padding:28px max(40px,calc((100% - var(--cw)) / 2)); }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="home.html" class="nav-logo" aria-label="NEXUS">
+    <svg viewBox="0 0 248 64" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#fff" d="M10.51,21.31v20.39c0,2.9-2.35,5.26-5.26,5.26C2.35,47,0,44.6,0,41.7V0s35.66,27.84,35.66,27.84V7.45c0-2.9,2.35-5.26,5.26-5.26s5.26,2.35,5.26,5.26v41.67S10.51,21.31,10.51,21.31z"/>
+      <path fill="#fff" d="M197.14,2.2v39.23c0,1.51-.57,3-1.65,4.04-1.01,1-2.25,1.48-3.68,1.48h-35.33c-1.51,0-3-.55-4.04-1.63-1-1.01-1.48-2.25-1.48-3.68V11.01h-10.8l-10.39,13.57,17.14,22.36h-11.84l-11.35-14.55L112.56,46.94H100.45l17.33-22.36L100.74,2.2h11.82l11.17,14.55,11.35-14.55h26.4v35.95h25.15V2.2h10.51z"/>
+      <path fill="#fff" d="M206.52,2.19h33.83c2.43,0,4.4,1.97,4.4,4.4s-1.97,4.4-4.4,4.4h-28.63v9.15h30.35c1.44,0,2.69.53,3.74,1.59,1.05,1.06,1.57,2.31,1.57,3.75v16.14c0,1.46-.52,2.71-1.57,3.75-1.05,1.04-2.3,1.56-3.74,1.56h-36.48c-2.43,0-4.4-1.97-4.4-4.4s1.97-4.4,4.4-4.4h31.26v-9.18h-30.32c-1.46,0-2.72-.52-3.77-1.56-1.05-1.04-1.57-2.29-1.57-3.75V7.51c0-1.44.52-2.69,1.57-3.74,1.05-1.05,2.3-1.57,3.77-1.57z"/>
+      <rect fill="#ff7c1a" x="51.43" y="2.19" width="46.2" height="8.81" rx="4.4"/>
+      <rect fill="#ff7c1a" x="59.63" y="20.17" width="29.81" height="8.81" rx="4.4"/>
+      <rect fill="#ff7c1a" x="67.51" y="38.14" width="14.04" height="8.81" rx="4.4"/>
+      <text fill="#888" font-family="sans-serif" font-size="9" transform="translate(152 60)">COMUNICAÇÃO</text>
+    </svg>
+  </a>
+  <div class="nav-links">
+    <a href="#produtos">Soluções</a>
+    <a href="#sobre">Sobre nós</a>
+    <a href="#cta-banner">Contato</a>
+    <button class="btn-nav" onclick="document.getElementById('cta-banner').scrollIntoView({behavior:'smooth'})">Falar com Consultor</button>
+  </div>
+  <button class="nav-ham" id="navHam" aria-label="Menu" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── MOBILE DRAWER ── -->
+<div class="nav-drawer" id="navDrawer">
+  <a href="#produtos" onclick="closeDrawer()">Soluções</a>
+  <a href="#sobre" onclick="closeDrawer()">Sobre nós</a>
+  <a href="#cta-banner" onclick="closeDrawer()">Contato</a>
+  <button class="btn-nav drawer-cta" onclick="closeDrawer();setTimeout(()=>document.getElementById('cta-banner').scrollIntoView({behavior:'smooth'}),200)">Falar com Consultor</button>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid-bg"></div>
+
+  <div class="hero-text rv">
+    <div class="hero-badge"><div class="hero-badge-dot"></div>Plataforma de Comunicação</div>
+    <h1 class="hero-title">Conecte sua<br><span class="accent">marca</span> ao Brasil.</h1>
+    <p class="hero-sub-txt">Do SMS ao Push Ads, da mensageria em massa ao marketing de proximidade — a NEXUS entrega o canal certo, para a pessoa certa, no momento certo.</p>
+    <div class="hero-ctas">
+      <a href="#produtos" class="btn-primary">Conheça as soluções</a>
+      <a href="#sobre" class="btn-ghost">Quem somos</a>
+    </div>
+  </div>
+
+  <!-- Animated phone cycling 4 channels -->
+  <div class="hero-phone-zone rv rv2">
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <div class="iphone-wrap" id="heroWrap">
+        <div class="iphone" id="heroPhone">
+          <div class="iphone-frame"></div>
+          <div class="hw-action"></div><div class="hw-vol-up"></div><div class="hw-vol-down"></div><div class="hw-power"></div>
+          <div class="iphone-screen">
+            <div class="di"><div class="di-dot"></div></div>
+
+            <!-- SMS Channel -->
+            <div class="ch-screen sms-screen active" id="chSMS">
+              <div class="screen-inner">
+                <div style="padding:46px 0 0;flex-shrink:0;"></div>
+                <div class="sms-header">
+                  <div class="sms-av">N</div>
+                  <div class="sms-name">NEXUS Marketing<small>+55 11 3569-4630</small></div>
+                </div>
+                <div class="sms-body">
+                  <div class="sms-bubble in">Olá! Sua promoção especial está esperando por você 🎁</div>
+                  <div class="sms-bubble in" style="animation-delay:.3s">Desconto de <strong>30% OFF</strong> válido até hoje.</div>
+                  <div class="sms-bubble out" style="animation-delay:.7s">Quero aproveitar!</div>
+                  <div class="sms-bubble in" style="animation-delay:1.1s">Ótimo! Acesse: nexus.co/promo30</div>
+                </div>
+              </div>
+              <div class="ch-label">SMS Marketing</div>
+            </div>
+
+            <!-- RCS Channel -->
+            <div class="ch-screen" id="chRCS" style="background:#f0f0f5;">
+              <div class="rcs-header">
+                <span style="color:#999;font-size:12px;margin-right:4px;">‹</span>
+                <div class="rcs-av">N</div>
+                <div class="rcs-name">NEXUS Marketing<small>Remetente verificado</small></div>
+              </div>
+              <div class="rcs-body">
+                <div class="rcs-card">
+                  <div class="rcs-card-img">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                  </div>
+                  <div class="rcs-card-body">
+                    <div class="rcs-card-title">Oferta exclusiva · Hoje</div>
+                    <div class="rcs-card-sub">30% de desconto em toda linha</div>
+                  </div>
+                  <div class="rcs-card-btns">
+                    <div class="rcs-card-btn">Ver oferta</div>
+                    <div class="rcs-card-btn" style="background:var(--dark2);">Loja</div>
+                  </div>
+                </div>
+                <div style="background:#fff;border-radius:12px;padding:9px 10px;font-size:9px;color:#333;line-height:1.5;box-shadow:0 2px 8px rgba(0,0,0,.07);">
+                  Aproveite agora! Promoção válida até <strong>23h59</strong>. Frete grátis acima de R$199.
+                </div>
+              </div>
+              <div class="ch-label" style="color:#111;background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.1);">RCS Business</div>
+            </div>
+
+            <!-- WhatsApp Channel -->
+            <div class="ch-screen" id="chWA">
+              <div class="wa-header">
+                <div class="wa-av">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>
+                </div>
+                <div class="wa-name">NEXUS Oficial<small>Online agora</small></div>
+              </div>
+              <div class="wa-body">
+                <div class="wa-bubble in">Olá! Temos novidades para você 👋</div>
+                <div class="wa-bubble in" style="margin-top:2px;">Sua campanha de Setembro está pronta. Quer agendar o disparo?</div>
+                <div class="wa-bubble out">Sim! Pode agendar para amanhã cedo.</div>
+                <div class="wa-bubble in" style="margin-top:2px;">Perfeito ✅ Agendado para 08h. Você receberá o relatório em tempo real.</div>
+              </div>
+              <div class="ch-label">WhatsApp Marketing</div>
+            </div>
+
+            <!-- Push Channel -->
+            <div class="ch-screen" id="chPush">
+              <div class="screen-inner" style="background:linear-gradient(165deg,#0e1f3a 0%,#1a3a5c 40%,#0a1628 100%);">
+                <div class="push-status">
+                  <span>09:41</span>
+                  <svg width="11" height="8" viewBox="0 0 13 10"><path d="M0 3.5C2.4 1.3 5.2 0 6.5 0S10.6 1.3 13 3.5M2.5 5.9C3.8 4.7 5.1 4 6.5 4s2.7.7 4 1.9M5 8.3C5.6 7.8 6 7.5 6.5 7.5S7.4 7.8 8 8.3" stroke="#fff" stroke-width="1.3" fill="none" stroke-linecap="round"/></svg>
+                </div>
+                <div class="push-time">09:41</div>
+                <div class="push-notif">
+                  <div class="push-notif-hdr">
+                    <div class="push-notif-ico">N</div>
+                    <span class="push-notif-app">NX Ads · agora</span>
+                  </div>
+                  <div class="push-notif-title">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" style="display:inline-block;vertical-align:middle;margin-right:3px"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg>
+                    Consumidor próximo!
+                  </div>
+                  <div class="push-notif-body">Você está a 80m do ponto de venda. Aproveite 20% OFF agora.</div>
+                  <div class="push-loc">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;flex-shrink:0"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span class="push-loc-txt">Raio 200m · Geofence ativo</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ch-label">Marketing de Proximidade</div>
+            </div>
+
+          </div><!-- /iphone-screen -->
+        </div><!-- /iphone -->
+      </div><!-- /iphone-wrap -->
+      <!-- channel dots -->
+      <div class="ch-dots">
+        <div class="ch-dot active" data-ch="0"></div>
+        <div class="ch-dot" data-ch="1"></div>
+        <div class="ch-dot" data-ch="2"></div>
+        <div class="ch-dot" data-ch="3"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar">
+  <div class="stat-item rv"><span class="stat-num">15</span><div class="stat-lbl">anos de experiência</div></div>
+  <div class="stat-item rv rv1"><span class="stat-num">500+</span><div class="stat-lbl">clientes atendidos</div></div>
+  <div class="stat-item rv rv2"><span class="stat-num">98%</span><div class="stat-lbl">taxa de abertura SMS</div></div>
+  <div class="stat-item rv rv3"><span class="stat-num">100M+</span><div class="stat-lbl">devices alcançáveis</div></div>
+</div>
+
+<!-- ── PRODUTOS ── -->
+<section id="produtos">
+  <div class="wrap rv">
+    <span class="tag dark" style="color:var(--orange);">Nossas soluções</span>
+    <h2 class="h2" style="color:#111;">Quatro canais.<br><span style="color:var(--orange)">Uma plataforma.</span></h2>
+    <p class="sub light-text">Escolha o canal ideal para cada momento da jornada do seu cliente — ou combine todos para uma estratégia omnicanal de alta performance.</p>
+  </div>
+  <div class="prod-grid">
+
+    <!-- SMS -->
+    <div class="prod-card rv rv1">
+      <div class="prod-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <div class="prod-tag">Canal 01</div>
+      <div class="prod-name">SMS Marketing</div>
+      <p class="prod-desc">O canal com maior taxa de abertura do mercado — 98%, lido em menos de 3 minutos. Sem internet, sem app, sem bloqueio. Alcance qualquer celular no Brasil com escala e precisão.</p>
+      <a href="index.html" class="prod-link">
+        Ver solução
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <!-- RCS -->
+    <div class="prod-card rv rv2">
+      <div class="prod-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h.01M11 8h6M7 12h3M12 12h5"/></svg>
+      </div>
+      <div class="prod-tag">Canal 02</div>
+      <div class="prod-name">RCS Business Messaging</div>
+      <p class="prod-desc">A evolução do SMS. Envie imagens, vídeos, carrosséis de cards e botões interativos com remetente verificado — direto no app de mensagens nativo, sem download.</p>
+      <a href="rcs.html" class="prod-link">
+        Ver solução
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="prod-card rv rv3">
+      <div class="prod-icon">
+        <svg viewBox="0 0 24 24" fill="var(--orange)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      </div>
+      <div class="prod-tag">Canal 03</div>
+      <div class="prod-name">WhatsApp Marketing</div>
+      <p class="prod-desc">A plataforma de mensagens mais usada no Brasil. Dispare campanhas, automatize conversas e gere conversões com o canal que seu cliente já usa no dia a dia.</p>
+      <a href="whatsapp.html" class="prod-link">
+        Ver solução
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <!-- Push -->
+    <div class="prod-card rv rv4">
+      <div class="prod-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div class="prod-tag">Canal 04</div>
+      <div class="prod-name">Marketing de Proximidade</div>
+      <p class="prod-desc">Push Ads com geolocalização em tempo real. Impacte consumidores quando estão próximos do seu PDV — 100M+ devices, CTR médio de 4% e relatório O2O de visitas físicas.</p>
+      <a href="push.html" class="prod-link">
+        Ver solução
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── CLIENT LOGOS ── -->
+<div class="cs-strip">
+  <div class="cs-label">Empresas que confiam na NEXUS</div>
+  <div class="cs-wrap">
+    <div class="cs-track">
+      <div class="cs-logo"><img src="logo-lavoisier.png" alt="Lavoisier"></div>
+      <div class="cs-logo"><img src="logo-onodera.png" alt="Onodera"></div>
+      <div class="cs-logo"><img src="logo-hope.png" alt="HOPE"></div>
+      <div class="cs-logo"><img src="logo-cury.png" alt="CURY"></div>
+      <div class="cs-logo"><img src="logo-bobstore.png" alt="BOBSTORE"></div>
+      <div class="cs-logo"><img src="logo-lavoisier.png" alt="Lavoisier"></div>
+      <div class="cs-logo"><img src="logo-onodera.png" alt="Onodera"></div>
+      <div class="cs-logo"><img src="logo-hope.png" alt="HOPE"></div>
+      <div class="cs-logo"><img src="logo-cury.png" alt="CURY"></div>
+      <div class="cs-logo"><img src="logo-bobstore.png" alt="BOBSTORE"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SOBRE ── -->
+<section id="sobre">
+  <div class="wrap sobre-layout">
+    <div class="sobre-text rv">
+      <span class="tag">Quem somos</span>
+      <h2 class="h2">15 anos conectando<br><span style="color:var(--orange)">marcas às pessoas.</span></h2>
+      <p class="sub">Nascemos com um propósito claro: tornar a comunicação das empresas mais inteligente, mais eficiente e com resultados que fazem diferença no dia a dia do negócio.</p>
+      <div class="sobre-quote">
+        "Aqui você não é só um contrato.<br>Você é um parceiro."
+      </div>
+      <p class="sub" style="margin-top:20px;">Já ajudamos mais de 500 clientes a transformar dados em campanhas, mensagens em conversas e contatos em clientes fiéis. Combinamos tecnologia avançada com um atendimento humano e próximo — isso é o que nos diferencia.</p>
+    </div>
+    <div class="sobre-right rv rv2">
+      <div class="sobre-numbers">
+        <div class="snumber rv rv1"><span class="snumber-val">15</span><div class="snumber-lbl">anos de experiência no mercado</div></div>
+        <div class="snumber rv rv2"><span class="snumber-val">500+</span><div class="snumber-lbl">clientes atendidos com sucesso</div></div>
+        <div class="snumber rv rv3"><span class="snumber-val">4</span><div class="snumber-lbl">canais de comunicação integrados</div></div>
+        <div class="snumber rv rv4"><span class="snumber-val">98%</span><div class="snumber-lbl">taxa de abertura SMS média</div></div>
+      </div>
+      <div class="sobre-pillars" style="margin-top:20px;">
+        <div class="pillar rv rv1">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <div>
+            <div class="pillar-title">Tecnologia de ponta</div>
+            <div class="pillar-desc">Especialistas em SMS, RCS, WhatsApp e Marketing de Proximidade com infraestrutura dedicada.</div>
+          </div>
+        </div>
+        <div class="pillar rv rv2">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div>
+            <div class="pillar-title">Atendimento humano</div>
+            <div class="pillar-desc">Nossa equipe acompanha cada etapa da sua estratégia com atenção, transparência e comprometimento.</div>
+          </div>
+        </div>
+        <div class="pillar rv rv3">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div>
+            <div class="pillar-title">Resultados mensuráveis</div>
+            <div class="pillar-desc">Do planejamento à análise dos resultados — dados reais para decisões mais inteligentes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ── -->
+<section id="cta-banner">
+  <div class="wrap">
+    <div class="cta-inner rv">
+      <div>
+        <div class="cta-eyebrow">Pronto para começar?</div>
+        <div class="cta-txt">Sua marca merece o canal certo. A NEXUS tem todos eles.</div>
+      </div>
+      <div class="cta-btns">
+        <a href="index.html" class="btn-white">Falar com consultor</a>
+        <a href="#produtos" class="btn-white-ghost">Ver soluções</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <svg viewBox="0 0 248 64" height="30" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M10.51,21.31v20.39c0,2.9-2.35,5.26-5.26,5.26C2.35,47,0,44.6,0,41.7V0s35.66,27.84,35.66,27.84V7.45c0-2.9,2.35-5.26,5.26-5.26s5.26,2.35,5.26,5.26v41.67S10.51,21.31,10.51,21.31z"/>
+        <path fill="#fff" d="M197.14,2.2v39.23c0,1.51-.57,3-1.65,4.04-1.01,1-2.25,1.48-3.68,1.48h-35.33c-1.51,0-3-.55-4.04-1.63-1-1.01-1.48-2.25-1.48-3.68V11.01h-10.8l-10.39,13.57,17.14,22.36h-11.84l-11.35-14.55L112.56,46.94H100.45l17.33-22.36L100.74,2.2h11.82l11.17,14.55,11.35-14.55h26.4v35.95h25.15V2.2h10.51z"/>
+        <path fill="#fff" d="M206.52,2.19h33.83c2.43,0,4.4,1.97,4.4,4.4s-1.97,4.4-4.4,4.4h-28.63v9.15h30.35c1.44,0,2.69.53,3.74,1.59,1.05,1.06,1.57,2.31,1.57,3.75v16.14c0,1.46-.52,2.71-1.57,3.75-1.05,1.04-2.3,1.56-3.74,1.56h-36.48c-2.43,0-4.4-1.97-4.4-4.4s1.97-4.4,4.4-4.4h31.26v-9.18h-30.32c-1.46,0-2.72-.52-3.77-1.56-1.05-1.04-1.57-2.29-1.57-3.75V7.51c0-1.44.52-2.69,1.57-3.74,1.05-1.05,2.3-1.57,3.77-1.57z"/>
+        <rect fill="#ff7c1a" x="51.43" y="2.19" width="46.2" height="8.81" rx="4.4"/>
+        <rect fill="#ff7c1a" x="59.63" y="20.17" width="29.81" height="8.81" rx="4.4"/>
+        <rect fill="#ff7c1a" x="67.51" y="38.14" width="14.04" height="8.81" rx="4.4"/>
+      </svg>
+      <p>A infraestrutura de comunicação digital para marcas que querem crescer com inteligência e escala.</p>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/nexus-comunica%C3%A7%C3%A3o/?originalSubdomain=br" target="_blank" rel="noopener" class="soc" aria-label="LinkedIn">in</a>
+        <a href="https://www.instagram.com/nexuscomunicacao/" target="_blank" rel="noopener" class="soc" aria-label="Instagram">ig</a>
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div class="fc">
+        <h4>Soluções</h4>
+        <a href="index.html">SMS Marketing</a>
+        <a href="rcs.html">RCS Business Messaging</a>
+        <a href="whatsapp.html">WhatsApp Marketing</a>
+        <a href="push.html">Marketing de Proximidade</a>
+      </div>
+      <div class="fc">
+        <h4>Empresa</h4>
+        <a href="#sobre">Sobre nós</a>
+        <a href="#">Cases</a>
+        <a href="#">Blog</a>
+        <a href="#">Seja um Parceiro</a>
+      </div>
+      <div class="fc">
+        <h4>Contato</h4>
+        <div class="fc-contact">(11) 3569-4630 / (11) 9 7094-4446</div>
+        <div class="fc-contact">atendimento@nexuscomunicacao.com</div>
+        <div class="fc-contact">Rua Orfanato, n° 760 – 4° Andar Sala 44<br>Vila Prudente · São Paulo – SP · 03131-010</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 NEXUS Comunicação. Todos os direitos reservados.</p>
+    <p>Política de Privacidade · Termos de Uso</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/5511970944446" class="fab" aria-label="WhatsApp" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+/* ── DRAWER ── */
+function toggleDrawer(){
+  const d=document.getElementById('navDrawer'),h=document.getElementById('navHam');
+  const open=d.classList.toggle('open');
+  h.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeDrawer(){
+  document.getElementById('navDrawer').classList.remove('open');
+  document.getElementById('navHam').classList.remove('open');
+  document.body.style.overflow='';
+}
+window.addEventListener('resize',()=>{if(window.innerWidth>=640)closeDrawer();});
+
+/* ── NAV SCROLL ── */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+
+/* ── 3D TILT ── */
+(function(){
+  const wrap=document.getElementById('heroWrap');
+  const phone=document.getElementById('heroPhone');
+  if(!wrap||!phone)return;
+  phone.style.transform='rotateX(4deg) rotateY(-6deg)';
+  wrap.addEventListener('mousemove',e=>{
+    const r=wrap.getBoundingClientRect();
+    const dx=(e.clientX-r.left-r.width/2)/(r.width/2);
+    const dy=(e.clientY-r.top-r.height/2)/(r.height/2);
+    phone.style.transition='transform .06s ease-out';
+    phone.style.transform=`rotateX(${-dy*16}deg) rotateY(${dx*22}deg)`;
+  });
+  wrap.addEventListener('mouseleave',()=>{
+    phone.style.transition='transform .9s cubic-bezier(.23,1,.32,1)';
+    phone.style.transform='rotateX(4deg) rotateY(-6deg)';
+  });
+})();
+
+/* ── CHANNEL CYCLING ANIMATION ── */
+(function(){
+  const screens = ['chSMS','chRCS','chWA','chPush'];
+  const labels  = ['SMS Marketing','RCS Business','WhatsApp Marketing','Marketing de Proximidade'];
+  const dots    = document.querySelectorAll('.ch-dot');
+  let current   = 0;
+  let timer;
+
+  function goTo(idx){
+    // hide current
+    document.getElementById(screens[current]).classList.remove('active');
+    dots[current].classList.remove('active');
+    // show next
+    current = idx;
+    document.getElementById(screens[current]).classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function next(){ goTo((current+1)%screens.length); }
+
+  function startAuto(){ timer = setInterval(next, 2800); }
+  function stopAuto() { clearInterval(timer); }
+
+  startAuto();
+
+  // dot click
+  dots.forEach(dot=>{
+    dot.addEventListener('click',()=>{
+      stopAuto();
+      goTo(parseInt(dot.dataset.ch));
+      startAuto();
+    });
+  });
+})();
+
+/* ── SCROLL REVEAL ── */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});
+},{threshold:0.1});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+
+/* ── STAT COUNTER ── */
+function countUp(el){
+  const raw=el.textContent;
+  const num=parseFloat(raw.replace(/[^\d.]/g,''));
+  const suf=raw.replace(/[\d.]/g,'');
+  if(isNaN(num))return;
+  let s=null;
+  const step=ts=>{
+    if(!s)s=ts;
+    const p=Math.min((ts-s)/1600,1);
+    const ease=1-Math.pow(1-p,3);
+    el.textContent=(num<10?(ease*num).toFixed(0):Math.round(ease*num))+suf;
+    if(p<1)requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const so=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.stat-num,.snumber-val').forEach(countUp);
+      so.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stats-bar,.sobre-numbers').forEach(el=>so.observe(el));
+
+/* ── MESH WAVE BACKGROUND ── */
+(function(){
+  const COLS=20,ROWS=11,AMP=16,SPD=0.01;
+  let globalT=0,scrollOff=0;
+  const layers=[];
+  window.addEventListener('scroll',()=>{scrollOff=window.scrollY*0.00014;},{passive:true});
+
+  function drawLayer(cvs,ctx){
+    const W=cvs.width,H=cvs.height;
+    if(W<2||H<2)return;
+    ctx.clearRect(0,0,W,H);
+    const sx=W/(COLS-1),sy=H/(ROWS-1),T=globalT+scrollOff;
+    const g=[];
+    for(let r=0;r<ROWS;r++){
+      g[r]=[];
+      for(let c=0;c<COLS;c++){
+        g[r][c]={x:c*sx+Math.sin(c*.52+r*.38+T)*AMP,y:r*sy+Math.cos(c*.38+r*.52+T*.88)*AMP};
+      }
+    }
+    ctx.beginPath();ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=.65;
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+      if(c<COLS-1){ctx.moveTo(g[r][c].x,g[r][c].y);ctx.lineTo(g[r][c+1].x,g[r][c+1].y);}
+      if(r<ROWS-1){ctx.moveTo(g[r][c].x,g[r][c].y);ctx.lineTo(g[r+1][c].x,g[r+1][c].y);}
+    }
+    ctx.stroke();
+    ctx.fillStyle='rgba(255,255,255,0.11)';
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){ctx.beginPath();ctx.arc(g[r][c].x,g[r][c].y,1.6,0,6.283);ctx.fill();}
+  }
+
+  function loop(){
+    if(!document.hidden){for(const{cvs,ctx}of layers)drawLayer(cvs,ctx);globalT+=SPD;}
+    requestAnimationFrame(loop);
+  }
+
+  function addLayer(section){
+    const cvs=document.createElement('canvas');
+    cvs.className='mesh-cvs';
+    section.prepend(cvs);
+    const ctx=cvs.getContext('2d');
+    function resize(){cvs.width=section.offsetWidth;cvs.height=section.offsetHeight;}
+    resize();
+    window.addEventListener('resize',resize,{passive:true});
+    layers.push({cvs,ctx});
+  }
+
+  document.querySelectorAll('#hero,#sobre,footer').forEach(addLayer);
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

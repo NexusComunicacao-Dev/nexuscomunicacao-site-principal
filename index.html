@@ -686,31 +686,55 @@ nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
 .trust-it::before { content:'✓'; color:var(--orange); font-weight:800; font-size:15px; }
 
 .lf-card {
-  background:#3d3d3d; border-radius:20px; padding:32px 24px;
+  background:#3d3d3d; border-radius:20px; padding:36px 28px;
   box-shadow:0 20px 55px rgba(0,0,0,.14);
+  border-top:3px solid var(--orange);
 }
-.lf-card h3 { font-size:20px; font-weight:800; color:#fff; margin-bottom:5px; }
-.lf-card > p { font-size:13px; color:rgba(255,255,255,.42); margin-bottom:24px; }
-.fg { margin-bottom:13px; }
-.fg label { display:block; font-size:11px; font-weight:700; color:rgba(255,255,255,.45); margin-bottom:5px; letter-spacing:.04em; text-transform:uppercase; }
+.lf-card h3 { font-size:22px; font-weight:800; color:#fff; margin-bottom:5px; }
+.lf-card > p { font-size:13px; color:rgba(255,255,255,.42); margin-bottom:28px; }
+.fg { margin-bottom:20px; }
+.fg label {
+  display:block; font-size:11.5px; font-weight:700; color:rgba(255,255,255,.6);
+  margin-bottom:8px; letter-spacing:.06em; text-transform:uppercase;
+}
 .fi {
-  width:100%; padding:13px 14px;
-  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
-  border-radius:9px; color:#fff; font-size:14px; outline:none; font-family:inherit; transition:all .2s;
+  width:100%; padding:14px 16px;
+  background:rgba(255,255,255,.07); border:1.5px solid rgba(255,255,255,.12);
+  border-radius:10px; color:#fff; font-size:14.5px; outline:none; font-family:inherit; transition:all .2s;
 }
-.fi:focus { border-color:var(--orange); background:rgba(255,124,26,.05); }
-.fi::placeholder { color:rgba(255,255,255,.22); }
-select.fi { -webkit-appearance:none; cursor:pointer; color:rgba(255,255,255,.65); }
+.fi:focus { border-color:var(--orange); background:rgba(255,124,26,.06); box-shadow:0 0 0 3px rgba(255,124,26,.12); }
+.fi.error { border-color:#e53935 !important; background:rgba(229,57,53,.07) !important; }
+.fi::placeholder { color:rgba(255,255,255,.25); }
+select.fi { -webkit-appearance:none; cursor:pointer; color:rgba(255,255,255,.7);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 16px center; padding-right:40px;
+}
 select.fi option { background:#1a1a1a; color:#fff; }
 .frow { display:grid; grid-template-columns:1fr; gap:0; }
+/* Solution chips */
+.sol-chips {
+  display:flex; flex-wrap:wrap; gap:8px; margin-top:2px;
+}
+.sol-chip {
+  flex:1 1 calc(33.33% - 6px);
+  padding:11px 10px; border:1.5px solid rgba(255,255,255,.13);
+  border-radius:10px; background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.55); font-size:12.5px; font-weight:600;
+  cursor:pointer; transition:all .2s; text-align:center; user-select:none;
+  font-family:inherit; line-height:1.3; white-space:nowrap;
+}
+.sol-chip:hover { border-color:rgba(255,124,26,.45); color:#fff; background:rgba(255,124,26,.08); }
+.sol-chip.selected { border-color:var(--orange); background:rgba(255,124,26,.15); color:#fff; font-weight:700; box-shadow:0 0 0 2px rgba(255,124,26,.2); }
+.sol-chips.chips-error .sol-chip:not(.selected) { border-color:rgba(229,57,53,.4); }
+.sol-chips.chips-error::after { content:'Selecione uma opção'; display:block; width:100%; font-size:11px; color:#e57373; margin-top:4px; font-weight:600; }
 .btn-lead {
-  width:100%; padding:15px; background:var(--orange); color:#fff;
+  width:100%; padding:16px; background:var(--orange); color:#fff;
   border:none; border-radius:11px; font-size:15px; font-weight:800;
-  cursor:pointer; font-family:inherit; margin-top:6px;
+  cursor:pointer; font-family:inherit; margin-top:8px;
   box-shadow:0 6px 22px rgba(255,124,26,.4); transition:all .25s; letter-spacing:.02em;
 }
 .btn-lead:hover { background:var(--orange-l,#ff9a4a); transform:translateY(-2px); box-shadow:0 10px 34px rgba(255,124,26,.55); }
-.lf-priv { font-size:11px; color:rgba(255,255,255,.22); text-align:center; margin-top:10px; }
+.lf-priv { font-size:11px; color:rgba(255,255,255,.25); text-align:center; margin-top:12px; }
 
 /* ──────────────────────────────────────────
    FOOTER
@@ -826,7 +850,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
   #heroPhone { width:260px; height:542px; }
   #chPhone { width:240px; height:500px; }
   .facts-grid { grid-template-columns:repeat(4,1fr); }
-  .frow { grid-template-columns:1fr 1fr; }
+  .frow { grid-template-columns:1fr 1fr; gap:14px; }
   .footer-grid { flex-direction:row; gap:0; justify-content:space-between; }
   .footer-cols { grid-template-columns:repeat(3,1fr); }
   .footer-bottom { flex-direction:row; justify-content:space-between; }
@@ -1385,20 +1409,31 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
       <h3>Solicite uma proposta gratuita</h3>
       <p>Nosso time responde em até 2 horas úteis</p>
       <div class="frow">
-        <div class="fg"><label>Nome completo</label><input id="sms-nome" type="text" class="fi" placeholder="Seu nome"></div>
-        <div class="fg"><label>Empresa</label><input id="sms-empresa" type="text" class="fi" placeholder="Nome da empresa"></div>
+        <div class="fg"><label>Nome completo</label><input id="sms-nome" type="text" class="fi" placeholder="Seu nome" required></div>
+        <div class="fg"><label>Empresa</label><input id="sms-empresa" type="text" class="fi" placeholder="Nome da empresa" required></div>
       </div>
       <div class="frow">
-        <div class="fg"><label>WhatsApp / Telefone</label><input id="sms-telefone" type="tel" class="fi" placeholder="(00) 00000-0000"></div>
-        <div class="fg"><label>E-mail</label><input id="sms-email" type="email" class="fi" placeholder="seu@email.com"></div>
+        <div class="fg"><label>WhatsApp / Telefone</label><input id="sms-telefone" type="tel" class="fi" placeholder="(00) 00000-0000" required maxlength="15" autocomplete="tel-national"></div>
+        <div class="fg"><label>E-mail</label><input id="sms-email" type="email" class="fi" placeholder="seu@email.com" required></div>
+      </div>
+      <div class="fg">
+        <label>Qual solução te interessa?</label>
+        <div class="sol-chips" id="sms-sol-chips">
+          <button type="button" class="sol-chip" onclick="selectSol(this,'sms','SMS')">SMS</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'sms','RCS')">RCS</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'sms','WhatsApp')">WhatsApp</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'sms','Proximidade')">Proximidade</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'sms','Indefinido')">Indefinido</button>
+        </div>
+        <input type="hidden" id="sms-solucao" value="">
       </div>
       <div class="fg">
         <label>Segmento da empresa</label>
-        <select id="sms-segmento" class="fi"><option value="" disabled selected>Selecione seu segmento</option><option>Varejo / E-commerce</option><option>Saúde e Bem-estar</option><option>Educação</option><option>Financeiro / Crédito</option><option>Imobiliário</option><option>Alimentação</option><option>Serviços</option><option>Outro</option></select>
+        <select id="sms-segmento" class="fi" required><option value="" disabled selected>Selecione seu segmento</option><option>Varejo / E-commerce</option><option>Saúde e Bem-estar</option><option>Educação</option><option>Financeiro / Crédito</option><option>Imobiliário</option><option>Alimentação</option><option>Serviços</option><option>Outro</option></select>
       </div>
       <div class="fg">
         <label>Volume estimado de SMS/mês</label>
-        <select id="sms-volume" class="fi"><option value="" disabled selected>Selecione o volume</option><option>Até 5.000</option><option>5.000 a 10.000</option><option>10.000 a 50.000</option><option>Acima de 50.000</option></select>
+        <select id="sms-volume" class="fi" required><option value="" disabled selected>Selecione o volume</option><option>Até 5.000</option><option>5.000 a 10.000</option><option>10.000 a 50.000</option><option>Acima de 50.000</option></select>
       </div>
       <button class="btn-lead" id="sms-btn" onclick="enviarLeadSMS(this)">Quero receber minha proposta →</button>
       <p class="lf-priv"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:4px;margin-bottom:1px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Seus dados estão seguros. Não enviamos spam.</p>
@@ -1698,18 +1733,52 @@ function brasiliaTimestamp() {
   });
 }
 
+/* ── Phone mask & form validation ── */
+function phoneMask(e) {
+  let v = e.target.value.replace(/\D/g,'').slice(0,11);
+  if (v.length > 6)      v = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7);
+  else if (v.length > 2) v = '(' + v.slice(0,2) + ') ' + v.slice(2);
+  else if (v.length)     v = '(' + v;
+  e.target.value = v;
+}
+function markErr(id) {
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('error'); el.focus(); }
+}
+function selectSol(btn, prefix, val) {
+  document.querySelectorAll('#'+prefix+'-sol-chips .sol-chip').forEach(c=>c.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById(prefix+'-solucao').value = val;
+  document.getElementById(prefix+'-sol-chips').classList.remove('chips-error');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const tel = document.getElementById('sms-telefone');
+  if (tel) tel.addEventListener('input', phoneMask);
+  document.querySelectorAll('.fi').forEach(el =>
+    el.addEventListener('input', () => el.classList.remove('error'))
+  );
+});
+
 async function enviarLeadSMS(btn) {
   const nome     = document.getElementById('sms-nome').value.trim();
   const empresa  = document.getElementById('sms-empresa').value.trim();
   const telefone = document.getElementById('sms-telefone').value.trim();
   const email    = document.getElementById('sms-email').value.trim();
+  const solucao  = document.getElementById('sms-solucao').value;
   const segmento = document.getElementById('sms-segmento').value;
   const volume   = document.getElementById('sms-volume').value;
 
-  if (!nome || !telefone) {
-    document.getElementById('sms-nome').focus();
-    return;
-  }
+  document.querySelectorAll('.fi.error').forEach(el => el.classList.remove('error'));
+  document.querySelectorAll('.sol-chips').forEach(el => el.classList.remove('chips-error'));
+
+  if (!nome)                              { markErr('sms-nome');      return; }
+  if (!empresa)                           { markErr('sms-empresa');   return; }
+  const telDigits = telefone.replace(/\D/g,'');
+  if (telDigits.length !== 11)            { markErr('sms-telefone');  return; }
+  if (!email)                             { markErr('sms-email');     return; }
+  if (!solucao)                           { document.getElementById('sms-sol-chips').classList.add('chips-error'); document.getElementById('sms-sol-chips').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  if (!segmento)                          { markErr('sms-segmento');  return; }
+  if (!volume)                            { markErr('sms-volume');    return; }
 
   btn.disabled = true;
   btn.textContent = 'Enviando…';
@@ -1720,6 +1789,7 @@ async function enviarLeadSMS(btn) {
     empresa,
     telefone,
     email,
+    solucao_interesse: solucao,
     segmento,
     volume_sms_mes:    volume,
     data_hora_brasilia: brasiliaTimestamp()
