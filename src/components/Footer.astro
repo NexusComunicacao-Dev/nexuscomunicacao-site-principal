@@ -1,0 +1,42 @@
+---
+// Footer único do site (mesma estrutura da index). Usado em TODAS as páginas
+// de canal. Coluna "Soluções" lista todos os canais. Antes cada página tinha
+// seu próprio footer divergente.
+import Logo from './Logo.astro';
+---
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <Logo height="30" />
+      <p>A infraestrutura de comunicação digital para marcas que querem crescer com inteligência e escala.</p>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/nexus-comunica%C3%A7%C3%A3o/?originalSubdomain=br" target="_blank" rel="noopener" class="soc" aria-label="LinkedIn">in</a>
+        <a href="https://www.instagram.com/nexuscomunicacao/" target="_blank" rel="noopener" class="soc" aria-label="Instagram">ig</a>
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div class="fc">
+        <h4>Institucional</h4>
+        <a href="#">Sobre nós</a><a href="#">Cases</a><a href="#">Blog</a><a href="#">Seja um Parceiro</a>
+      </div>
+      <div class="fc">
+        <h4>Soluções</h4>
+        <a href="/">SMS Marketing</a>
+        <a href="/rcs">RCS Business Messaging</a>
+        <a href="/whatsapp">WhatsApp Marketing</a>
+        <a href="/push">Push Ads</a>
+        <a href="#">Base Geolocalizada</a>
+      </div>
+      <div class="fc">
+        <h4>Contato</h4>
+        <div class="fc-contact">(11) 3569-4630 / (11) 9 7094-4446</div>
+        <div class="fc-contact">atendimento@nexuscomunicacao.com</div>
+        <div class="fc-contact">Rua Orfanato, n° 760 – 4° Andar Sala 44<br>Vila Prudente · São Paulo – SP · 03131-010</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 NEXUS Comunicação. Todos os direitos reservados.</p>
+    <p><a href="/politica-de-privacidade" style="color:inherit;">Política de Privacidade</a> · <a href="/termos-de-servico" style="color:inherit;">Termos de Uso</a></p>
+  </div>
+</footer>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 98">
+  <rect width="98" height="98" fill="#111111"/>
+  <g transform="translate(0,25.5)">
+    <path fill="white" d="M10.51,21.31v20.39c0,2.9-2.35,5.26-5.26,5.26h0C2.35,46.95,0,44.6,0,41.7V0s35.66,27.84,35.66,27.84V7.45c0-2.9,2.35-5.26,5.26-5.26h0c2.9,0,5.26,2.35,5.26,5.26v41.67S10.51,21.31,10.51,21.31Z"/>
+    <rect fill="white" x="51.43" y="2.19" width="46.2" height="8.81" rx="4.4" ry="4.4"/>
+    <rect fill="white" x="59.63" y="20.17" width="29.81" height="8.81" rx="4.4" ry="4.4"/>
+    <rect fill="white" x="67.51" y="38.14" width="14.04" height="8.81" rx="4.4" ry="4.4"/>
+  </g>
+</svg>

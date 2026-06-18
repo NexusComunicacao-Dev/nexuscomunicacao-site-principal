@@ -1,0 +1,219 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Termos de Uso · NEXUS Comunicação" gtag={false}>
+<style is:inline slot="head">
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; background:#fff; color:#111; line-height:1.7; }
+img, svg { display:block; max-width:100%; }
+a { color:#111; }
+.topbar { border-bottom:1px solid #e5e5e5; }
+.topbar-inner { max-width:860px; margin:0 auto; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; }
+.topbar a.back { font-size:14px; font-weight:600; text-decoration:none; }
+.topbar a.back:hover { text-decoration:underline; }
+.wrap { max-width:860px; margin:0 auto; padding:48px 24px 80px; }
+h1 { font-size:32px; font-weight:800; line-height:1.25; margin-bottom:8px; }
+.meta { font-size:14px; color:#555; margin-bottom:32px; }
+.intro { background:#f7f7f7; border:1px solid #e5e5e5; border-radius:8px; padding:20px 24px; font-size:15px; margin-bottom:40px; }
+h2 { font-size:22px; font-weight:700; margin:40px 0 14px; }
+h3 { font-size:17px; font-weight:600; margin:24px 0 10px; }
+p { margin-bottom:14px; font-size:15.5px; }
+ul { margin:0 0 16px 22px; }
+li { margin-bottom:8px; font-size:15.5px; }
+.box { background:#f7f7f7; border:1px solid #e5e5e5; border-radius:8px; padding:18px 22px; font-size:15px; margin:16px 0 24px; }
+.box p { margin-bottom:6px; }
+.box p:last-child { margin-bottom:0; }
+.foot { border-top:1px solid #e5e5e5; padding:24px; text-align:center; font-size:13.5px; color:#555; }
+.foot a { color:#555; }
+@media (max-width:560px){ h1{font-size:26px;} }
+</style>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="/"><img src="/logo.svg" alt="NEXUS Comunicação" height="30"></a>
+    <a class="back" href="/">Voltar ao site</a>
+  </div>
+</div>
+
+<main class="wrap">
+  <h1>Termos de Uso</h1>
+  <p class="meta">Versão 1.0 · Última atualização: junho de 2026 · Vigência: a partir de 10/06/2026</p>
+
+  <div class="intro">
+    Estes Termos de Uso regem a relação entre a COMUNIKA SERVIÇOS EM COMUNICAÇÃO LTDA, CNPJ 51.767.476/0001-93, operando sob o nome fantasia NEXUS Comunicação ("NEXUS"), e você ("Cliente" ou "Usuário") quanto ao acesso e uso do site nexuscomunicacao.com e da Plataforma NEXUS de envio de mensagens. Leia com atenção antes de utilizar nossos serviços.
+  </div>
+
+  <h2>1. Aceitação dos Termos</h2>
+  <p>Ao acessar nosso site, preencher formulários de contato, contratar qualquer serviço ou utilizar a Plataforma NEXUS, você declara ter lido, entendido e concordado com estes Termos de Uso e com nossa <a href="/politica-de-privacidade">Política de Privacidade</a>, que é parte integrante deste instrumento.</p>
+  <p>Caso não concorde com qualquer disposição destes Termos, solicitamos que não utilize nossos serviços.</p>
+  <p>Se você representa uma pessoa jurídica, declara ter poderes para vinculá-la a estes Termos.</p>
+
+  <h2>2. Definições</h2>
+  <ul>
+    <li><strong>NEXUS:</strong> COMUNIKA SERVIÇOS EM COMUNICAÇÃO LTDA (CNPJ 51.767.476/0001-93), operando sob o nome fantasia NEXUS Comunicação, empresa operadora da plataforma e provedora dos serviços.</li>
+    <li><strong>Cliente:</strong> pessoa jurídica ou física maior de 18 anos que contrata os serviços da NEXUS.</li>
+    <li><strong>Usuário:</strong> qualquer pessoa que acesse o site nexuscomunicacao.com ou a Plataforma NEXUS.</li>
+    <li><strong>Plataforma:</strong> sistema online da NEXUS para criação, gerenciamento e envio de campanhas de SMS, RCS, WhatsApp, Push Ads e demais canais disponibilizados.</li>
+    <li><strong>Destinatário:</strong> pessoa física que recebe as mensagens disparadas pelo Cliente por meio da Plataforma.</li>
+    <li><strong>Base de Contatos:</strong> lista de números de telefone e dados associados carregada pelo Cliente na Plataforma para envio de campanhas.</li>
+    <li><strong>Base Geolocalizada:</strong> base de dados de terceiros disponibilizada pela NEXUS para campanhas de prospecção, segmentada por perfil demográfico e geográfico.</li>
+    <li><strong>Campanha:</strong> conjunto de mensagens disparado em massa ou individualmente por meio da Plataforma.</li>
+  </ul>
+
+  <h2>3. Descrição dos serviços</h2>
+  <p>A NEXUS oferece uma plataforma SaaS (Software as a Service) para comunicação corporativa em massa, incluindo:</p>
+  <ul>
+    <li><strong>SMS em Massa:</strong> envio de SMS para listas de contatos com alta entregabilidade.</li>
+    <li><strong>SMS Transacional:</strong> envio programático de mensagens individuais via API (OTPs, notificações, alertas).</li>
+    <li><strong>RCS Business Messaging:</strong> mensagens ricas com imagens, vídeos, botões e carrosséis via Google Messages.</li>
+    <li><strong>WhatsApp Business:</strong> envio de mensagens via API oficial do WhatsApp.</li>
+    <li><strong>WhatsApp em Massa:</strong> envio de mensagens em massa pelo WhatsApp com suporte a texto, vídeos e imagens. O disparo é operado com acompanhamento da equipe NEXUS, que envia relatório sintético da campanha ao cliente. Horário de envio restrito das 8h às 17h de segunda a sexta-feira.</li>
+    <li><strong>Push Ads:</strong> notificações push para dispositivos móveis e desktop.</li>
+    <li><strong>Base Geolocalizada:</strong> acesso a base de dados segmentada para prospecção.</li>
+    <li><strong>NEXUS Intelligence Platform:</strong> módulos de IA para análise, pontuação de contatos, sugestões de campanha e dashboards inteligentes.</li>
+    <li><strong>API NEXUS:</strong> integração programática com sistemas do Cliente.</li>
+  </ul>
+  <p>A NEXUS reserva-se o direito de adicionar, modificar ou descontinuar funcionalidades, mediante comunicação prévia aos Clientes ativos.</p>
+
+  <h2>4. Cadastro e conta</h2>
+  <h3>4.1 Criação de conta</h3>
+  <p>Para utilizar a Plataforma, o Cliente deve criar uma conta fornecendo informações verdadeiras, completas e atualizadas. A NEXUS poderá solicitar documentos adicionais para verificação cadastral.</p>
+  <h3>4.2 Responsabilidade pelo acesso</h3>
+  <p>O Cliente é responsável pela confidencialidade de suas credenciais de acesso e por todas as atividades realizadas em sua conta. Em caso de uso não autorizado, o Cliente deve notificar a NEXUS imediatamente pelo e-mail dev@nexuscomunicacao.com.</p>
+  <h3>4.3 Veracidade das informações</h3>
+  <p>O fornecimento de informações falsas ou enganosas constitui violação destes Termos e pode ensejar rescisão imediata do contrato, sem prejuízo das medidas legais cabíveis.</p>
+
+  <h2>5. Obrigações do Cliente</h2>
+  <p>Ao utilizar os serviços da NEXUS, o Cliente obriga-se a:</p>
+  <ul>
+    <li>Utilizar a Plataforma exclusivamente para fins lícitos e em conformidade com a legislação brasileira vigente, incluindo a LGPD, o Marco Civil da Internet (Lei n.º 12.965/2014), o Código de Defesa do Consumidor e as regulamentações da Anatel.</li>
+    <li>Garantir que possui autorização legal (consentimento ou outro fundamento válido sob a LGPD) para enviar mensagens aos destinatários de sua base de contatos.</li>
+    <li>Identificar claramente o remetente das mensagens, de modo que o destinatário possa reconhecer a origem.</li>
+    <li>Incluir mecanismo de opt-out em campanhas de marketing (ex.: "Responda SAIR para cancelar"), respeitando todas as solicitações de descadastramento em até 2 (dois) dias úteis.</li>
+    <li>Não enviar mensagens em horários inadequados: campanhas de SMS e RCS devem respeitar o período das 8h às 21h; campanhas de WhatsApp em massa estão restritas ao horário das 8h às 17h, conforme boas práticas do setor e diretrizes da Meta.</li>
+    <li>Manter suas informações cadastrais atualizadas.</li>
+    <li>Efetuar os pagamentos nas datas acordadas.</li>
+    <li>Cooperar com a NEXUS em investigações de incidentes envolvendo seu uso da Plataforma.</li>
+  </ul>
+
+  <h2>6. Usos proibidos</h2>
+  <div class="box">
+    <p>O descumprimento das vedações abaixo pode resultar em suspensão ou cancelamento imediato da conta, sem direito a reembolso, além das medidas legais aplicáveis.</p>
+  </div>
+  <p>É expressamente vedado ao Cliente:</p>
+  <ul>
+    <li>Enviar spam, mensagens não solicitadas ou conteúdo enganoso, abusivo, obsceno, difamatório, ameaçador ou ilegal.</li>
+    <li>Enviar comunicações a destinatários que tenham solicitado opt-out ou que estejam em listas de bloqueio.</li>
+    <li>Divulgar informações falsas, fraudulentas ou que induzam o destinatário a erro.</li>
+    <li>Usar a Plataforma para golpes, phishing, esquemas de pirâmide ou qualquer atividade criminosa.</li>
+    <li>Promover produtos, serviços ou conteúdo que seja ilegal no Brasil (substâncias controladas, apostas ilegais, pornografia infantil, discriminação, etc.).</li>
+    <li>Enviar mensagens com conteúdo político partidário em períodos eleitorais, salvo expressamente permitido pela legislação eleitoral e com os devidos registros junto ao TSE.</li>
+    <li>Tentar burlar os mecanismos de entregabilidade, simular remetentes oficiais de outras marcas ou falsificar o número de origem.</li>
+    <li>Realizar engenharia reversa, descompilar ou tentar acessar o código-fonte da Plataforma.</li>
+    <li>Compartilhar credenciais de acesso com terceiros não autorizados.</li>
+    <li>Submeter à Plataforma dados obtidos de forma ilícita ou sem as bases legais exigidas pela LGPD.</li>
+    <li>Utilizar a Plataforma para sobrecarregar, danificar ou comprometer a infraestrutura da NEXUS ou de terceiros.</li>
+  </ul>
+  <p>A NEXUS reserva-se o direito de monitorar o uso da Plataforma para detectar violações e, quando necessário, reportar às autoridades competentes.</p>
+
+  <h2>7. Conformidade com a LGPD e tratamento de bases de contatos</h2>
+  <h3>7.1 Responsabilidade do Cliente como controlador</h3>
+  <p>Quando o Cliente faz upload de sua própria base de contatos na Plataforma, ele atua como controlador dos dados pessoais desses destinatários, nos termos da LGPD. O Cliente é o único e exclusivo responsável por:</p>
+  <ul>
+    <li>Possuir base legal válida para o tratamento e envio de mensagens a cada destinatário (consentimento, legítimo interesse, execução de contrato, etc.).</li>
+    <li>Respeitar o direito de opt-out e exclusão solicitado pelos destinatários.</li>
+    <li>Garantir a qualidade, integridade e licitude dos dados da base carregada.</li>
+    <li>Cumprir obrigações de transparência perante os destinatários.</li>
+  </ul>
+  <h3>7.2 NEXUS como operadora</h3>
+  <p>A NEXUS age como operadora dos dados das bases de contatos carregadas pelo Cliente, processando-os exclusivamente conforme instruções contratuais e para a finalidade de entrega das mensagens. A NEXUS não utilizará esses dados para finalidades próprias.</p>
+  <h3>7.3 Acordo de Processamento de Dados</h3>
+  <p>Ao contratar os serviços da NEXUS, o Cliente celebra automaticamente um Acordo de Processamento de Dados (DPA) com a NEXUS, disponível mediante solicitação, que formaliza as obrigações de operadora e controladora nos termos do Art. 39 da LGPD.</p>
+  <h3>7.4 Base Geolocalizada</h3>
+  <p>O uso da Base Geolocalizada da NEXUS para campanhas de prospecção está sujeito às condições específicas informadas no momento da contratação. O Cliente deve utilizar esses dados exclusivamente para os fins declarados e em conformidade com a LGPD e as condições de licenciamento do fornecedor da base.</p>
+
+  <h2>8. Propriedade intelectual</h2>
+  <p>Todos os direitos de propriedade intelectual sobre a Plataforma NEXUS, incluindo software, algoritmos, interfaces, design, marcas, logotipos, documentação e conteúdos, pertencem exclusivamente à NEXUS ou a seus licenciantes.</p>
+  <p>O contrato de prestação de serviços concede ao Cliente uma licença de uso limitada, não exclusiva, intransferível e revogável para acessar e utilizar a Plataforma durante a vigência do contrato, exclusivamente para os fins previstos nestes Termos.</p>
+  <p>O Cliente mantém todos os direitos sobre os conteúdos (textos, imagens, dados) que submete à Plataforma, concedendo à NEXUS licença limitada para processá-los exclusivamente para a prestação dos serviços contratados.</p>
+
+  <h2>9. Pagamento e faturamento</h2>
+  <h3>9.1 Preços e planos</h3>
+  <p>Os valores dos serviços são acordados individualmente em proposta comercial ou contrato específico, podendo variar conforme o volume de mensagens, canal escolhido e modalidade de contratação.</p>
+  <h3>9.2 Faturamento</h3>
+  <p>O faturamento ocorre conforme o modelo contratado (pré-pago por créditos ou pós-pago por uso). As condições de pagamento, vencimentos e modalidades aceitas constam na proposta ou contrato firmado com o Cliente.</p>
+  <h3>9.3 Inadimplência</h3>
+  <p>O atraso no pagamento sujeita o Cliente a juros de mora de 1% ao mês, correção monetária pelo IGPM e multa de 5%, sem prejuízo da suspensão do acesso à Plataforma até a regularização. Débitos em aberto por mais de 30 dias podem ensejar rescisão contratual.</p>
+  <h3>9.4 Reajustes</h3>
+  <p>Os preços poderão ser reajustados anualmente com base no IGPM ou outro índice acordado, mediante comunicação prévia de 30 (trinta) dias.</p>
+  <h3>9.5 Política de reembolso</h3>
+  <p>Créditos não utilizados em modalidade pré-paga não são reembolsáveis, salvo em caso de rescisão por culpa da NEXUS ou por motivo de força maior devidamente comprovado. Em caso de cobrança indevida, a NEXUS promoverá o estorno no próximo ciclo de faturamento.</p>
+
+  <h2>10. Disponibilidade e SLA</h2>
+  <p>A NEXUS empenhará esforços razoáveis para manter a Plataforma disponível 24 (vinte e quatro) horas por dia, 7 (sete) dias por semana, com meta de disponibilidade de 99,2% ao mês, excluídas janelas de manutenção programada e eventos de força maior.</p>
+  <p>Manutenções programadas serão comunicadas com antecedência mínima de 12 horas e realizadas preferencialmente em horários de baixo uso.</p>
+  <p>A entregabilidade das mensagens depende também de fatores externos à NEXUS, como disponibilidade das operadoras de telefonia, Google (para RCS), Meta (para WhatsApp) e condições de rede dos destinatários, sobre os quais a NEXUS não tem controle direto.</p>
+
+  <h2>11. Limitação de responsabilidade</h2>
+  <h3>11.1 Exclusões</h3>
+  <p>A NEXUS não se responsabiliza por:</p>
+  <ul>
+    <li>Danos resultantes do uso indevido da Plataforma pelo Cliente em violação destes Termos.</li>
+    <li>Falhas de entregabilidade decorrentes de operadoras de telefonia, provedores de mensageria ou de limitações dos dispositivos dos destinatários.</li>
+    <li>Conteúdo das mensagens enviadas pelo Cliente, sendo a NEXUS mera transportadora.</li>
+    <li>Perdas indiretas, lucros cessantes, danos morais ou emergentes decorrentes da interrupção do serviço por fatores fora de seu controle razoável.</li>
+    <li>Atos de terceiros, incluindo ataques cibernéticos de grande escala ou decisões de provedores como Google e Meta que afetem a disponibilidade dos canais.</li>
+  </ul>
+  <h3>11.2 Limite de indenização</h3>
+  <p>Em qualquer hipótese, a responsabilidade total da NEXUS perante o Cliente ficará limitada ao valor efetivamente pago pelo Cliente nos 3 (três) meses imediatamente anteriores ao evento que originou o dano, salvo em casos de dolo ou culpa grave da NEXUS.</p>
+  <h3>11.3 Responsabilidade do Cliente</h3>
+  <p>O Cliente é integralmente responsável pelas mensagens enviadas por meio da Plataforma e pelas consequências jurídicas, regulatórias e reputacionais decorrentes do conteúdo e do uso de suas bases de contatos. O Cliente indenizará a NEXUS por quaisquer danos, multas ou demandas de terceiros decorrentes de violações cometidas pelo Cliente.</p>
+
+  <h2>12. Vigência e rescisão</h2>
+  <h3>12.1 Início da vigência</h3>
+  <p>Estes Termos entram em vigor no momento da aceitação pelo Usuário e vigoram por prazo indeterminado, ou pelo prazo específico acordado em contrato.</p>
+  <h3>12.2 Rescisão pelo Cliente</h3>
+  <p>O Cliente pode encerrar sua conta e rescindir o contrato a qualquer momento mediante notificação escrita com antecedência de 30 (trinta) dias, salvo prazo diferente previsto em contrato específico.</p>
+  <h3>12.3 Rescisão pela NEXUS</h3>
+  <p>A NEXUS pode suspender ou encerrar o acesso do Cliente imediatamente e sem necessidade de aviso prévio em caso de:</p>
+  <ul>
+    <li>Violação de qualquer disposição destes Termos, especialmente das proibições da Cláusula 6.</li>
+    <li>Inadimplência por prazo superior a 30 (trinta) dias.</li>
+    <li>Fornecimento de informações falsas no cadastro.</li>
+    <li>Uso da Plataforma para atividades ilegais ou que causem dano à reputação da NEXUS.</li>
+    <li>Ordem judicial ou determinação de autoridade regulatória competente.</li>
+  </ul>
+  <h3>12.4 Efeitos da rescisão</h3>
+  <p>Após a rescisão, o acesso à Plataforma será revogado. Os dados do Cliente serão tratados conforme a <a href="/politica-de-privacidade">Política de Privacidade</a>. Obrigações de pagamento, confidencialidade e responsabilidade sobrevivem à rescisão.</p>
+
+  <h2>13. Confidencialidade</h2>
+  <p>Cada parte compromete-se a manter em sigilo as informações confidenciais da outra parte, usando-as exclusivamente para os fins previstos nestes Termos. São consideradas confidenciais: estratégias comerciais, dados de clientes, preços, tecnologia, dados de campanhas e quaisquer informações não públicas compartilhadas no âmbito da relação contratual.</p>
+  <p>As obrigações de confidencialidade permanecem em vigor por 5 (cinco) anos após o término do contrato ou por prazo indeterminado para segredos comerciais.</p>
+
+  <h2>14. Lei aplicável e foro</h2>
+  <p>Estes Termos são regidos exclusivamente pelas leis da República Federativa do Brasil. Fica eleito o foro da Comarca de São Paulo/SP para dirimir quaisquer controvérsias decorrentes destes Termos, com renúncia expressa a qualquer outro, por mais privilegiado que seja.</p>
+  <p>As partes comprometem-se a tentar resolver amigavelmente quaisquer disputas antes de recorrer ao Judiciário, por meio de negociação direta ou mediação, pelo prazo de 30 (trinta) dias.</p>
+
+  <h2>15. Contato</h2>
+  <p>Dúvidas, notificações ou solicitações relacionadas a estes Termos devem ser encaminhadas para:</p>
+  <div class="box">
+    <p><strong>COMUNIKA SERVIÇOS EM COMUNICAÇÃO LTDA (Nexus Comunicação)</strong></p>
+    <p><strong>CNPJ:</strong> 51.767.476/0001-93</p>
+    <p><strong>E-mail:</strong> marcelo@nexuscomunicacao.com</p>
+    <p><strong>Telefone:</strong> (11) 3569-4630 / (11) 9 7094-4446</p>
+    <p><strong>Endereço:</strong> Rua Orfanato, 760, Sala 44, Vila Prudente, São Paulo/SP, CEP 03131-010</p>
+    <p><strong>Atendimento:</strong> Segunda a sexta, das 9h às 18h (horário de Brasília)</p>
+  </div>
+  <div class="box">
+    <p>Versão atual: 1.0 (junho/2026). A NEXUS reserva-se o direito de atualizar estes Termos periodicamente. Alterações substanciais serão comunicadas com antecedência mínima de 15 (quinze) dias por e-mail ou notificação na Plataforma. O uso continuado dos serviços após a data de vigência das alterações constitui aceitação dos novos Termos.</p>
+  </div>
+</main>
+
+<footer class="foot">
+  <p>© 2026 NEXUS Comunicação. Todos os direitos reservados. · marcelo@nexuscomunicacao.com</p>
+  <p><a href="/politica-de-privacidade">Política de Privacidade</a> · <a href="/termos-de-servico">Termos de Uso</a></p>
+</footer>
+
+</Base>
