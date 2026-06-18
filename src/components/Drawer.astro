@@ -1,0 +1,11 @@
+---
+// Shell do menu mobile (drawer). Os links variam por página e vêm via slot,
+// verbatim. closeDrawer() é definido no script inline de cada página.
+interface Props {
+  id?: string;
+}
+const { id = 'navDrawer' } = Astro.props;
+---
+<div class="nav-drawer" id={id}>
+  <slot />
+</div>

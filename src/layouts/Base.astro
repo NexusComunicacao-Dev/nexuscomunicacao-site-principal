@@ -1,0 +1,39 @@
+---
+// Layout base: <head> comum (charset/viewport/title/favicon/gtag) + corpo via <slot/>.
+// gtag é CONDICIONAL: marketing pages = true (default); páginas legais não tinham
+// gtag e devem continuar sem (passar gtag={false}).
+// O <slot name="head"/> permite cada página injetar no <head> seu <style is:inline>
+// e, no caso da /obrigado, o snippet de conversão (na ordem certa, depois do config).
+interface Props {
+  title: string;
+  gtag?: boolean;
+  lang?: string;
+}
+const { title, gtag = true, lang = 'pt-BR' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title}</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+{gtag && (
+  <>
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=AW-328024362"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-328024362');
+    </script>
+  </>
+)}
+<slot name="head" />
+</head>
+<body>
+<slot />
+</body>
+</html>

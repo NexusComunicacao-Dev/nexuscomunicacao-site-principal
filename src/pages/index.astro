@@ -1,0 +1,1750 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Drawer from '../components/Drawer.astro';
+import Footer from '../components/Footer.astro';
+import Logo from '../components/Logo.astro';
+import WhatsAppFab from '../components/WhatsAppFab.astro';
+---
+<Base title="NEXUS — SMS Marketing">
+<style is:inline slot="head">
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ─── TOKENS ─── */
+:root {
+  --orange: #ff7c1a;
+  --orange-d: #e06010;
+  --orange-l: #ff9a4a;
+  --dark: #4a4a4a;
+  --dark2: #3d3d3d;
+  --dark3: #565656;
+  --light: #f7f7f7;
+  --light2: #ffffff;
+  --cw: 1200px;          /* container max-width */
+  --px: 24px;            /* lateral padding mobile */
+  --py: 80px;            /* vertical padding sections */
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; -webkit-tap-highlight-color:transparent; }
+body { font-family:'Inter',sans-serif; background:var(--dark); color:#fff; overflow-x:hidden; }
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-thumb { background:var(--orange); border-radius:2px; }
+img, svg { display:block; max-width:100%; }
+a { text-decoration:none; }
+
+/* ─── CONTAINER ─── */
+/* Aplica max-width centralizado com padding lateral consistente em todos
+   os wrappers de conteúdo interno das seções */
+.channel-layout,
+.geo-layout,
+.faq-layout,
+.lf-inner,
+.footer-grid,
+.footer-bottom {
+  max-width: var(--cw);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* ─── UTILITIES ─── */
+.btn-primary {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 28px; background:var(--orange); color:#fff;
+  border:none; border-radius:10px; font-size:15px; font-weight:700;
+  cursor:pointer; font-family:inherit;
+  box-shadow:0 6px 24px rgba(255,124,26,.4);
+  transition:all .22s;
+}
+.btn-primary:hover { background:var(--orange-l,#ff9a4a); transform:translateY(-2px); box-shadow:0 10px 36px rgba(255,124,26,.55); }
+
+.btn-ghost {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 28px; background:transparent; color:#fff;
+  border:1.5px solid rgba(255,255,255,.22); border-radius:10px;
+  font-size:15px; font-weight:600; cursor:pointer; font-family:inherit;
+  transition:all .22s;
+}
+.btn-ghost:hover { border-color:var(--orange); color:var(--orange); background:rgba(255,124,26,.05); }
+
+.tag {
+  display:inline-block; padding:5px 14px;
+  background:rgba(255,124,26,.1); border:1px solid rgba(255,124,26,.28);
+  border-radius:100px; font-size:11px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--orange); margin-bottom:18px;
+}
+.tag.dark { background:rgba(255,124,26,.12); }
+
+.h2 {
+  font-size:clamp(28px,4vw,50px); font-weight:900;
+  letter-spacing:-.03em; line-height:1.08;
+}
+.sub {
+  font-size:clamp(15px,1.8vw,17px); color:rgba(255,255,255,.5);
+  line-height:1.8; margin-top:16px; max-width:520px;
+}
+.sub.light-text { color:#666; }
+
+/* reveal */
+.rv { opacity:0; transform:translateY(28px); transition:opacity .7s ease,transform .7s ease; }
+.rv.on { opacity:1; transform:none; }
+.rv1 { transition-delay:.1s; }
+.rv2 { transition-delay:.2s; }
+.rv3 { transition-delay:.3s; }
+.rv4 { transition-delay:.4s; }
+
+/* ──────────────────────────────────────────
+   NAV
+────────────────────────────────────────── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 20px;
+  background:rgba(45,45,45,.92); backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,124,26,.1);
+  transition:all .3s;
+}
+nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
+.nav-logo svg { height:30px; }
+.nav-links { display:none; align-items:center; gap:28px; }
+.nav-links a { color:rgba(255,255,255,.72); font-size:14px; font-weight:500; transition:color .2s; }
+.nav-links a:hover { color:var(--orange); }
+.btn-nav {
+  padding:9px 18px; background:var(--orange); color:#fff; border:none;
+  border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;
+  font-family:inherit; box-shadow:0 4px 18px rgba(255,124,26,.35);
+  transition:all .2s; white-space:nowrap;
+}
+.btn-nav:hover { background:var(--orange-l,#ff9a4a); transform:translateY(-1px); }
+
+.nav-switch {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:7px 14px; border:1px solid rgba(255,255,255,.2); border-radius:20px;
+  color:rgba(255,255,255,.65); font-size:12px; font-weight:600;
+  transition:all .2s; letter-spacing:.02em; white-space:nowrap;
+}
+.nav-switch:hover { border-color:var(--orange); color:var(--orange); background:rgba(255,124,26,.08); }
+.nav-switch svg { width:12px; height:12px; fill:currentColor; }
+
+/* ──────────────────────────────────────────
+   iPHONE DEVICE FRAME (shared)
+────────────────────────────────────────── */
+.iphone-wrap {
+  display:flex; justify-content:center; align-items:center;
+  perspective:1100px; padding:20px 20px;
+}
+@media(min-width:640px){ .iphone-wrap { padding:40px 20px; } }
+.iphone {
+  position:relative; width:240px; height:500px;
+  transform-style:preserve-3d;
+  transition:transform .08s ease-out;
+  cursor:grab; flex-shrink:0;
+}
+
+/* Titanium body */
+.iphone-frame {
+  position:absolute; inset:0;
+  border-radius:46px;
+  background:linear-gradient(158deg,#484848 0%,#363636 25%,#1e1e1e 55%,#363636 80%,#484848 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.22),
+    inset 0 0 0 2.5px rgba(0,0,0,.75),
+    0 40px 90px rgba(0,0,0,.85),
+    0 16px 40px rgba(0,0,0,.55),
+    0 0 50px rgba(255,124,26,.07);
+}
+/* Top edge highlight */
+.iphone-frame::after {
+  content:''; position:absolute; top:0; left:12%; right:12%;
+  height:1px; background:rgba(255,255,255,.3); border-radius:100%;
+}
+
+/* Screen glass */
+.iphone-screen {
+  position:absolute; top:9px; left:9px; right:9px; bottom:9px;
+  border-radius:38px; background:#050508; overflow:hidden;
+  box-shadow:inset 0 0 0 .5px rgba(255,255,255,.07);
+}
+/* Glass sheen */
+.iphone-screen::before {
+  content:''; position:absolute; inset:0; z-index:100; pointer-events:none;
+  border-radius:38px;
+  background:linear-gradient(130deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.02) 35%,transparent 65%);
+}
+
+/* Dynamic Island */
+.di {
+  position:absolute; top:11px; left:50%; transform:translateX(-50%);
+  width:96px; height:27px; background:#000; border-radius:18px; z-index:50;
+  box-shadow:0 0 0 .5px rgba(255,255,255,.06);
+  display:flex; align-items:center; justify-content:flex-end; padding-right:10px;
+}
+.di-dot { width:9px; height:9px; border-radius:50%; background:#1a1a22; border:1px solid rgba(255,255,255,.1); }
+
+/* Left hardware buttons */
+.hw-action {
+  position:absolute; left:-3px; top:86px;
+  width:3px; height:20px; border-radius:3px 0 0 3px;
+  background:linear-gradient(to right,#222,#3a3a3a);
+}
+.hw-vol-up {
+  position:absolute; left:-3px; top:120px;
+  width:3px; height:40px; border-radius:3px 0 0 3px;
+  background:linear-gradient(to right,#222,#3a3a3a);
+}
+.hw-vol-down {
+  position:absolute; left:-3px; top:170px;
+  width:3px; height:40px; border-radius:3px 0 0 3px;
+  background:linear-gradient(to right,#222,#3a3a3a);
+}
+/* Right power button */
+.hw-power {
+  position:absolute; right:-3px; top:135px;
+  width:3px; height:56px; border-radius:0 3px 3px 0;
+  background:linear-gradient(to left,#222,#3a3a3a);
+}
+
+/* Screen content area */
+.screen-inner {
+  position:absolute; inset:0; overflow:hidden;
+  display:flex; flex-direction:column;
+}
+/* status bar */
+.status-bar {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:46px 18px 0; font-size:11px; font-weight:700; color:#fff;
+  flex-shrink:0;
+}
+.status-icons { display:flex; align-items:center; gap:4px; }
+
+/* ──────────────────────────────────────────
+   HERO
+────────────────────────────────────────── */
+#hero {
+  min-height:100svh; display:flex; flex-direction:column;
+  padding:90px var(--px) 60px;
+  position:relative; overflow:hidden;
+  align-items:center; gap:40px;
+}
+.hero-glow {
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 30%,rgba(255,124,26,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 70%,rgba(255,124,26,.04) 0%,transparent 50%);
+}
+.hero-grid-bg {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:linear-gradient(rgba(255,124,26,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,124,26,.04) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
+}
+.hero-text {
+  position:relative; z-index:2; text-align:center; max-width:600px;
+}
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 14px; border-radius:100px; margin-bottom:22px;
+  background:rgba(255,124,26,.12); border:1px solid rgba(255,124,26,.3);
+  font-size:12px; font-weight:700; color:var(--orange);
+  letter-spacing:.08em; text-transform:uppercase;
+}
+.hero-badge-dot {
+  width:6px; height:6px; border-radius:50%; background:var(--orange);
+  animation:pulseDot 1.6s ease-in-out infinite;
+}
+@keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+
+.hero-title {
+  font-size:clamp(42px,9vw,80px); font-weight:900;
+  letter-spacing:-.04em; line-height:.98;
+  margin-bottom:20px;
+}
+.hero-title .accent { color:var(--orange); }
+.hero-sub-txt {
+  font-size:clamp(15px,2vw,18px); color:rgba(255,255,255,.5);
+  line-height:1.75; margin-bottom:32px;
+}
+.hero-ctas { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-bottom:40px; }
+.hero-pills {
+  display:grid; grid-template-columns:1fr;
+  gap:10px; text-align:left;
+}
+@media(min-width:400px){ .hero-pills { grid-template-columns:1fr 1fr; } }
+.pill {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:12px 14px; background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08); border-radius:12px;
+}
+.pill-icon { font-size:18px; flex-shrink:0; margin-top:1px; display:flex; align-items:center; }
+.pill-text { font-size:12px; line-height:1.5; }
+.pill-text strong { display:block; color:#fff; font-size:13px; font-weight:700; }
+.pill-text span { color:rgba(255,255,255,.45); }
+
+/* Hero phone */
+.hero-phone-zone {
+  position:relative; z-index:2;
+  display:flex; justify-content:center; align-items:center;
+  width:100%;
+}
+#heroPhone { width:240px; height:500px; }
+
+/* SMS chat inside hero phone */
+.sms-chat { padding:10px 12px; display:flex; flex-direction:column; gap:9px; flex:1; overflow:hidden; }
+.sms-header {
+  display:flex; align-items:center; gap:9px;
+  padding:7px 12px; border-bottom:1px solid rgba(255,255,255,.07);
+  margin:0 -12px; flex-shrink:0;
+}
+.sms-av {
+  width:30px; height:30px; border-radius:50%; background:var(--orange);
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; color:#fff; flex-shrink:0;
+}
+.sms-name { font-size:12px; font-weight:700; color:#fff; }
+.sms-name small { display:block; font-size:9px; color:rgba(255,255,255,.38); font-weight:400; }
+.bubble {
+  max-width:84%; padding:9px 12px; border-radius:16px;
+  font-size:11px; line-height:1.55;
+  animation:bubbleIn .5s ease both;
+}
+.bubble.in {
+  background:rgba(255,255,255,.09); color:rgba(255,255,255,.85);
+  border-bottom-left-radius:3px; align-self:flex-start;
+}
+.bubble.out {
+  background:var(--orange); color:#fff;
+  border-bottom-right-radius:3px; align-self:flex-end;
+}
+.bubble:nth-child(2){animation-delay:.1s}
+.bubble:nth-child(3){animation-delay:.4s}
+.bubble:nth-child(4){animation-delay:.7s}
+.bubble:nth-child(5){animation-delay:1s}
+.bubble:nth-child(6){animation-delay:1.3s}
+@keyframes bubbleIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+.btime { font-size:8.5px; color:rgba(255,255,255,.3); text-align:right; margin-top:3px; }
+
+/* Floating badges */
+.phone-float {
+  position:absolute;
+  background:rgba(16,16,18,.93); border:1px solid rgba(255,124,26,.22);
+  border-radius:12px; padding:10px 14px;
+  font-size:11px; font-weight:600; color:#fff;
+  box-shadow:0 10px 36px rgba(0,0,0,.55);
+  white-space:nowrap; backdrop-filter:blur(14px);
+  animation:floatBob 3.2s ease-in-out infinite;
+  z-index:10;
+}
+.fv { font-size:19px; font-weight:900; color:var(--orange); display:block; line-height:1.2; }
+.pf1 { top:50px; right:-12px; animation-delay:0s; }
+.pf2 { top:220px; left:-12px; animation-delay:.9s; }
+.pf3 { bottom:90px; right:-12px; animation-delay:1.7s; }
+@media(min-width:640px){
+  .pf1 { right:-42px; }
+  .pf2 { left:-56px; }
+  .pf3 { right:-44px; }
+}
+@keyframes floatBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+
+/* ──────────────────────────────────────────
+   STATS BAR
+────────────────────────────────────────── */
+.stats-bar {
+  background:var(--dark2);
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  padding:24px var(--px);
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:20px 12px;
+  max-width:100%; /* full-width faixa, conteúdo limitado pelo padding */
+}
+.stat-item { text-align:center; }
+.stat-item:last-child { grid-column:span 2; } /* 5th item full-width on mobile 2-col grid */
+.stat-num { font-size:24px; font-weight:900; color:var(--orange); display:block; }
+.stat-lbl { font-size:11px; color:rgba(255,255,255,.42); margin-top:3px; line-height:1.3; }
+
+/* ──────────────────────────────────────────
+   SECTION COMMON
+────────────────────────────────────────── */
+/* Seções: padding vertical generoso + lateral base 24 px.
+   O conteúdo interno usa max-width via .channel-layout etc.
+   Para seções sem wrapper interno, o padding lateral da própria
+   seção delimita o conteúdo de forma consistente. */
+.sec {
+  padding: var(--py) var(--px);
+}
+.sec-light { background:var(--light); color:#111; }
+.sec-dark { background:var(--dark); }
+.sec-dark2 { background:var(--dark2); }
+
+.sec-light .sub { color:#666; }
+.sec-light .tag { background:rgba(255,124,26,.1); border-color:rgba(255,124,26,.28); }
+.sec-light .h2 { color:#111; }
+
+/* ──────────────────────────────────────────
+   CHANNEL SECTION
+────────────────────────────────────────── */
+.channel-layout {
+  display:flex; flex-direction:column; gap:32px; align-items:center;
+}
+.channel-text { width:100%; }
+
+.ch-tabs { margin-top:32px; display:flex; flex-direction:column; gap:6px; }
+.tab {
+  display:flex; align-items:center; gap:14px;
+  padding:12px 16px; border-radius:10px; cursor:pointer;
+  border:1px solid transparent; transition:all .22s;
+}
+.tab:hover { background:rgba(255,124,26,.06); border-color:rgba(255,124,26,.18); }
+.tab.active { background:rgba(255,124,26,.09); border-color:rgba(255,124,26,.32); }
+.tab-n {
+  width:30px; height:30px; border-radius:8px; flex-shrink:0;
+  background:rgba(0,0,0,.08); display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:700; color:#999; transition:all .22s;
+}
+.tab.active .tab-n { background:var(--orange); color:#fff; }
+.tab-body { display:flex; flex-direction:column; gap:2px; }
+.tab-l { font-size:14px; font-weight:600; color:#555; transition:all .22s; line-height:1.3; }
+.tab.active .tab-l { color:#111; }
+.tab-desc { font-size:11.5px; color:#999; line-height:1.4; display:none; }
+.tab.active .tab-desc { display:block; color:var(--orange); font-weight:500; }
+.tab-cta { margin-top:28px; }
+
+/* Channel phone */
+.channel-phone-zone {
+  display:flex; justify-content:center;
+  width:100%; order:-1; /* phone first on mobile so it's visible when tapping tabs */
+}
+#chPhone { width:220px; height:464px; }
+
+/* Channel screen messages */
+.ch-screen-inner { padding:52px 12px 12px; display:flex; flex-direction:column; gap:9px; }
+.ch-top { display:flex; justify-content:space-between; align-items:center; font-size:10px; font-weight:700; color:#fff; margin-bottom:8px; padding:0 2px; }
+.ch-msg {
+  background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.06);
+  border-radius:12px; padding:10px 12px;
+  font-size:10.5px; color:rgba(255,255,255,.82); line-height:1.6;
+  animation:bubbleIn .4s ease both;
+}
+.ch-from { font-size:9px; color:var(--orange); font-weight:700; margin-bottom:5px; letter-spacing:.02em; }
+.hi { color:var(--orange); font-weight:700; }
+.ch-tab { display:none; flex-direction:column; gap:8px; }
+.ch-tab.active { display:flex; }
+
+/* ── CANAL: TELA LIGHT — diferencia do mockup hero (dark) ── */
+#chPhone .iphone-screen {
+  background:#f0f0f5;
+  box-shadow:inset 0 0 0 .5px rgba(0,0,0,.08);
+}
+#chPhone .iphone-screen::before {
+  background:linear-gradient(130deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,.01) 35%,transparent 65%);
+}
+#chPhone .ch-top { color:#111; }
+#chPhone .ch-top svg { filter:invert(1) opacity(.65); }
+#chPhone .ch-msg {
+  background:#fff; border-color:rgba(0,0,0,.08); color:#333;
+}
+#chPhone .ch-from { color:var(--orange); }
+#chPhone .hi { color:var(--orange-d,#e06010); }
+
+/* ──────────────────────────────────────────
+   GEO SECTION
+────────────────────────────────────────── */
+.geo-layout { display:flex; flex-direction:column; gap:32px; }
+.geo-card {
+  background:var(--dark3); border:1px solid rgba(255,255,255,.08);
+  border-radius:20px; padding:28px; position:relative; overflow:hidden;
+}
+
+/* ── Painel de visualização interativa ── */
+.geo-viz {
+  position:relative; height:188px;
+  border-radius:12px; margin-bottom:18px; overflow:hidden;
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
+}
+/* cada painel ocupa todo o espaço, oculto por padrão */
+.gv {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none;
+  transition:opacity .4s ease;
+}
+.gv.gv-on { opacity:1; pointer-events:auto; }
+
+/* 01 — Localização: grid + pins pulsantes */
+.gv-map-bg {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(255,124,26,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,124,26,.07) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.gv-pin {
+  position:absolute; width:10px; height:10px;
+  transform:translate(-50%,-50%);
+}
+.gv-pin::before {
+  content:''; position:absolute; inset:1.5px;
+  background:var(--orange); border-radius:50%; z-index:1;
+}
+.gv-pulse {
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:34px; height:34px; border-radius:50%;
+  border:1.5px solid var(--orange);
+  animation:gvPulse 2.4s ease-out infinite;
+}
+@keyframes gvPulse {
+  0%   { opacity:.7; transform:translate(-50%,-50%) scale(.2); }
+  100% { opacity:0;  transform:translate(-50%,-50%) scale(1);  }
+}
+.gv-pin:nth-child(2)  .gv-pulse { animation-delay:.48s; }
+.gv-pin:nth-child(3)  .gv-pulse { animation-delay:.96s; }
+.gv-pin:nth-child(4)  .gv-pulse { animation-delay:1.44s; }
+.gv-pin:nth-child(5)  .gv-pulse { animation-delay:1.92s; }
+.gv-tag {
+  position:absolute; font-size:9px; font-weight:700;
+  color:rgba(255,255,255,.6); padding:1px 5px;
+  background:rgba(0,0,0,.4); border-radius:3px;
+  transform:translate(-50%,-160%); white-space:nowrap; z-index:2;
+}
+
+/* 02 — Gênero: anéis de progresso SVG */
+.gv-rings { display:flex; gap:36px; align-items:center; }
+.gv-ring-item { display:flex; flex-direction:column; align-items:center; gap:8px; }
+.gv-ring-svg { width:76px; height:76px; display:block; }
+.gv-ring-bg  { fill:none; stroke:rgba(255,255,255,.08); stroke-width:8; }
+.gv-ring-arc { fill:none; stroke-width:8; stroke-linecap:round;
+  stroke-dasharray:0 201; transform-origin:50% 50%;
+  transform:rotate(-90deg);
+  transition:stroke-dasharray .9s cubic-bezier(.23,1,.32,1); }
+.gv-ring-masc .gv-ring-arc { stroke:var(--orange); }
+.gv-ring-fem  .gv-ring-arc { stroke:var(--orange-l,#ff9a4a); }
+.gv-on .gv-ring-masc .gv-ring-arc { stroke-dasharray:104 201; }
+.gv-on .gv-ring-fem  .gv-ring-arc { stroke-dasharray:97 201; transition-delay:.18s; }
+.gv-ring-lbl { text-align:center; }
+.gv-ring-lbl strong { display:block; font-size:17px; font-weight:900; color:#fff; }
+.gv-ring-lbl span   { font-size:10px; color:rgba(255,255,255,.42); }
+
+/* 03 — Faixa Etária: barras verticais */
+.gv-bars-v {
+  display:flex; align-items:flex-end; gap:8px;
+  height:130px; width:100%; padding:0 28px;
+}
+.gv-bv { display:flex; flex-direction:column; align-items:center; gap:5px; flex:1; }
+.gv-bv-bar {
+  width:100%; background:var(--orange); border-radius:4px 4px 0 0;
+  height:0; max-height:110px;
+  transition:height .7s cubic-bezier(.23,1,.32,1);
+}
+.gv-on .gv-bv-bar { height:var(--h); }
+.gv-bv:nth-child(1) .gv-bv-bar { transition-delay:.05s; }
+.gv-bv:nth-child(2) .gv-bv-bar { transition-delay:.12s; }
+.gv-bv:nth-child(3) .gv-bv-bar { transition-delay:.19s; opacity:.85; }
+.gv-bv:nth-child(4) .gv-bv-bar { transition-delay:.26s; opacity:.7; }
+.gv-bv:nth-child(5) .gv-bv-bar { transition-delay:.33s; opacity:.55; }
+.gv-bv span { font-size:9px; color:rgba(255,255,255,.42); font-weight:600; white-space:nowrap; }
+
+/* 04 — Classe Social: barras horizontais */
+.gv-bars-h {
+  display:flex; flex-direction:column; gap:14px;
+  width:100%; padding:0 28px;
+}
+.gv-bh { display:flex; align-items:center; gap:10px; }
+.gv-bh-l { font-size:11px; color:rgba(255,255,255,.52); font-weight:600; width:62px; flex-shrink:0; }
+.gv-bh-track { flex:1; height:7px; background:rgba(255,255,255,.08); border-radius:4px; overflow:hidden; }
+.gv-bh-fill {
+  height:100%; background:var(--orange); border-radius:4px;
+  width:0; transition:width .7s cubic-bezier(.23,1,.32,1);
+}
+.gv-bh:nth-child(1) .gv-bh-fill { transition-delay:.05s; }
+.gv-bh:nth-child(2) .gv-bh-fill { transition-delay:.14s; opacity:.9; }
+.gv-bh:nth-child(3) .gv-bh-fill { transition-delay:.23s; opacity:.75; }
+.gv-bh:nth-child(4) .gv-bh-fill { transition-delay:.32s; opacity:.6; }
+.gv-on .gv-bh-fill { width:var(--w); }
+.gv-bh-v { font-size:11px; color:var(--orange); font-weight:700; width:30px; text-align:right; flex-shrink:0; }
+.geo-glow {
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse at 60% 40%,rgba(255,124,26,.1),transparent 60%);
+}
+.geo-icon { margin-bottom:20px; position:relative; z-index:2; }
+.map-dot { display:none; }
+.geo-filters { display:flex; flex-direction:column; gap:8px; position:relative; z-index:2; }
+.geo-f {
+  display:flex; align-items:center; gap:12px;
+  padding:12px 14px; background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07); border-radius:10px;
+  font-size:13px; color:rgba(255,255,255,.7); cursor:pointer; transition:all .2s;
+}
+.geo-f:hover,.geo-f.active { border-color:rgba(255,124,26,.38); background:rgba(255,124,26,.06); color:#fff; }
+.geo-fn {
+  width:24px; height:24px; background:rgba(255,124,26,.15); border-radius:6px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:700; color:var(--orange); flex-shrink:0;
+}
+.geo-f.active .geo-fn { background:var(--orange); color:#fff; }
+
+/* ──────────────────────────────────────────
+   ORANGE BANNER
+────────────────────────────────────────── */
+.banner-wrap { padding:0 var(--px); }
+.banner-inner {
+  background:linear-gradient(130deg,var(--orange) 0%,#ff9a30 55%,var(--orange-d,#e06010) 100%);
+  border-radius:20px; padding:48px 32px;
+  display:flex; flex-direction:column; gap:28px;
+  position:relative; overflow:hidden;
+}
+.banner-inner::before {
+  content:''; position:absolute; top:-40%; right:-10%; width:380px; height:380px;
+  background:rgba(255,255,255,.07); border-radius:50%; pointer-events:none;
+}
+.banner-txt { font-size:clamp(18px,3.5vw,30px); font-weight:800; color:#fff; line-height:1.3; }
+.banner-btn {
+  padding:15px 30px; background:#fff; color:var(--orange);
+  border-radius:10px; font-size:14px; font-weight:800; align-self:flex-start;
+  box-shadow:0 4px 18px rgba(0,0,0,.15); transition:all .2s; white-space:nowrap;
+}
+.banner-btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,0,0,.2); }
+
+/* ──────────────────────────────────────────
+   FACTS
+────────────────────────────────────────── */
+.facts-source { font-size:11px; color:#aaa; margin-top:6px; margin-bottom:32px; }
+.facts-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+}
+.fact-card {
+  background:#fff; border:1px solid rgba(0,0,0,.07);
+  border-radius:14px; padding:22px 18px;
+  box-shadow:0 2px 14px rgba(0,0,0,.05);
+  transition:all .28s; position:relative; overflow:hidden;
+}
+.fact-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--orange),var(--orange-l,#ff9a4a));
+  transform:scaleX(0); transform-origin:left; transition:transform .28s;
+}
+.fact-card:hover { box-shadow:0 8px 30px rgba(0,0,0,.1); transform:translateY(-3px); }
+.fact-card:hover::before { transform:scaleX(1); }
+.fact-val { font-size:clamp(28px,5vw,40px); font-weight:900; color:var(--orange); letter-spacing:-.02em; }
+.fact-val sup { font-size:.5em; }
+.fact-lbl { font-size:13px; font-weight:700; color:#222; margin-top:4px; }
+.fact-desc { font-size:12px; color:#888; line-height:1.5; margin-top:5px; }
+.facts-cta { text-align:center; margin-top:44px; }
+.facts-cta p { font-size:17px; font-weight:700; color:#111; margin-bottom:18px; }
+
+/* ──────────────────────────────────────────
+   FAQ
+────────────────────────────────────────── */
+.faq-layout { display:flex; flex-direction:column; gap:32px; }
+.faq-copy .sub { color:#fff; font-weight:700; }
+.faq-list { display:flex; flex-direction:column; }
+.faq-item { border-bottom:1px solid rgba(255,255,255,.1); }
+.faq-q {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:18px 0; font-size:14px; font-weight:700; color:#fff;
+  cursor:pointer; gap:12px; transition:color .2s;
+}
+.faq-q:hover { color:var(--orange); }
+.faq-tog { font-size:22px; font-weight:300; color:var(--orange); flex-shrink:0; transition:transform .3s; }
+.faq-item.open .faq-tog { transform:rotate(45deg); }
+.faq-a {
+  font-size:14px; color:rgba(255,255,255,.55); line-height:1.7;
+  max-height:0; overflow:hidden; transition:max-height .35s ease,padding .35s;
+}
+.faq-item.open .faq-a { max-height:180px; padding-bottom:16px; }
+
+/* ──────────────────────────────────────────
+   LEAD FORM
+────────────────────────────────────────── */
+#lead-form {
+  background:#fff; padding:var(--py) var(--px); position:relative; overflow:hidden;
+}
+.lf-glow {
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 70% 60% at 80% 50%,rgba(255,124,26,.05),transparent 60%);
+}
+.lf-inner {
+  display:flex; flex-direction:column; gap:48px;
+  position:relative; z-index:1; max-width:1100px; margin:0 auto;
+}
+.lf-copy .tag { background:rgba(255,124,26,.1); border-color:rgba(255,124,26,.28); color:var(--orange); }
+.lf-copy .h2 { color:#111; }
+.lf-trust { display:flex; flex-wrap:wrap; gap:12px 18px; margin-top:28px; }
+.trust-it {
+  display:flex; align-items:center; gap:7px;
+  font-size:13px; color:#555; font-weight:500;
+}
+.trust-it::before { content:'✓'; color:var(--orange); font-weight:800; font-size:15px; }
+
+.lf-card {
+  background:#3d3d3d; border-radius:20px; padding:36px 28px;
+  box-shadow:0 20px 55px rgba(0,0,0,.14);
+  border-top:3px solid var(--orange);
+}
+.lf-card h3 { font-size:22px; font-weight:800; color:#fff; margin-bottom:5px; }
+.lf-card > p { font-size:13px; color:rgba(255,255,255,.42); margin-bottom:28px; }
+.fg { margin-bottom:20px; }
+.fg label {
+  display:block; font-size:11.5px; font-weight:700; color:rgba(255,255,255,.6);
+  margin-bottom:8px; letter-spacing:.06em; text-transform:uppercase;
+}
+.fi {
+  width:100%; padding:14px 16px;
+  background:rgba(255,255,255,.07); border:1.5px solid rgba(255,255,255,.12);
+  border-radius:10px; color:#fff; font-size:14.5px; outline:none; font-family:inherit; transition:all .2s;
+}
+.fi:focus { border-color:var(--orange); background:rgba(255,124,26,.06); box-shadow:0 0 0 3px rgba(255,124,26,.12); }
+.fi.error { border-color:#e53935 !important; background:rgba(229,57,53,.07) !important; }
+.fi::placeholder { color:rgba(255,255,255,.25); }
+select.fi { -webkit-appearance:none; cursor:pointer; color:rgba(255,255,255,.7);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 16px center; padding-right:40px;
+}
+select.fi option { background:#1a1a1a; color:#fff; }
+.frow { display:grid; grid-template-columns:1fr; gap:0; }
+/* Solution chips */
+.sol-chips {
+  display:flex; flex-wrap:wrap; gap:8px; margin-top:2px;
+}
+.sol-chip {
+  flex:1 1 calc(33.33% - 6px);
+  padding:11px 10px; border:1.5px solid rgba(255,255,255,.13);
+  border-radius:10px; background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.55); font-size:12.5px; font-weight:600;
+  cursor:pointer; transition:all .2s; text-align:center; user-select:none;
+  font-family:inherit; line-height:1.3; white-space:nowrap;
+}
+.sol-chip:hover { border-color:rgba(255,124,26,.45); color:#fff; background:rgba(255,124,26,.08); }
+.sol-chip.selected { border-color:var(--orange); background:rgba(255,124,26,.15); color:#fff; font-weight:700; box-shadow:0 0 0 2px rgba(255,124,26,.2); }
+.sol-chips.chips-error .sol-chip:not(.selected) { border-color:rgba(229,57,53,.4); }
+.sol-chips.chips-error::after { content:'Selecione uma opção'; display:block; width:100%; font-size:11px; color:#e57373; margin-top:4px; font-weight:600; }
+.btn-lead {
+  width:100%; padding:16px; background:var(--orange); color:#fff;
+  border:none; border-radius:11px; font-size:15px; font-weight:800;
+  cursor:pointer; font-family:inherit; margin-top:8px;
+  box-shadow:0 6px 22px rgba(255,124,26,.4); transition:all .25s; letter-spacing:.02em;
+}
+.btn-lead:hover { background:var(--orange-l,#ff9a4a); transform:translateY(-2px); box-shadow:0 10px 34px rgba(255,124,26,.55); }
+.lf-priv { font-size:11px; color:rgba(255,255,255,.25); text-align:center; margin-top:12px; }
+
+/* ──────────────────────────────────────────
+   FOOTER
+────────────────────────────────────────── */
+footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); padding:56px var(--px) 32px; }
+.footer-grid { display:flex; flex-direction:column; gap:40px; margin-bottom:40px; }
+.footer-brand > p { font-size:13px; color:rgba(255,255,255,.35); line-height:1.7; margin-top:14px; max-width:240px; }
+.footer-socials { display:flex; gap:10px; margin-top:16px; }
+.soc {
+  width:34px; height:34px; background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1); border-radius:7px;
+  display:flex; align-items:center; justify-content:center;
+  color:rgba(255,255,255,.5); font-size:12px; font-weight:700; transition:all .2s;
+}
+.soc:hover { background:rgba(255,124,26,.15); border-color:var(--orange); color:var(--orange); }
+.footer-cols { display:grid; grid-template-columns:1fr 1fr; gap:32px 20px; }
+.fc h4 { font-size:11px; font-weight:700; color:rgba(255,255,255,.35); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; }
+.fc a { display:block; font-size:13px; color:rgba(255,255,255,.5); margin-bottom:9px; transition:color .2s; }
+.fc a:hover { color:var(--orange); }
+.fc-contact { font-size:13px; color:rgba(255,255,255,.5); margin-bottom:8px; line-height:1.5; }
+.footer-bottom {
+  border-top:1px solid rgba(255,255,255,.06); padding-top:24px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.footer-bottom p { font-size:11px; color:rgba(255,255,255,.22); }
+
+/* ── MESH WAVE CANVAS ── */
+/* Canvas de fundo animado injetado por JS nas seções escuras */
+.mesh-cvs {
+  position:absolute; inset:0;
+  width:100% !important; height:100% !important;
+  z-index:0; pointer-events:none;
+}
+/* Garante que o conteúdo das seções escuras fique acima do canvas */
+.sec-dark, .sec-dark2, footer { position:relative; overflow:hidden; }
+.sec-dark > *:not(.mesh-cvs),
+.sec-dark2 > *:not(.mesh-cvs),
+footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
+/* Hero: conteúdo acima do canvas (glow e grid-bg ficam entre canvas e texto, ok) */
+.hero-text, .hero-phone-zone { position:relative; z-index:2; }
+
+/* Whatsapp FAB */
+.fab {
+  position:fixed; bottom:24px; right:20px; z-index:999;
+  width:52px; height:52px; background:#25D366; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 22px rgba(37,211,102,.4); transition:all .3s;
+}
+.fab:hover { transform:scale(1.1); box-shadow:0 10px 32px rgba(37,211,102,.6); }
+.fab svg { width:26px; height:26px; fill:#fff; }
+
+/* ──────────────────────────────────────────
+   HAMBURGER / MOBILE DRAWER
+────────────────────────────────────────── */
+.nav-ham {
+  display:flex; flex-direction:column; justify-content:center; gap:5px;
+  width:40px; height:40px; padding:6px;
+  background:transparent; border:none; cursor:pointer; z-index:1002;
+  flex-shrink:0;
+}
+.nav-ham span {
+  display:block; width:22px; height:2px;
+  background:rgba(255,255,255,.85); border-radius:2px;
+  transition:all .28s cubic-bezier(.22,1,.36,1);
+  transform-origin:center;
+}
+.nav-ham.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+.nav-ham.open span:nth-child(2) { opacity:0; width:0; }
+.nav-ham.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+.nav-drawer {
+  position:fixed; top:0; left:0; right:0; bottom:0; z-index:1001;
+  background:rgba(42,42,42,.98); backdrop-filter:blur(20px);
+  display:flex; flex-direction:column; align-items:flex-start;
+  padding:84px 32px 48px; gap:0;
+  transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.22,1,.36,1);
+  pointer-events:none; overflow-y:auto;
+}
+.nav-drawer.open { transform:none; pointer-events:auto; }
+.nav-drawer a {
+  display:block; color:rgba(255,255,255,.78); font-size:20px; font-weight:700;
+  padding:16px 0; width:100%; border-bottom:1px solid rgba(255,255,255,.08);
+  transition:color .2s;
+}
+.nav-drawer a:last-of-type { border-bottom:none; }
+.nav-drawer a:hover { color:var(--orange); }
+.drawer-cta {
+  margin-top:28px !important; width:100%; font-size:16px !important;
+  padding:16px !important; text-align:center; justify-content:center;
+  border-radius:12px !important; border:none !important; cursor:pointer;
+  font-family:inherit !important;
+}
+
+/* ──────────────────────────────────────────
+   TABLET  ≥ 640px
+────────────────────────────────────────── */
+@media(min-width:640px) {
+  .nav-ham { display:none; }
+  .nav-drawer { display:none; }
+  :root { --px: 40px; --py: 96px; }
+  nav { padding:16px 40px; }
+  nav.scrolled { padding:10px 40px; }
+  .nav-links { display:flex; }
+  #hero { padding:100px 40px 70px; }
+  .hero-pills { grid-template-columns:1fr 1fr; }
+  .stats-bar { grid-template-columns:repeat(5,1fr); padding:28px 40px; }
+  .stat-item:last-child { grid-column:auto; }
+  .banner-wrap { padding:0 40px; }
+  .banner-inner { flex-direction:row; align-items:center; padding:56px 48px; }
+  .banner-btn { align-self:auto; }
+  .iphone { width:260px; height:542px; }
+  #heroPhone { width:260px; height:542px; }
+  #chPhone { width:240px; height:500px; }
+  .facts-grid { grid-template-columns:repeat(4,1fr); }
+  .frow { grid-template-columns:1fr 1fr; gap:14px; }
+  .footer-grid { flex-direction:row; gap:0; justify-content:space-between; }
+  .footer-cols { grid-template-columns:repeat(3,1fr); }
+  .footer-bottom { flex-direction:row; justify-content:space-between; }
+}
+
+/* ──────────────────────────────────────────
+   DESKTOP  ≥ 1024px
+────────────────────────────────────────── */
+@media(min-width:1024px) {
+  /* Container: padding lateral escala com a largura da tela
+     para criar efeito de max-width sem afetar o background das seções.
+     calc((100% - 1200px) / 2) cresce após 1280px mantendo conteúdo ≤ 1200px. */
+  :root {
+    --px: max(40px, calc((100% - var(--cw)) / 2));
+    --py: 112px;
+  }
+
+  nav { padding:18px max(40px, calc((100% - var(--cw)) / 2)); }
+  nav.scrolled { padding:11px max(40px, calc((100% - var(--cw)) / 2)); }
+
+  #hero {
+    flex-direction:row; align-items:center;
+    padding:120px max(40px, calc((100% - var(--cw)) / 2)) 90px;
+    gap:60px; min-height:100vh;
+  }
+  .hero-text { text-align:left; flex:1; max-width:580px; }
+  .hero-ctas { justify-content:flex-start; }
+  .hero-pills { grid-template-columns:1fr 1fr; max-width:480px; }
+  .hero-phone-zone { flex:1; }
+
+  .iphone { width:290px; height:605px; }
+  #heroPhone { width:290px; height:605px; }
+
+  .stats-bar {
+    padding:28px max(40px, calc((100% - var(--cw)) / 2));
+    grid-template-columns:repeat(5,1fr);
+  }
+
+  .banner-wrap { padding:0 max(40px, calc((100% - var(--cw)) / 2)); }
+
+  /* Channel — grid 2 colunas: texto respira, telefone fixo à direita */
+  .channel-layout {
+    display:grid;
+    grid-template-columns: minmax(280px, 560px) auto;
+    gap:56px;
+    justify-content:center;
+    align-items:start;
+    flex-direction:unset; /* neutraliza o flex mobile */
+  }
+  .channel-text { width:auto; } /* deixa o grid definir a largura */
+  .channel-phone-zone { order:0; position:sticky; top:110px; align-self:flex-start; }
+  #chPhone { width:260px; height:542px; }
+
+  /* Geo */
+  .geo-layout { flex-direction:row; gap:56px; align-items:center; }
+  .geo-card { flex:1; }
+
+  /* FAQ */
+  .faq-layout { flex-direction:row; gap:64px; }
+  .faq-copy { flex:0 0 320px; }
+  .faq-list { flex:1; }
+
+  /* Lead form */
+  .lf-inner { flex-direction:row; align-items:center; gap:56px; }
+  .lf-copy { flex:1; }
+  .lf-card { flex:0 0 460px; padding:44px; }
+
+  /* Footer */
+  .footer-grid { flex-direction:row; justify-content:space-between; align-items:flex-start; }
+  .footer-cols { grid-template-columns:repeat(3,1fr); gap:40px; }
+
+  .fab { bottom:30px; right:30px; }
+}
+</style>
+
+<!-- ── NAV ── -->
+<Nav>
+  <a slot="logo" href="#" class="nav-logo" aria-label="NEXUS"><Logo text /></a>
+    <a href="#channel">Soluções</a>
+    <a href="#faq">Suporte</a>
+    <a href="/rcs" class="nav-switch">
+      Ver RCS
+      <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </a>
+    <a href="/whatsapp" class="nav-switch">
+      Ver WhatsApp
+      <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </a>
+    <a href="/push" class="nav-switch">
+      Ver Push Ads
+      <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </a>
+    <button class="btn-nav" onclick="document.getElementById('lead-form').scrollIntoView({behavior:'smooth'})">Falar com Consultor</button>
+  </Nav>
+
+<!-- ── MOBILE DRAWER ── -->
+<Drawer>
+  <a href="#channel" onclick="closeDrawer()">Soluções</a>
+  <a href="#faq" onclick="closeDrawer()">Suporte</a>
+  <a href="/rcs">Ver RCS →</a>
+  <a href="/whatsapp">Ver WhatsApp →</a>
+  <a href="/push">Ver Push Ads →</a>
+  <button class="btn-nav drawer-cta" onclick="closeDrawer();setTimeout(()=>document.getElementById('lead-form').scrollIntoView({behavior:'smooth'}),200)">Falar com Consultor</button>
+</Drawer>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid-bg"></div>
+
+  <div class="hero-text rv">
+    <div class="hero-badge"><div class="hero-badge-dot"></div>Solução Oficial</div>
+    <h1 class="hero-title">SMS<br><span class="accent">Marketing.</span></h1>
+    <p class="hero-sub-txt">A maneira mais efetiva para divulgações com seu produto e captação de novos clientes — direto no celular, sem internet.</p>
+    <div class="hero-ctas">
+      <a href="#lead-form" class="btn-primary">Quero começar agora</a>
+      <a href="#lead-form" class="btn-ghost">Falar com consultor</a>
+    </div>
+    <div class="hero-pills">
+      <div class="pill"><div class="pill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="pill-text"><strong>90% lidos em 3 min</strong><span>canal mais rápido</span></div></div>
+      <div class="pill"><div class="pill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div><div class="pill-text"><strong>SMS Oficial</strong><span>sem bloqueio</span></div></div>
+      <div class="pill"><div class="pill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="var(--orange)" stroke="none"/></svg></div><div class="pill-text"><strong>Sem internet</strong><span>o usuário não precisa</span></div></div>
+      <div class="pill"><div class="pill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="pill-text"><strong>Base geolocalizada</strong><span>segmente seu público</span></div></div>
+    </div>
+  </div>
+
+  <div class="hero-phone-zone">
+    <div class="iphone-wrap" id="heroWrap">
+      <div class="iphone" id="heroPhone">
+        <!-- Frame -->
+        <div class="iphone-frame"></div>
+        <!-- Side buttons -->
+        <div class="hw-action"></div>
+        <div class="hw-vol-up"></div>
+        <div class="hw-vol-down"></div>
+        <div class="hw-power"></div>
+        <!-- Screen -->
+        <div class="iphone-screen">
+          <div class="screen-inner">
+            <div class="di"><div class="di-dot"></div></div>
+            <div class="status-bar">
+              <span>9:41</span>
+              <div class="status-icons">
+                <svg width="13" height="9" viewBox="0 0 13 9" fill="none"><rect x="0" y="3.5" width="2" height="5.5" rx=".8" fill="white" opacity=".5"/><rect x="3" y="2" width="2" height="7" rx=".8" fill="white" opacity=".7"/><rect x="6" y=".5" width="2" height="8.5" rx=".8" fill="white" opacity=".9"/><rect x="9" y="0" width="2" height="9" rx=".8" fill="white"/></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11" fill="none" style="margin-left:5px"><rect x=".5" y=".5" width="20" height="10" rx="3" stroke="white" stroke-opacity=".35"/><rect x="2" y="2" width="14" height="7" rx="1.5" fill="white" opacity=".9"/><path d="M21.5 3.8v3.4c.9-.3 1.5-1 1.5-1.7s-.6-1.4-1.5-1.7z" fill="white" opacity=".4"/></svg>
+              </div>
+            </div>
+            <div class="sms-chat">
+              <div class="sms-header">
+                <div class="sms-av">N</div>
+                <div class="sms-name">NEXUS SMS<small>Mensagem de texto</small></div>
+              </div>
+              <div class="bubble in">Ola! Temos uma oferta exclusiva para voce. Aproveite <strong style="color:#ff7c1a">30% OFF</strong> na sua proxima compra!<div class="btime">09:32</div></div>
+              <div class="bubble out">Tenho interesse! Como faco?<div class="btime">09:33</div></div>
+              <div class="bubble in">Acesse: nexus.com.br/promo<br>Valido ate hoje as 23h59!<div class="btime">09:33</div></div>
+              <div class="bubble out">Perfeito, obrigado!<div class="btime">09:34</div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Floating badges -->
+        <div class="phone-float pf1"><span class="fv">98%</span>Taxa de abertura</div>
+        <div class="phone-float pf2"><span class="fv">90s</span>Tempo de resposta</div>
+        <div class="phone-float pf3"><span class="fv">3 min</span>Lidos em até</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar">
+  <div class="stat-item rv"><span class="stat-num">98%</span><div class="stat-lbl">Taxa de abertura</div></div>
+  <div class="stat-item rv rv1"><span class="stat-num">90%</span><div class="stat-lbl">Lidos em até 3 min</div></div>
+  <div class="stat-item rv rv2"><span class="stat-num">209%</span><div class="stat-lbl">A mais vs. e-mail</div></div>
+  <div class="stat-item rv rv3"><span class="stat-num">99,2%</span><div class="stat-lbl">Entregabilidade</div></div>
+  <div class="stat-item rv rv4"><span class="stat-num">10%</span><div class="stat-lbl">SPAM vs. 50% do e-mail</div></div>
+</div>
+
+<!-- ── CLIENTES ── -->
+<style is:inline>
+.cs-strip { background:var(--dark3,#565656); padding:44px var(--px) 40px; overflow:hidden; }
+.cs-label { text-align:center; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:30px; }
+.cs-wrap { overflow:hidden; mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); -webkit-mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); }
+.cs-track { display:flex; align-items:center; gap:72px; width:max-content; animation:csMarquee 30s linear infinite; }
+.cs-track:hover { animation-play-state:paused; }
+@keyframes csMarquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.cs-logo { display:flex; align-items:center; justify-content:center; flex-shrink:0; height:52px; opacity:.45; transition:opacity .3s ease; cursor:default; }
+.cs-logo:hover { opacity:1; }
+.cs-logo img { height:46px; width:auto; max-width:160px; object-fit:contain; }
+</style>
+<div class="cs-strip">
+  <div class="cs-label">Empresas que confiam na Nexus</div>
+  <div class="cs-wrap">
+    <div class="cs-track">
+      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
+      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
+      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
+      <div class="cs-logo"><img src="/logo-cury.png" alt="Cury"></div>
+      <div class="cs-logo"><img src="/logo-bobstore.png" alt="Bobstore"></div>
+      <!-- duplicatas para loop contínuo -->
+      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
+      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
+      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
+      <div class="cs-logo"><img src="/logo-cury.png" alt="Cury"></div>
+      <div class="cs-logo"><img src="/logo-bobstore.png" alt="Bobstore"></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- ── CHANNEL ── -->
+<section id="channel" class="sec sec-light">
+  <div class="channel-layout">
+
+    <div class="channel-text">
+      <div class="tag rv">Canais de uso</div>
+      <h2 class="h2 rv rv1">O SMS é um canal de comunicação <span style="color:var(--orange)">direta</span> com seu cliente.</h2>
+      <p class="sub rv rv2">O SMS é uma ferramenta poderosa que pode ajudar no seu negócio, independentemente do ramo de atuação da sua empresa.</p>
+      <div class="ch-tabs rv rv3">
+        <div class="tab active" data-tab="marketing"><div class="tab-n">01</div><div class="tab-body"><div class="tab-l">Marketing</div><div class="tab-desc">Promoções, cupons e Black Friday</div></div></div>
+        <div class="tab" data-tab="cobranca"><div class="tab-n">02</div><div class="tab-body"><div class="tab-l">Cobrança</div><div class="tab-desc">Lembretes de fatura e confirmação de pagamento</div></div></div>
+        <div class="tab" data-tab="pesquisa"><div class="tab-n">03</div><div class="tab-body"><div class="tab-l">Pesquisa</div><div class="tab-desc">NPS e pesquisas de satisfação</div></div></div>
+        <div class="tab" data-tab="confirmacao"><div class="tab-n">04</div><div class="tab-body"><div class="tab-l">Confirmação</div><div class="tab-desc">Agendamentos e confirmações de presença</div></div></div>
+        <div class="tab" data-tab="avisos"><div class="tab-n">05</div><div class="tab-body"><div class="tab-l">Avisos</div><div class="tab-desc">Status de pedido e notificações de entrega</div></div></div>
+        <div class="tab" data-tab="transacoes"><div class="tab-n">06</div><div class="tab-body"><div class="tab-l">Transações</div><div class="tab-desc">Códigos de verificação e autenticação</div></div></div>
+      </div>
+      <div class="tab-cta rv rv4">
+        <a href="#lead-form" class="btn-primary">Quero usar o SMS no meu negócio</a>
+      </div>
+    </div>
+
+    <div class="channel-phone-zone" id="chWrap">
+      <div class="iphone-wrap" style="padding:20px 20px 20px">
+        <div class="iphone" id="chPhone">
+          <div class="iphone-frame"></div>
+          <div class="hw-action"></div>
+          <div class="hw-vol-up"></div>
+          <div class="hw-vol-down"></div>
+          <div class="hw-power"></div>
+          <div class="iphone-screen">
+            <div class="screen-inner">
+              <div class="di"><div class="di-dot"></div></div>
+              <div class="ch-screen-inner">
+                <div class="ch-top"><span>9:41</span><svg width="30" height="9" viewBox="0 0 30 9" fill="white" opacity=".7"><rect x="0" y="3" width="2" height="6" rx=".8"/><rect x="3" y="1.5" width="2" height="7.5" rx=".8"/><rect x="6" y=".5" width="2" height="8.5" rx=".8"/><rect x="9" y="0" width="2" height="9" rx=".8"/><rect x="17" y=".5" width="12" height="8" rx="2" opacity=".3"/><rect x="18" y="1.5" width="8" height="6" rx="1.5" fill="white"/><rect x="29" y="3" width="1.5" height="3" rx=".5" opacity=".4"/></svg></div>
+
+                <div class="ch-tab active" id="ch-marketing">
+                  <div class="ch-msg"><div class="ch-from">NEXUS Marketing</div><span class="hi">OFERTA EXCLUSIVA!</span> Aproveite 40% OFF em toda a loja hoje. Use o codigo: <span class="hi">SMS40</span> — nexus.com.br/sale</div>
+                  <div class="ch-msg"><div class="ch-from">NEXUS Promos</div>Ultima chance! Black Friday termina em <span class="hi">2 horas</span>. Nao perca!</div>
+                </div>
+                <div class="ch-tab" id="ch-cobranca">
+                  <div class="ch-msg"><div class="ch-from">NEXUS Financeiro</div>Sua fatura de <span class="hi">R$ 248,90</span> vence amanha. Pague agora: nexus.com.br/pagar</div>
+                  <div class="ch-msg"><div class="ch-from">NEXUS Financeiro</div>Pagamento confirmado! Obrigado por estar em dia.</div>
+                </div>
+                <div class="ch-tab" id="ch-pesquisa">
+                  <div class="ch-msg"><div class="ch-from">NEXUS Pesquisa</div>Como foi sua experiencia conosco? Responda de <span class="hi">1 a 5</span>. Sua opiniao vale muito!</div>
+                </div>
+                <div class="ch-tab" id="ch-confirmacao">
+                  <div class="ch-msg"><div class="ch-from">NEXUS Agenda</div>Seu agendamento para <span class="hi">amanha as 14h</span> esta confirmado. Responda SIM para confirmar ou NAO para cancelar.</div>
+                </div>
+                <div class="ch-tab" id="ch-avisos">
+                  <div class="ch-msg"><div class="ch-from">NEXUS Avisos</div>Seu pedido <span class="hi">#12847</span> saiu para entrega! Previsao: hoje entre 14h e 18h.</div>
+                </div>
+                <div class="ch-tab" id="ch-transacoes">
+                  <div class="ch-msg"><div class="ch-from">NEXUS Banco</div>Codigo de verificacao: <span class="hi">847261</span>. Valido por 5 minutos. Nunca compartilhe.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── GEO ── -->
+<section id="geo" class="sec sec-dark2">
+  <div class="geo-layout">
+    <div class="geo-card rv">
+      <div class="geo-glow"></div>
+
+      <!-- Painel de visualização interativo — troca conforme o filtro ativo -->
+      <div class="geo-viz">
+
+        <!-- 01: Localização — grid + pins pulsantes -->
+        <div class="gv gv-loc gv-on">
+          <div class="gv-map-bg"></div>
+          <div class="gv-pin" style="top:28%;left:22%"><div class="gv-pulse"></div></div>
+          <div class="gv-pin" style="top:42%;left:52%"><div class="gv-pulse"></div></div>
+          <div class="gv-pin" style="top:66%;left:30%"><div class="gv-pulse"></div></div>
+          <div class="gv-pin" style="top:20%;left:70%"><div class="gv-pulse"></div></div>
+          <div class="gv-pin" style="top:74%;left:68%"><div class="gv-pulse"></div></div>
+          <div class="gv-tag" style="top:28%;left:22%">SP</div>
+          <div class="gv-tag" style="top:42%;left:52%">RJ</div>
+          <div class="gv-tag" style="top:66%;left:30%">BH</div>
+          <div class="gv-tag" style="top:20%;left:70%">BSB</div>
+          <div class="gv-tag" style="top:74%;left:68%">POA</div>
+        </div>
+
+        <!-- 02: Gênero — anéis de progresso SVG -->
+        <div class="gv gv-gen">
+          <div class="gv-rings">
+            <div class="gv-ring-item gv-ring-masc">
+              <svg class="gv-ring-svg" viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="32" class="gv-ring-bg"/>
+                <circle cx="40" cy="40" r="32" class="gv-ring-arc"/>
+              </svg>
+              <div class="gv-ring-lbl"><strong>52%</strong><span>Masculino</span></div>
+            </div>
+            <div class="gv-ring-item gv-ring-fem">
+              <svg class="gv-ring-svg" viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="32" class="gv-ring-bg"/>
+                <circle cx="40" cy="40" r="32" class="gv-ring-arc"/>
+              </svg>
+              <div class="gv-ring-lbl"><strong>48%</strong><span>Feminino</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03: Faixa Etária — barras verticais animadas -->
+        <div class="gv gv-age">
+          <div class="gv-bars-v">
+            <div class="gv-bv"><div class="gv-bv-bar" style="--h:64px"></div><span>18–24</span></div>
+            <div class="gv-bv"><div class="gv-bv-bar" style="--h:100px"></div><span>25–34</span></div>
+            <div class="gv-bv"><div class="gv-bv-bar" style="--h:82px"></div><span>35–44</span></div>
+            <div class="gv-bv"><div class="gv-bv-bar" style="--h:54px"></div><span>45–54</span></div>
+            <div class="gv-bv"><div class="gv-bv-bar" style="--h:34px"></div><span>55+</span></div>
+          </div>
+        </div>
+
+        <!-- 04: Classe Social — barras horizontais animadas -->
+        <div class="gv gv-cls">
+          <div class="gv-bars-h">
+            <div class="gv-bh"><span class="gv-bh-l">Classe A</span><div class="gv-bh-track"><div class="gv-bh-fill" style="--w:20%"></div></div><span class="gv-bh-v">20%</span></div>
+            <div class="gv-bh"><span class="gv-bh-l">Classe B</span><div class="gv-bh-track"><div class="gv-bh-fill" style="--w:35%"></div></div><span class="gv-bh-v">35%</span></div>
+            <div class="gv-bh"><span class="gv-bh-l">Classe C</span><div class="gv-bh-track"><div class="gv-bh-fill" style="--w:30%"></div></div><span class="gv-bh-v">30%</span></div>
+            <div class="gv-bh"><span class="gv-bh-l">Classe D/E</span><div class="gv-bh-track"><div class="gv-bh-fill" style="--w:15%"></div></div><span class="gv-bh-v">15%</span></div>
+          </div>
+        </div>
+
+      </div><!-- /geo-viz -->
+
+      <div class="geo-filters">
+        <div class="geo-f active" data-viz="gv-loc"><div class="geo-fn">01</div>Localização</div>
+        <div class="geo-f" data-viz="gv-gen"><div class="geo-fn">02</div>Gênero</div>
+        <div class="geo-f" data-viz="gv-age"><div class="geo-fn">03</div>Faixa Etária</div>
+        <div class="geo-f" data-viz="gv-cls"><div class="geo-fn">04</div>Classe Social</div>
+      </div>
+    </div>
+    <div class="rv rv1">
+      <div class="tag">Segmentação inteligente</div>
+      <h2 class="h2">Base de dados <span style="color:var(--orange)">geolocalizada</span></h2>
+      <p class="sub">Através de parceiros especializados, podemos oferecer bases de dados atualizadas para seus clientes. Filtre por localização, gênero, faixa etária e classe social para impactar exatamente quem você precisa.</p>
+      <div style="margin-top:32px">
+        <a href="#lead-form" class="btn-primary">Quero segmentar meu público</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BANNER ── -->
+<div class="banner-wrap" style="padding-top:0;padding-bottom:0;background:var(--dark2)">
+  <div style="padding:48px 0">
+    <div class="banner-inner rv">
+      <div class="banner-txt">Comunique-se em massa com novos clientes<br>sem risco de bloqueio, por SMS.</div>
+      <a href="#lead-form" class="banner-btn">Começar agora →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FACTS ── -->
+<section id="facts" class="sec sec-light">
+  <div class="tag rv">Fatos sobre o SMS</div>
+  <h2 class="h2 rv rv1">Números que <span style="color:var(--orange)">comprovam</span></h2>
+  <p class="facts-source rv rv2">Fontes: Anatel, IBGE, SMSBUMP, GSMA e DSIM</p>
+  <div class="facts-grid">
+    <div class="fact-card rv"><div class="fact-val">230<sup>mi</sup></div><div class="fact-lbl">Celulares ativos no Brasil</div><div class="fact-desc">O maior mercado da América Latina — seu cliente está a um SMS de distância</div></div>
+    <div class="fact-card rv rv1"><div class="fact-val">90%</div><div class="fact-lbl">Lidos em até 3 minutos</div><div class="fact-desc">A grande maioria dos SMS são lidos em até 3 minutos após o recebimento</div></div>
+    <div class="fact-card rv rv2"><div class="fact-val">98%</div><div class="fact-lbl">Taxa de abertura</div><div class="fact-desc">Dos SMS são abertos pelo usuário — muito acima de qualquer outro canal</div></div>
+    <div class="fact-card rv rv3"><div class="fact-val">209%</div><div class="fact-lbl">A mais que e-mail e Facebook</div><div class="fact-desc">A taxa de resposta do SMS supera em 209% o e-mail marketing e o Facebook</div></div>
+    <div class="fact-card rv"><div class="fact-val">99,2%</div><div class="fact-lbl">Acessam a internet pelo celular</div><div class="fact-desc">Dos domicílios com internet utilizam o celular como principal meio de acesso</div></div>
+    <div class="fact-card rv rv1"><div class="fact-val">90s</div><div class="fact-lbl">Tempo médio de resposta</div><div class="fact-desc">É o tempo médio em que uma mensagem de SMS é respondida pelo destinatário</div></div>
+    <div class="fact-card rv rv2"><div class="fact-val">10%</div><div class="fact-lbl">Considerado SPAM</div><div class="fact-desc">Apenas 10% do SMS é SPAM — contra 50% dos e-mails enviados</div></div>
+    <div class="fact-card rv rv3"><div class="fact-val" style="font-size:clamp(22px,3vw,32px);line-height:1.15">Base<br>Própria</div><div class="fact-lbl">Dados Geolocalizados</div><div class="fact-desc">Banco próprio para segmentação avançada de campanhas</div></div>
+  </div>
+  <div class="facts-cta rv">
+    <p>Resultados reais para o seu negócio. Comece hoje.</p>
+    <a href="#lead-form" class="btn-primary">Solicitar proposta gratuita</a>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq" class="sec sec-dark">
+  <div class="faq-layout">
+    <div class="faq-copy">
+      <div class="tag rv">Dúvidas</div>
+      <h2 class="h2 rv rv1">Tem alguma <span style="color:var(--orange)">dúvida?</span></h2>
+      <p class="sub rv rv2">Confira as perguntas mais frequentes. Se precisar de mais ajuda, nossa equipe está pronta.</p>
+      <div style="margin-top:28px" class="rv rv3">
+        <a href="#lead-form" class="btn-primary">Falar com a equipe</a>
+      </div>
+    </div>
+    <div class="faq-list rv rv2">
+      <div class="faq-item">
+        <div class="faq-q">O SMS precisa que o destinatário tenha internet?<span class="faq-tog">+</span></div>
+        <div class="faq-a">Não! Essa é uma das grandes vantagens do SMS. O destinatário não precisa de conexão com a internet — basta ter sinal de celular.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Posso usar minha própria base de contatos?<span class="faq-tog">+</span></div>
+        <div class="faq-a">Sim! Você pode importar sua própria base na plataforma. Também oferecemos nossa base geolocalizada para ampliar seu alcance.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Existe risco de bloqueio das mensagens?<span class="faq-tog">+</span></div>
+        <div class="faq-a">Não. Somos canal de SMS Oficial, o que garante entregabilidade de 99,2% sem risco de bloqueio por operadoras.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Quais tipos de negócios podem usar o SMS marketing?<span class="faq-tog">+</span></div>
+        <div class="faq-a">Qualquer negócio! Marketing, cobranças, pesquisas, confirmações, avisos e transações são os usos mais comuns.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Como funciona o suporte da Nexus?<span class="faq-tog">+</span></div>
+        <div class="faq-a">Oferecemos suporte via chat, e-mail e telefone. Planos Enterprise contam com gestor dedicado e suporte prioritário.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEPOIMENTOS ── -->
+<style is:inline>
+#depoimentos { background:#444; padding:var(--py) var(--px); text-align:center; position:relative; overflow:hidden; }
+.dep-inner { max-width:820px; margin:0 auto; position:relative; z-index:1; }
+.dep-tag-lbl { font-size:11px; font-weight:700; letter-spacing:.18em; color:var(--orange); text-transform:uppercase; margin-bottom:36px; }
+.dep-quote-mark { font-size:88px; line-height:.9; color:rgba(255,255,255,.13); font-family:Georgia,'Times New Roman',serif; margin-bottom:20px; font-weight:900; }
+.dep-slides {
+  display:grid;
+  grid-template-columns:1fr;
+  grid-template-rows:1fr;
+  margin-bottom:0;
+}
+.dep-slide {
+  grid-area:1/1;
+  opacity:0; transition:opacity .55s ease, transform .55s ease;
+  pointer-events:none; transform:translateY(10px);
+}
+.dep-slide.dep-active { opacity:1; pointer-events:auto; transform:none; }
+.dep-text {
+  font-size:clamp(17px,2.6vw,26px); font-weight:800; line-height:1.45;
+  color:#fff; margin-bottom:28px; letter-spacing:-.02em;
+}
+.dep-name { font-size:15px; font-weight:700; color:#fff; margin-bottom:5px; }
+.dep-role { font-size:13px; color:rgba(255,255,255,.48); }
+.dep-avatars { display:flex; gap:14px; justify-content:center; margin-top:40px; flex-wrap:wrap; }
+.dep-av-btn {
+  width:56px; height:56px; border-radius:50%;
+  border:2.5px solid transparent; padding:2px;
+  background:transparent; cursor:pointer; transition:border-color .25s;
+  flex-shrink:0;
+}
+.dep-av-btn.dep-active { border-color:var(--orange); }
+.dep-av {
+  width:100%; height:100%; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px; font-weight:800; color:#fff; letter-spacing:.02em;
+  overflow:hidden; user-select:none; transition:background .25s;
+}
+.dep-av-btn:not(.dep-active) .dep-av { background:rgba(255,255,255,.16); filter:grayscale(1); }
+.dep-av-btn.dep-active   .dep-av { background:var(--orange); filter:none; }
+</style>
+<section id="depoimentos">
+  <div class="dep-inner">
+    <div class="dep-tag-lbl rv">Depoimentos</div>
+    <div class="dep-quote-mark rv rv1">"</div>
+    <div class="dep-slides rv rv2">
+      <div class="dep-slide dep-active">
+        <p class="dep-text">"Depois que conheci os serviços da Nexus Comunicação, meu negócio só decolou! Eles proporcionam sempre o melhor serviço de SMS para mim e meu negócio. Sou muito grata a eles por isso!!!"</p>
+        <div class="dep-name">Jéssica Alves</div>
+        <div class="dep-role">CEO, Mind Software House</div>
+      </div>
+      <div class="dep-slide">
+        <p class="dep-text">"Trabalhar com a empresa foi uma experiência excepcional. Eles não apenas entregaram resultados de alta qualidade, mas também demonstraram um compromisso genuíno em entender nossas necessidades e superar expectativas."</p>
+        <div class="dep-name">Carlos Santos</div>
+        <div class="dep-role">Gerente de Projetos, Tech Innovate</div>
+      </div>
+      <div class="dep-slide">
+        <p class="dep-text">"A empresa se destacou pela sua capacidade de inovação e pela qualidade dos seus produtos. Estou muito satisfeito com a parceria estabelecida e ansioso para colaborar novamente no futuro."</p>
+        <div class="dep-name">Maria Oliveira</div>
+        <div class="dep-role">Diretora de Operações, GlobalTech Solutions</div>
+      </div>
+      <div class="dep-slide">
+        <p class="dep-text">"Os serviços prestados pela empresa superaram todas as nossas expectativas. A equipe demonstrou expertise e comprometimento em fornecer soluções eficientes e personalizadas para o nosso negócio."</p>
+        <div class="dep-name">João Pereira</div>
+        <div class="dep-role">CEO, Inovação Digital Ltda</div>
+      </div>
+    </div>
+    <div class="dep-avatars rv rv3">
+      <button class="dep-av-btn dep-active" onclick="depGoTo(0)" aria-label="Jéssica Alves"><div class="dep-av">JA</div></button>
+      <button class="dep-av-btn" onclick="depGoTo(1)" aria-label="Carlos Santos"><div class="dep-av">CS</div></button>
+      <button class="dep-av-btn" onclick="depGoTo(2)" aria-label="Maria Oliveira"><div class="dep-av">MO</div></button>
+      <button class="dep-av-btn" onclick="depGoTo(3)" aria-label="João Pereira"><div class="dep-av">JP</div></button>
+    </div>
+  </div>
+</section>
+<script is:inline>
+(function(){
+  let cur=0, timer;
+  const slides=document.querySelectorAll('.dep-slide');
+  const btns=document.querySelectorAll('.dep-av-btn');
+  window.depGoTo=function(n){
+    slides[cur].classList.remove('dep-active');
+    btns[cur].classList.remove('dep-active');
+    cur=n;
+    slides[cur].classList.add('dep-active');
+    btns[cur].classList.add('dep-active');
+    clearInterval(timer);
+    timer=setInterval(()=>depGoTo((cur+1)%slides.length),5500);
+  };
+  timer=setInterval(()=>depGoTo((cur+1)%slides.length),5500);
+})();
+</script>
+
+<!-- ── LEAD FORM ── -->
+<section id="lead-form">
+  <div class="lf-glow"></div>
+  <div class="lf-inner">
+    <div class="lf-copy">
+      <div class="tag rv">Fale com um especialista</div>
+      <h2 class="h2 rv rv1" style="color:#111">Comece a enviar SMS agora <span style="color:var(--orange)">sem complicação.</span></h2>
+      <p class="sub rv rv2 light-text">Preencha o formulário e um consultor entra em contato em até 2 horas úteis com uma proposta personalizada.</p>
+      <div class="lf-trust rv rv3">
+        <div class="trust-it">Sem fidelidade</div>
+        <div class="trust-it">Sem taxa de setup</div>
+        <div class="trust-it">99,2% de entrega</div>
+        <div class="trust-it">SMS Oficial</div>
+        <div class="trust-it">Suporte dedicado</div>
+        <div class="trust-it">Plataforma completa</div>
+      </div>
+    </div>
+    <div class="lf-card rv rv2">
+      <h3>Solicite uma proposta gratuita</h3>
+      <p>Nosso time responde em até 2 horas úteis</p>
+      <div class="frow">
+        <div class="fg"><label>Nome completo</label><input id="sms-nome" type="text" class="fi" placeholder="Seu nome" required></div>
+        <div class="fg"><label>Empresa</label><input id="sms-empresa" type="text" class="fi" placeholder="Nome da empresa" required></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>WhatsApp / Telefone</label><input id="sms-telefone" type="tel" class="fi" placeholder="(00) 00000-0000" required maxlength="15" autocomplete="tel-national"></div>
+        <div class="fg"><label>E-mail</label><input id="sms-email" type="email" class="fi" placeholder="seu@email.com" required></div>
+      </div>
+      <div class="fg">
+        <label>Qual solução te interessa?</label>
+        <div class="sol-chips" id="sms-sol-chips">
+          <button type="button" class="sol-chip" onclick="selectSol(this,'sms','SMS')">SMS</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'sms','RCS')">RCS</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'sms','WhatsApp')">WhatsApp</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'sms','Proximidade')">Proximidade</button>
+          <button type="button" class="sol-chip" onclick="selectSol(this,'sms','Indefinido')">Indefinido</button>
+        </div>
+        <input type="hidden" id="sms-solucao" value="">
+      </div>
+      <div class="fg">
+        <label>Segmento da empresa</label>
+        <select id="sms-segmento" class="fi" required><option value="" disabled selected>Selecione seu segmento</option><option>Varejo / E-commerce</option><option>Saúde e Bem-estar</option><option>Educação</option><option>Financeiro / Crédito</option><option>Imobiliário</option><option>Alimentação</option><option>Serviços</option><option>Outro</option></select>
+      </div>
+      <div class="fg">
+        <label>Volume estimado de SMS/mês</label>
+        <select id="sms-volume" class="fi" required><option value="" disabled selected>Selecione o volume</option><option>Até 5.000</option><option>5.000 a 10.000</option><option>10.000 a 50.000</option><option>Acima de 50.000</option></select>
+      </div>
+      <button class="btn-lead" id="sms-btn" onclick="enviarLeadSMS(this)">Quero receber minha proposta →</button>
+      <p class="lf-priv"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:4px;margin-bottom:1px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Seus dados estão seguros. Não enviamos spam.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<Footer />
+
+<WhatsAppFab />
+
+<script is:inline>
+/* ── MOBILE DRAWER ── */
+function toggleDrawer() {
+  const d = document.getElementById('navDrawer');
+  const h = document.getElementById('navHam');
+  const open = d.classList.toggle('open');
+  h.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeDrawer() {
+  document.getElementById('navDrawer').classList.remove('open');
+  document.getElementById('navHam').classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Close drawer on resize to desktop
+window.addEventListener('resize', () => { if(window.innerWidth >= 640) closeDrawer(); });
+
+/* ── NAV scroll ── */
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+/* ── 3D tilt helper ── */
+function tilt3d(wrap, phone, maxX, maxY, defX, defY) {
+  const scene = phone;
+  scene.style.transform = `rotateX(${defX}deg) rotateY(${defY}deg)`;
+  wrap.addEventListener('mousemove', e => {
+    const r = wrap.getBoundingClientRect();
+    const dx = (e.clientX - r.left - r.width/2) / (r.width/2);
+    const dy = (e.clientY - r.top - r.height/2) / (r.height/2);
+    scene.style.transition = 'transform .06s ease-out';
+    scene.style.transform = `rotateX(${-dy*maxX}deg) rotateY(${dx*maxY}deg)`;
+  });
+  wrap.addEventListener('mouseleave', () => {
+    scene.style.transition = 'transform .9s cubic-bezier(.23,1,.32,1)';
+    scene.style.transform = `rotateX(${defX}deg) rotateY(${defY}deg)`;
+  });
+  /* touch tilt */
+  wrap.addEventListener('touchmove', e => {
+    const t = e.touches[0];
+    const r = wrap.getBoundingClientRect();
+    const dx = (t.clientX - r.left - r.width/2) / (r.width/2);
+    const dy = (t.clientY - r.top - r.height/2) / (r.height/2);
+    scene.style.transition = 'transform .06s ease-out';
+    scene.style.transform = `rotateX(${-dy*maxX*.5}deg) rotateY(${dx*maxY*.5}deg)`;
+  }, { passive:true });
+  wrap.addEventListener('touchend', () => {
+    scene.style.transition = 'transform .9s cubic-bezier(.23,1,.32,1)';
+    scene.style.transform = `rotateX(${defX}deg) rotateY(${defY}deg)`;
+  });
+}
+
+/* Apply tilt to both phones via closest iphone-wrap */
+const heroWrap = document.getElementById('heroWrap');
+const heroPhone = document.getElementById('heroPhone');
+if (heroWrap && heroPhone) tilt3d(heroWrap, heroPhone, 16, 22, 4, -6);
+
+const chWrapEl = document.getElementById('chWrap');
+const chPhoneEl = document.getElementById('chPhone');
+if (chWrapEl && chPhoneEl) {
+  /* wrap is the iphone-wrap inside chWrap */
+  const inner = chWrapEl.querySelector('.iphone-wrap');
+  if (inner) tilt3d(inner, chPhoneEl, 14, 18, 3, 8);
+}
+
+/* ── Channel tabs ── */
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.ch-tab').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    const el = document.getElementById('ch-' + tab.dataset.tab);
+    if (el) el.classList.add('active');
+  });
+});
+
+/* ── Geo filters + visualização ── */
+const geoFs  = document.querySelectorAll('.geo-f');
+const geoViz = document.querySelectorAll('.geo-viz .gv');
+geoFs.forEach(f => {
+  f.addEventListener('click', () => {
+    geoFs.forEach(x => x.classList.remove('active'));
+    geoViz.forEach(v => v.classList.remove('gv-on'));
+    f.classList.add('active');
+    const target = document.querySelector('.geo-viz .' + (f.dataset.viz || ''));
+    if (target) target.classList.add('gv-on');
+  });
+});
+
+/* ── FAQ accordion ── */
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!open) item.classList.add('open');
+  });
+});
+
+/* ── Scroll reveal ── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+
+/* ── Stat counter ── */
+function countUp(el) {
+  const raw = el.textContent;
+  const num = parseFloat(raw.replace(/[^\d.]/g, ''));
+  const suf = raw.replace(/[\d.]/g, '');
+  if (isNaN(num)) return;
+  let s = null;
+  const step = ts => {
+    if (!s) s = ts;
+    const p = Math.min((ts - s) / 1600, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = (num < 10 ? (ease * num).toFixed(1) : Math.round(ease * num)) + suf;
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const so = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.stat-num').forEach(countUp);
+      so.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+const sb = document.querySelector('.stats-bar');
+if (sb) so.observe(sb);
+
+
+/* ── MESH WAVE BACKGROUND ──
+   Loop global único → sem risco de IO cancelar o RAF antes de rodar.
+   SPD=0.01 garante movimento claramente visível a 60 fps.
+   Scroll parallax: grade desloca suavemente enquanto a página desce. */
+(function(){
+  const COLS=20, ROWS=11, AMP=16, SPD=0.01;
+  let globalT   = 0;
+  let scrollOff = 0;
+  const layers  = []; /* { cvs, ctx, resize } para cada seção */
+
+  window.addEventListener('scroll', () => {
+    scrollOff = window.scrollY * 0.00014;
+  }, {passive:true});
+
+  function drawLayer(cvs, ctx){
+    const W = cvs.width, H = cvs.height;
+    if (W < 2 || H < 2) return;
+    ctx.clearRect(0, 0, W, H);
+    const sx = W / (COLS - 1);
+    const sy = H / (ROWS - 1);
+    const T  = globalT + scrollOff;
+
+    /* grade deslocada por ondas senoidais */
+    const g = [];
+    for (let r = 0; r < ROWS; r++) {
+      g[r] = [];
+      for (let c = 0; c < COLS; c++) {
+        g[r][c] = {
+          x: c * sx + Math.sin(c * .52 + r * .38 + T) * AMP,
+          y: r * sy + Math.cos(c * .38 + r * .52 + T * .88) * AMP
+        };
+      }
+    }
+
+    /* linhas */
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+    ctx.lineWidth   = .65;
+    for (let r = 0; r < ROWS; r++) {
+      for (let c = 0; c < COLS; c++) {
+        if (c < COLS-1) { ctx.moveTo(g[r][c].x,g[r][c].y); ctx.lineTo(g[r][c+1].x,g[r][c+1].y); }
+        if (r < ROWS-1) { ctx.moveTo(g[r][c].x,g[r][c].y); ctx.lineTo(g[r+1][c].x,g[r+1][c].y); }
+      }
+    }
+    ctx.stroke();
+
+    /* pontos */
+    ctx.fillStyle = 'rgba(255,255,255,0.11)';
+    for (let r = 0; r < ROWS; r++) {
+      for (let c = 0; c < COLS; c++) {
+        ctx.beginPath();
+        ctx.arc(g[r][c].x, g[r][c].y, 1.6, 0, 6.283);
+        ctx.fill();
+      }
+    }
+  }
+
+  /* loop único — sem IntersectionObserver bloqueante */
+  function loop(){
+    if (!document.hidden) {
+      for (const {cvs, ctx} of layers) drawLayer(cvs, ctx);
+      globalT += SPD;
+    }
+    requestAnimationFrame(loop);
+  }
+
+  function meshInit(el){
+    if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+    el.style.overflow = 'hidden';
+
+    const cvs = document.createElement('canvas');
+    cvs.className = 'mesh-cvs';
+    el.prepend(cvs);
+    const ctx = cvs.getContext('2d');
+    if (!ctx) return;
+
+    function resize(){
+      const r = el.getBoundingClientRect();
+      cvs.width  = Math.round(r.width  || el.offsetWidth  || 1);
+      cvs.height = Math.round(r.height || el.offsetHeight || 1);
+    }
+    resize();
+    window.addEventListener('resize', resize, {passive:true});
+    layers.push({cvs, ctx, resize});
+  }
+
+  /* aplica ao hero + seções escuras + footer */
+  const hero = document.getElementById('hero');
+  if (hero) meshInit(hero);
+  document.querySelectorAll('.sec-dark, .sec-dark2').forEach(meshInit);
+  const ft = document.querySelector('footer');
+  if (ft) meshInit(ft);
+
+  /* inicia o loop — sem esperar IO nem evento externo */
+  requestAnimationFrame(loop);
+})();
+</script>
+
+<script is:inline>
+/* ── WEBHOOK LEAD FORM — SMS ── */
+const WEBHOOK_URL = 'https://midas-n8n.zn6ejt.easypanel.host/webhook/d05cec8a-1849-400a-bd61-09555631f83c';
+
+function brasiliaTimestamp() {
+  return new Date().toLocaleString('pt-BR', {
+    timeZone: 'America/Sao_Paulo',
+    day:    '2-digit',
+    month:  '2-digit',
+    year:   'numeric',
+    hour:   '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  });
+}
+
+/* ── Phone mask & form validation ── */
+function phoneMask(e) {
+  let v = e.target.value.replace(/\D/g,'').slice(0,11);
+  if (v.length > 6)      v = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7);
+  else if (v.length > 2) v = '(' + v.slice(0,2) + ') ' + v.slice(2);
+  else if (v.length)     v = '(' + v;
+  e.target.value = v;
+}
+function markErr(id) {
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('error'); el.focus(); }
+}
+function selectSol(btn, prefix, val) {
+  document.querySelectorAll('#'+prefix+'-sol-chips .sol-chip').forEach(c=>c.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById(prefix+'-solucao').value = val;
+  document.getElementById(prefix+'-sol-chips').classList.remove('chips-error');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const tel = document.getElementById('sms-telefone');
+  if (tel) tel.addEventListener('input', phoneMask);
+  document.querySelectorAll('.fi').forEach(el =>
+    el.addEventListener('input', () => el.classList.remove('error'))
+  );
+});
+
+async function enviarLeadSMS(btn) {
+  const nome     = document.getElementById('sms-nome').value.trim();
+  const empresa  = document.getElementById('sms-empresa').value.trim();
+  const telefone = document.getElementById('sms-telefone').value.trim();
+  const email    = document.getElementById('sms-email').value.trim();
+  const solucao  = document.getElementById('sms-solucao').value;
+  const segmento = document.getElementById('sms-segmento').value;
+  const volume   = document.getElementById('sms-volume').value;
+
+  document.querySelectorAll('.fi.error').forEach(el => el.classList.remove('error'));
+  document.querySelectorAll('.sol-chips').forEach(el => el.classList.remove('chips-error'));
+
+  if (!nome)                              { markErr('sms-nome');      return; }
+  if (!empresa)                           { markErr('sms-empresa');   return; }
+  const telDigits = telefone.replace(/\D/g,'');
+  if (telDigits.length !== 11)            { markErr('sms-telefone');  return; }
+  if (!email)                             { markErr('sms-email');     return; }
+  if (!solucao)                           { document.getElementById('sms-sol-chips').classList.add('chips-error'); document.getElementById('sms-sol-chips').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  if (!segmento)                          { markErr('sms-segmento');  return; }
+  if (!volume)                            { markErr('sms-volume');    return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+
+  const payload = {
+    origem:            'LP SMS Marketing',
+    nome,
+    empresa,
+    telefone,
+    email,
+    solucao_interesse: solucao,
+    segmento,
+    volume_sms_mes:    volume,
+    data_hora_brasilia: brasiliaTimestamp()
+  };
+
+  try {
+    await Promise.race([
+      fetch(WEBHOOK_URL, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload)
+      }),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
+    ]);
+  } catch (e) {
+    // Segue para obrigado mesmo em caso de falha/timeout — não bloqueia o usuário
+  }
+
+  window.location.href = '/obrigado';
+}
+</script>
+</Base>
