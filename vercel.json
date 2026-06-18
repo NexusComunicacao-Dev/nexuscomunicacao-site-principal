@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/home.html", "destination": "/home", "permanent": true },
+    { "source": "/rcs.html", "destination": "/rcs", "permanent": true },
+    { "source": "/whatsapp.html", "destination": "/whatsapp", "permanent": true },
+    { "source": "/push.html", "destination": "/push", "permanent": true },
+    { "source": "/obrigado.html", "destination": "/obrigado", "permanent": true },
+    { "source": "/politica-de-privacidade.html", "destination": "/politica-de-privacidade", "permanent": true },
+    { "source": "/termos-de-servico.html", "destination": "/termos-de-servico", "permanent": true }
+  ]
+}

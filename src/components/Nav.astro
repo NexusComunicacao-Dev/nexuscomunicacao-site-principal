@@ -1,0 +1,19 @@
+---
+// Shell do nav fixo do topo. O logo (slot "logo") e os links (slot default)
+// variam por página, então são passados verbatim. O wrapper, o id e o botão
+// hambúrguer (idênticos em todas) ficam aqui. toggleDrawer() é definido no
+// script inline de cada página.
+interface Props {
+  id?: string;
+}
+const { id = 'nav' } = Astro.props;
+---
+<nav id={id}>
+  <slot name="logo" />
+  <div class="nav-links">
+    <slot />
+  </div>
+  <button class="nav-ham" id="navHam" aria-label="Menu" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>

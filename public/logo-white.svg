@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_1" data-name="Camada 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 247.98 64.23">
+  <defs>
+    <style>
+      .cls-2 { letter-spacing: 0em; }
+      .cls-3 { fill: #ff7c1a; stroke-width: 0px; }
+      .cls-4 { fill: #ffffff; stroke-width: 0px; }
+      .cls-5 { letter-spacing: -.02em; }
+      .cls-6 {
+        fill: rgba(255,255,255,0.6);
+        font-family: GeologicaRoman-Thin, 'Geologica Roman', 'Inter', sans-serif;
+        font-size: 12.52px;
+        font-weight: 200;
+      }
+    </style>
+  </defs>
+  <g>
+    <g>
+      <path class="cls-4" d="M10.51,21.31v20.39c0,2.9-2.35,5.26-5.26,5.26h0C2.35,46.95,0,44.6,0,41.7V0s35.66,27.84,35.66,27.84V7.45c0-2.9,2.35-5.26,5.26-5.26h0c2.9,0,5.26,2.35,5.26,5.26v41.67S10.51,21.31,10.51,21.31Z"/>
+      <path class="cls-4" d="M197.14,2.2v39.23c0,1.51-.57,2.99-1.65,4.04-1.01,1-2.25,1.48-3.68,1.48h-35.33c-1.51,0-2.99-.55-4.04-1.63-1-1.01-1.48-2.25-1.48-3.68V11.01h-10.8l-10.39,13.57,17.14,22.36h-11.84l-11.35-14.55-11.17,14.55h-12.11l17.33-22.36L100.74,2.2h11.82l11.17,14.55,11.35-14.55h26.4v35.95h25.15V2.2h10.51Z"/>
+      <path class="cls-4" d="M206.52,2.19h33.83c2.43,0,4.4,1.97,4.4,4.4h0c0,2.43-1.97,4.4-4.4,4.4h-28.63v9.15h30.35c1.44,0,2.69.53,3.74,1.59,1.05,1.06,1.57,2.31,1.57,3.75v16.14c0,1.46-.52,2.71-1.57,3.75-1.05,1.04-2.3,1.56-3.74,1.56h-36.48c-2.43,0-4.4-1.97-4.4-4.4h0c0-2.43,1.97-4.4,4.4-4.4h31.26v-9.18h-30.32c-1.46,0-2.72-.52-3.77-1.56-1.05-1.04-1.57-2.29-1.57-3.75V7.51c0-1.44.52-2.69,1.57-3.74,1.05-1.05,2.3-1.57,3.77-1.57Z"/>
+    </g>
+    <g>
+      <rect class="cls-3" x="51.43" y="2.19" width="46.2" height="8.81" rx="4.4" ry="4.4"/>
+      <rect class="cls-3" x="59.63" y="20.17" width="29.81" height="8.81" rx="4.4" ry="4.4"/>
+      <rect class="cls-3" x="67.51" y="38.14" width="14.04" height="8.81" rx="4.4" ry="4.4"/>
+    </g>
+  </g>
+  <text class="cls-6" transform="translate(152.09 60.14)"><tspan class="cls-2" x="0" y="0">C</tspan><tspan x="8.59" y="0">OMUNIC</tspan><tspan class="cls-5" x="60.34" y="0">A</tspan><tspan x="68.38" y="0">Ç</tspan><tspan class="cls-5" x="77.09" y="0">Ã</tspan><tspan x="85.13" y="0">O</tspan></text>
+</svg>
