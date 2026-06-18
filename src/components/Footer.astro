@@ -28,6 +28,13 @@ import Logo from './Logo.astro';
         <a href="#">Base Geolocalizada</a>
       </div>
       <div class="fc">
+        <h4>Agentes</h4>
+        <a href="/agents/convoca">Convoca</a>
+        <a href="/agents/mandato-digital">Mandato Digital</a>
+        <a href="/agents/porta-voz">Porta-Voz</a>
+        <a href="/agents/voz-ativa">Voz Ativa</a>
+      </div>
+      <div class="fc">
         <h4>Contato</h4>
         <div class="fc-contact">(11) 3569-4630 / (11) 9 7094-4446</div>
         <div class="fc-contact">atendimento@nexuscomunicacao.com</div>
@@ -40,3 +47,8 @@ import Logo from './Logo.astro';
     <p><a href="/politica-de-privacidade" style="color:inherit;">Política de Privacidade</a> · <a href="/termos-de-servico" style="color:inherit;">Termos de Uso</a></p>
   </div>
 </footer>
+<style is:inline>
+  /* 4 colunas no footer (Institucional/Soluções/Agentes/Contato) — sobrescreve o repeat(3) das páginas */
+  .footer-cols { grid-template-columns: 1fr 1fr; }
+  @media (min-width: 1024px) { .footer-cols { grid-template-columns: repeat(4, 1fr); } }
+</style>
