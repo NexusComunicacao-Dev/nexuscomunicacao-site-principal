@@ -5,10 +5,18 @@ import Drawer from '../components/Drawer.astro';
 import Footer from '../components/Footer.astro';
 import Logo from '../components/Logo.astro';
 import WhatsAppFab from '../components/WhatsAppFab.astro';
+import { Image } from 'astro:assets';
+import logoLavoisier from '../assets/logo-lavoisier.png';
+import logoOnodera from '../assets/logo-onodera.png';
+import logoHope from '../assets/logo-hope.png';
+import logoCury from '../assets/logo-cury.png';
+import logoBobstore from '../assets/logo-bobstore.png';
 ---
-<Base title="NEXUS Comunicação — Plataforma de Marketing Digital">
-<style is:inline slot="head">
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+<Base
+  title="NEXUS Comunicação | Plataforma de Marketing Digital"
+  description="Plataforma completa de marketing digital da NEXUS Comunicação: SMS, RCS, WhatsApp e Push Ads de proximidade, com base geolocalizada e disparo em massa para toda a sua operação."
+>
+<style is:global>
 
 /* ─── TOKENS ─── */
 :root {
@@ -80,6 +88,23 @@ a { text-decoration:none; }
 .rv.on { opacity:1; transform:none; }
 .rv1 { transition-delay:.1s; } .rv2 { transition-delay:.2s; }
 .rv3 { transition-delay:.3s; } .rv4 { transition-delay:.4s; }
+
+/* O hero está sempre no viewport no load: a entrada roda por keyframes, sem depender
+   do IntersectionObserver registrado no fim do documento. Mesma duração (.7s),
+   mesmo easing (ease) e mesmo deslocamento (28px) do .rv. */
+@keyframes rvEnter { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
+#hero .rv  { animation:rvEnter .7s ease both; }
+#hero .rv1 { animation-delay:.1s; }
+#hero .rv2 { animation-delay:.2s; }
+#hero .rv3 { animation-delay:.3s; }
+#hero .rv4 { animation-delay:.4s; }
+
+/* respeita quem pediu menos movimento no sistema: as animações infinitas param
+   no estado inicial. !important garante a vitória independente da ordem de bundle. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-badge-dot, .cs-track { animation:none !important; }
+}
+
 
 /* ─── NAV ─── */
 nav {
@@ -438,7 +463,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
 }
 .soc:hover { background:rgba(255,124,26,.15); border-color:var(--orange); color:var(--orange); }
 .footer-cols { display:grid; grid-template-columns:1fr 1fr; gap:32px 20px; }
-.fc h4 { font-size:11px; font-weight:700; color:rgba(255,255,255,.35); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; }
+.fc h3 { font-size:11px; font-weight:700; color:rgba(255,255,255,.35); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; }
 .fc a { display:block; font-size:13px; color:rgba(255,255,255,.5); margin-bottom:9px; transition:color .2s; }
 .fc a:hover { color:var(--orange); }
 .fc-contact { font-size:13px; color:rgba(255,255,255,.5); margin-bottom:8px; line-height:1.5; }
@@ -531,7 +556,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
   <div class="hero-text rv">
     <div class="hero-badge"><div class="hero-badge-dot"></div>Plataforma de Comunicação</div>
     <h1 class="hero-title">Conecte sua<br><span class="accent">marca</span> ao Brasil.</h1>
-    <p class="hero-sub-txt">Do SMS ao Push Ads, da mensageria em massa ao marketing de proximidade — a NEXUS entrega o canal certo, para a pessoa certa, no momento certo.</p>
+    <p class="hero-sub-txt">Do SMS ao Push Ads, da mensageria em massa ao marketing de proximidade, a NEXUS entrega o canal certo, para a pessoa certa, no momento certo.</p>
     <div class="hero-ctas">
       <a href="#produtos" class="btn-primary">Conheça as soluções</a>
       <a href="#sobre" class="btn-ghost">Quem somos</a>
@@ -665,7 +690,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
   <div class="wrap rv">
     <span class="tag dark" style="color:var(--orange);">Nossas soluções</span>
     <h2 class="h2" style="color:#111;">Quatro canais.<br><span style="color:var(--orange)">Uma plataforma.</span></h2>
-    <p class="sub light-text">Escolha o canal ideal para cada momento da jornada do seu cliente — ou combine todos para uma estratégia omnicanal de alta performance.</p>
+    <p class="sub light-text">Escolha o canal ideal para cada momento da jornada do seu cliente, ou combine todos para uma estratégia omnicanal de alta performance.</p>
   </div>
   <div class="prod-grid">
 
@@ -676,7 +701,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
       </div>
       <div class="prod-tag">Canal 01</div>
       <div class="prod-name">SMS Marketing</div>
-      <p class="prod-desc">O canal com maior taxa de abertura do mercado — 98%, lido em menos de 3 minutos. Sem internet, sem app, sem bloqueio. Alcance qualquer celular no Brasil com escala e precisão.</p>
+      <p class="prod-desc">O canal com maior taxa de abertura do mercado: 98%, lido em menos de 3 minutos. Sem internet, sem app, sem bloqueio. Alcance qualquer celular no Brasil com escala e precisão.</p>
       <a href="/" class="prod-link">
         Ver solução
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -690,7 +715,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
       </div>
       <div class="prod-tag">Canal 02</div>
       <div class="prod-name">RCS Business Messaging</div>
-      <p class="prod-desc">A evolução do SMS. Envie imagens, vídeos, carrosséis de cards e botões interativos com remetente verificado — direto no app de mensagens nativo, sem download.</p>
+      <p class="prod-desc">A evolução do SMS. Envie imagens, vídeos, carrosséis de cards e botões interativos com remetente verificado, direto no app de mensagens nativo, sem download.</p>
       <a href="/rcs" class="prod-link">
         Ver solução
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -718,7 +743,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
       </div>
       <div class="prod-tag">Canal 04</div>
       <div class="prod-name">Marketing de Proximidade</div>
-      <p class="prod-desc">Push Ads com geolocalização em tempo real. Impacte consumidores quando estão próximos do seu PDV — 100M+ devices, CTR médio de 4% e relatório O2O de visitas físicas.</p>
+      <p class="prod-desc">Push Ads com geolocalização em tempo real. Impacte consumidores quando estão próximos do seu PDV: 100M+ devices, CTR médio de 4% e relatório O2O de visitas físicas.</p>
       <a href="/push" class="prod-link">
         Ver solução
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -733,16 +758,16 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
   <div class="cs-label">Empresas que confiam na NEXUS</div>
   <div class="cs-wrap">
     <div class="cs-track">
-      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
-      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
-      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
-      <div class="cs-logo"><img src="/logo-cury.png" alt="CURY"></div>
-      <div class="cs-logo"><img src="/logo-bobstore.png" alt="BOBSTORE"></div>
-      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
-      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
-      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
-      <div class="cs-logo"><img src="/logo-cury.png" alt="CURY"></div>
-      <div class="cs-logo"><img src="/logo-bobstore.png" alt="BOBSTORE"></div>
+      <div class="cs-logo"><Image src={logoLavoisier} alt="Lavoisier" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoOnodera} alt="Onodera" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoHope} alt="HOPE" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoCury} alt="CURY" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoBobstore} alt="BOBSTORE" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoLavoisier} alt="Lavoisier" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoOnodera} alt="Onodera" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoHope} alt="HOPE" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoCury} alt="CURY" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoBobstore} alt="BOBSTORE" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" /></div>
     </div>
   </div>
 </div>
@@ -757,7 +782,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
       <div class="sobre-quote">
         "Aqui você não é só um contrato.<br>Você é um parceiro."
       </div>
-      <p class="sub" style="margin-top:20px;">Já ajudamos mais de 500 clientes a transformar dados em campanhas, mensagens em conversas e contatos em clientes fiéis. Combinamos tecnologia avançada com um atendimento humano e próximo — isso é o que nos diferencia.</p>
+      <p class="sub" style="margin-top:20px;">Já ajudamos mais de 500 clientes a transformar dados em campanhas, mensagens em conversas e contatos em clientes fiéis. Combinamos tecnologia avançada com um atendimento humano e próximo. Isso é o que nos diferencia.</p>
     </div>
     <div class="sobre-right rv rv2">
       <div class="sobre-numbers">
@@ -791,7 +816,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
           </div>
           <div>
             <div class="pillar-title">Resultados mensuráveis</div>
-            <div class="pillar-desc">Do planejamento à análise dos resultados — dados reais para decisões mais inteligentes.</div>
+            <div class="pillar-desc">Do planejamento à análise dos resultados: dados reais para decisões mais inteligentes.</div>
           </div>
         </div>
       </div>
@@ -925,11 +950,24 @@ const so=new IntersectionObserver(entries=>{
 },{threshold:0.5});
 document.querySelectorAll('.stats-bar,.sobre-numbers').forEach(el=>so.observe(el));
 
-/* ── MESH WAVE BACKGROUND ── */
+/* ── MESH WAVE BACKGROUND ──
+   Loop global único; o IntersectionObserver apenas marca quais camadas estão
+   na viewport, sem nunca cancelar o RAF. */
 (function(){
-  const COLS=20,ROWS=11,AMP=16,SPD=0.01;
+  const COLS=20,ROWS=11,AMP=16,SPD=0.01,DOT=1.6;
   let globalT=0,scrollOff=0;
-  const layers=[];
+  const layers=new Map();
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* grade alocada uma única vez e reaproveitada a cada frame */
+  const grid=[];
+  for(let r=0;r<ROWS;r++){grid[r]=[];for(let c=0;c<COLS;c++)grid[r][c]={x:0,y:0};}
+
+  /* canvases fora da viewport não são redesenhados */
+  const io=new IntersectionObserver(entries=>{
+    for(const e of entries){const l=layers.get(e.target);if(l)l.visible=e.isIntersecting;}
+  },{rootMargin:'200px'});
+
   window.addEventListener('scroll',()=>{scrollOff=window.scrollY*0.00014;},{passive:true});
 
   function drawLayer(cvs,ctx){
@@ -937,41 +975,55 @@ document.querySelectorAll('.stats-bar,.sobre-numbers').forEach(el=>so.observe(el
     if(W<2||H<2)return;
     ctx.clearRect(0,0,W,H);
     const sx=W/(COLS-1),sy=H/(ROWS-1),T=globalT+scrollOff;
-    const g=[];
     for(let r=0;r<ROWS;r++){
-      g[r]=[];
       for(let c=0;c<COLS;c++){
-        g[r][c]={x:c*sx+Math.sin(c*.52+r*.38+T)*AMP,y:r*sy+Math.cos(c*.38+r*.52+T*.88)*AMP};
+        const p=grid[r][c];
+        p.x=c*sx+Math.sin(c*.52+r*.38+T)*AMP;
+        p.y=r*sy+Math.cos(c*.38+r*.52+T*.88)*AMP;
       }
     }
     ctx.beginPath();ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=.65;
     for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
-      if(c<COLS-1){ctx.moveTo(g[r][c].x,g[r][c].y);ctx.lineTo(g[r][c+1].x,g[r][c+1].y);}
-      if(r<ROWS-1){ctx.moveTo(g[r][c].x,g[r][c].y);ctx.lineTo(g[r+1][c].x,g[r+1][c].y);}
+      if(c<COLS-1){ctx.moveTo(grid[r][c].x,grid[r][c].y);ctx.lineTo(grid[r][c+1].x,grid[r][c+1].y);}
+      if(r<ROWS-1){ctx.moveTo(grid[r][c].x,grid[r][c].y);ctx.lineTo(grid[r+1][c].x,grid[r+1][c].y);}
     }
     ctx.stroke();
+    /* pontos: um único path para os 220 círculos */
     ctx.fillStyle='rgba(255,255,255,0.11)';
-    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){ctx.beginPath();ctx.arc(g[r][c].x,g[r][c].y,1.6,0,6.283);ctx.fill();}
+    ctx.beginPath();
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+      const p=grid[r][c];
+      ctx.moveTo(p.x+DOT,p.y);
+      ctx.arc(p.x,p.y,DOT,0,6.283);
+    }
+    ctx.fill();
   }
 
   function loop(){
-    if(!document.hidden){for(const{cvs,ctx}of layers)drawLayer(cvs,ctx);globalT+=SPD;}
+    if(!document.hidden){
+      for(const l of layers.values())if(l.visible)drawLayer(l.cvs,l.ctx);
+      globalT+=SPD;
+    }
     requestAnimationFrame(loop);
   }
+
+  function staticFrame(){for(const l of layers.values())drawLayer(l.cvs,l.ctx);}
 
   function addLayer(section){
     const cvs=document.createElement('canvas');
     cvs.className='mesh-cvs';
     section.prepend(cvs);
     const ctx=cvs.getContext('2d');
-    function resize(){cvs.width=section.offsetWidth;cvs.height=section.offsetHeight;}
+    if(!ctx)return;
+    function resize(){cvs.width=section.offsetWidth;cvs.height=section.offsetHeight;if(reduce.matches)drawLayer(cvs,ctx);}
     resize();
     window.addEventListener('resize',resize,{passive:true});
-    layers.push({cvs,ctx});
+    layers.set(section,{cvs,ctx,visible:true});
+    io.observe(section);
   }
 
   document.querySelectorAll('#hero,#sobre,footer').forEach(addLayer);
-  requestAnimationFrame(loop);
+  requestAnimationFrame(reduce.matches?staticFrame:loop);
 })();
 </script>
 </Base>

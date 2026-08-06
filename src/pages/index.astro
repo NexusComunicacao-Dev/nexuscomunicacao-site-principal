@@ -5,11 +5,18 @@ import Drawer from '../components/Drawer.astro';
 import Footer from '../components/Footer.astro';
 import Logo from '../components/Logo.astro';
 import WhatsAppFab from '../components/WhatsAppFab.astro';
+import { Image } from 'astro:assets';
+import logoLavoisier from '../assets/logo-lavoisier.png';
+import logoOnodera from '../assets/logo-onodera.png';
+import logoHope from '../assets/logo-hope.png';
+import logoCury from '../assets/logo-cury.png';
+import logoBobstore from '../assets/logo-bobstore.png';
 ---
-<Base title="NEXUS — SMS Marketing">
-<style is:inline slot="head">
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
+<Base
+  title="NEXUS | SMS Marketing"
+  description="Dispare campanhas de SMS Marketing com 98% de taxa de abertura e 99,2% de entregabilidade. SMS oficial, base geolocalizada e envio em massa sem o cliente precisar de internet."
+>
+<style is:global>
 /* ─── TOKENS ─── */
 :root {
   --orange: #ff7c1a;
@@ -94,6 +101,22 @@ a { text-decoration:none; }
 .rv2 { transition-delay:.2s; }
 .rv3 { transition-delay:.3s; }
 .rv4 { transition-delay:.4s; }
+
+/* O hero está sempre no viewport no load: a entrada roda por keyframes, sem depender
+   do IntersectionObserver registrado no fim do documento. Mesma duração (.7s),
+   mesmo easing (ease) e mesmo deslocamento (28px) do .rv. */
+@keyframes rvEnter { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
+#hero .rv  { animation:rvEnter .7s ease both; }
+#hero .rv1 { animation-delay:.1s; }
+#hero .rv2 { animation-delay:.2s; }
+#hero .rv3 { animation-delay:.3s; }
+#hero .rv4 { animation-delay:.4s; }
+
+/* respeita quem pediu menos movimento no sistema: as animações infinitas param
+   no estado inicial. !important garante a vitória independente da ordem de bundle. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-badge-dot, .phone-float, .gv-pulse, .cs-track { animation:none !important; }
+}
 
 /* ──────────────────────────────────────────
    NAV
@@ -433,7 +456,7 @@ nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
 .ch-tab { display:none; flex-direction:column; gap:8px; }
 .ch-tab.active { display:flex; }
 
-/* ── CANAL: TELA LIGHT — diferencia do mockup hero (dark) ── */
+/* ── CANAL: TELA LIGHT, diferencia do mockup hero (dark) ── */
 #chPhone .iphone-screen {
   background:#f0f0f5;
   box-shadow:inset 0 0 0 .5px rgba(0,0,0,.08);
@@ -473,7 +496,7 @@ nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
 }
 .gv.gv-on { opacity:1; pointer-events:auto; }
 
-/* 01 — Localização: grid + pins pulsantes */
+/* 01 - Localização: grid + pins pulsantes */
 .gv-map-bg {
   position:absolute; inset:0;
   background-image:
@@ -511,7 +534,7 @@ nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
   transform:translate(-50%,-160%); white-space:nowrap; z-index:2;
 }
 
-/* 02 — Gênero: anéis de progresso SVG */
+/* 02 - Gênero: anéis de progresso SVG */
 .gv-rings { display:flex; gap:36px; align-items:center; }
 .gv-ring-item { display:flex; flex-direction:column; align-items:center; gap:8px; }
 .gv-ring-svg { width:76px; height:76px; display:block; }
@@ -528,7 +551,7 @@ nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
 .gv-ring-lbl strong { display:block; font-size:17px; font-weight:900; color:#fff; }
 .gv-ring-lbl span   { font-size:10px; color:rgba(255,255,255,.42); }
 
-/* 03 — Faixa Etária: barras verticais */
+/* 03 - Faixa Etária: barras verticais */
 .gv-bars-v {
   display:flex; align-items:flex-end; gap:8px;
   height:130px; width:100%; padding:0 28px;
@@ -547,7 +570,7 @@ nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
 .gv-bv:nth-child(5) .gv-bv-bar { transition-delay:.33s; opacity:.55; }
 .gv-bv span { font-size:9px; color:rgba(255,255,255,.42); font-weight:600; white-space:nowrap; }
 
-/* 04 — Classe Social: barras horizontais */
+/* 04 - Classe Social: barras horizontais */
 .gv-bars-h {
   display:flex; flex-direction:column; gap:14px;
   width:100%; padding:0 28px;
@@ -745,7 +768,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
 }
 .soc:hover { background:rgba(255,124,26,.15); border-color:var(--orange); color:var(--orange); }
 .footer-cols { display:grid; grid-template-columns:1fr 1fr; gap:32px 20px; }
-.fc h4 { font-size:11px; font-weight:700; color:rgba(255,255,255,.35); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; }
+.fc h3 { font-size:11px; font-weight:700; color:rgba(255,255,255,.35); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; }
 .fc a { display:block; font-size:13px; color:rgba(255,255,255,.5); margin-bottom:9px; transition:color .2s; }
 .fc a:hover { color:var(--orange); }
 .fc-contact { font-size:13px; color:rgba(255,255,255,.5); margin-bottom:8px; line-height:1.5; }
@@ -885,7 +908,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
 
   .banner-wrap { padding:0 max(40px, calc((100% - var(--cw)) / 2)); }
 
-  /* Channel — grid 2 colunas: texto respira, telefone fixo à direita */
+  /* Channel - grid 2 colunas: texto respira, telefone fixo à direita */
   .channel-layout {
     display:grid;
     grid-template-columns: minmax(280px, 560px) auto;
@@ -922,7 +945,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
 
 <!-- ── NAV ── -->
 <Nav>
-  <a slot="logo" href="#" class="nav-logo" aria-label="NEXUS"><Logo text /></a>
+  <a slot="logo" href="/" class="nav-logo" aria-label="NEXUS"><Logo text /></a>
     <a href="#channel">Soluções</a>
     <a href="#faq">Suporte</a>
     <a href="/rcs" class="nav-switch">
@@ -958,7 +981,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
   <div class="hero-text rv">
     <div class="hero-badge"><div class="hero-badge-dot"></div>Solução Oficial</div>
     <h1 class="hero-title">SMS<br><span class="accent">Marketing.</span></h1>
-    <p class="hero-sub-txt">A maneira mais efetiva para divulgações com seu produto e captação de novos clientes — direto no celular, sem internet.</p>
+    <p class="hero-sub-txt">A maneira mais efetiva para divulgações com seu produto e captação de novos clientes, direto no celular, sem internet.</p>
     <div class="hero-ctas">
       <a href="#lead-form" class="btn-primary">Quero começar agora</a>
       <a href="#lead-form" class="btn-ghost">Falar com consultor</a>
@@ -1023,7 +1046,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
 </div>
 
 <!-- ── CLIENTES ── -->
-<style is:inline>
+<style is:global>
 .cs-strip { background:var(--dark3,#565656); padding:44px var(--px) 40px; overflow:hidden; }
 .cs-label { text-align:center; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:30px; }
 .cs-wrap { overflow:hidden; mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); -webkit-mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); }
@@ -1038,17 +1061,17 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
   <div class="cs-label">Empresas que confiam na Nexus</div>
   <div class="cs-wrap">
     <div class="cs-track">
-      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
-      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
-      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
-      <div class="cs-logo"><img src="/logo-cury.png" alt="Cury"></div>
-      <div class="cs-logo"><img src="/logo-bobstore.png" alt="Bobstore"></div>
+      <div class="cs-logo"><Image src={logoLavoisier} alt="Lavoisier" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoOnodera} alt="Onodera" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoHope} alt="HOPE" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoCury} alt="Cury" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoBobstore} alt="Bobstore" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
       <!-- duplicatas para loop contínuo -->
-      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
-      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
-      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
-      <div class="cs-logo"><img src="/logo-cury.png" alt="Cury"></div>
-      <div class="cs-logo"><img src="/logo-bobstore.png" alt="Bobstore"></div>
+      <div class="cs-logo"><Image src={logoLavoisier} alt="Lavoisier" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoOnodera} alt="Onodera" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoHope} alt="HOPE" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoCury} alt="Cury" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoBobstore} alt="Bobstore" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
     </div>
   </div>
 </div>
@@ -1091,7 +1114,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
                 <div class="ch-top"><span>9:41</span><svg width="30" height="9" viewBox="0 0 30 9" fill="white" opacity=".7"><rect x="0" y="3" width="2" height="6" rx=".8"/><rect x="3" y="1.5" width="2" height="7.5" rx=".8"/><rect x="6" y=".5" width="2" height="8.5" rx=".8"/><rect x="9" y="0" width="2" height="9" rx=".8"/><rect x="17" y=".5" width="12" height="8" rx="2" opacity=".3"/><rect x="18" y="1.5" width="8" height="6" rx="1.5" fill="white"/><rect x="29" y="3" width="1.5" height="3" rx=".5" opacity=".4"/></svg></div>
 
                 <div class="ch-tab active" id="ch-marketing">
-                  <div class="ch-msg"><div class="ch-from">NEXUS Marketing</div><span class="hi">OFERTA EXCLUSIVA!</span> Aproveite 40% OFF em toda a loja hoje. Use o codigo: <span class="hi">SMS40</span> — nexus.com.br/sale</div>
+                  <div class="ch-msg"><div class="ch-from">NEXUS Marketing</div><span class="hi">OFERTA EXCLUSIVA!</span> Aproveite 40% OFF em toda a loja hoje. Use o codigo: <span class="hi">SMS40</span> - nexus.com.br/sale</div>
                   <div class="ch-msg"><div class="ch-from">NEXUS Promos</div>Ultima chance! Black Friday termina em <span class="hi">2 horas</span>. Nao perca!</div>
                 </div>
                 <div class="ch-tab" id="ch-cobranca">
@@ -1126,10 +1149,10 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
     <div class="geo-card rv">
       <div class="geo-glow"></div>
 
-      <!-- Painel de visualização interativo — troca conforme o filtro ativo -->
+      <!-- Painel de visualização interativo, troca conforme o filtro ativo -->
       <div class="geo-viz">
 
-        <!-- 01: Localização — grid + pins pulsantes -->
+        <!-- 01: Localização, grid + pins pulsantes -->
         <div class="gv gv-loc gv-on">
           <div class="gv-map-bg"></div>
           <div class="gv-pin" style="top:28%;left:22%"><div class="gv-pulse"></div></div>
@@ -1144,7 +1167,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
           <div class="gv-tag" style="top:74%;left:68%">POA</div>
         </div>
 
-        <!-- 02: Gênero — anéis de progresso SVG -->
+        <!-- 02: Gênero, anéis de progresso SVG -->
         <div class="gv gv-gen">
           <div class="gv-rings">
             <div class="gv-ring-item gv-ring-masc">
@@ -1164,7 +1187,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
           </div>
         </div>
 
-        <!-- 03: Faixa Etária — barras verticais animadas -->
+        <!-- 03: Faixa Etária, barras verticais animadas -->
         <div class="gv gv-age">
           <div class="gv-bars-v">
             <div class="gv-bv"><div class="gv-bv-bar" style="--h:64px"></div><span>18–24</span></div>
@@ -1175,7 +1198,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
           </div>
         </div>
 
-        <!-- 04: Classe Social — barras horizontais animadas -->
+        <!-- 04: Classe Social, barras horizontais animadas -->
         <div class="gv gv-cls">
           <div class="gv-bars-h">
             <div class="gv-bh"><span class="gv-bh-l">Classe A</span><div class="gv-bh-track"><div class="gv-bh-fill" style="--w:20%"></div></div><span class="gv-bh-v">20%</span></div>
@@ -1221,13 +1244,13 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
   <h2 class="h2 rv rv1">Números que <span style="color:var(--orange)">comprovam</span></h2>
   <p class="facts-source rv rv2">Fontes: Anatel, IBGE, SMSBUMP, GSMA e DSIM</p>
   <div class="facts-grid">
-    <div class="fact-card rv"><div class="fact-val">230<sup>mi</sup></div><div class="fact-lbl">Celulares ativos no Brasil</div><div class="fact-desc">O maior mercado da América Latina — seu cliente está a um SMS de distância</div></div>
+    <div class="fact-card rv"><div class="fact-val">230<sup>mi</sup></div><div class="fact-lbl">Celulares ativos no Brasil</div><div class="fact-desc">O maior mercado da América Latina, seu cliente está a um SMS de distância</div></div>
     <div class="fact-card rv rv1"><div class="fact-val">90%</div><div class="fact-lbl">Lidos em até 3 minutos</div><div class="fact-desc">A grande maioria dos SMS são lidos em até 3 minutos após o recebimento</div></div>
-    <div class="fact-card rv rv2"><div class="fact-val">98%</div><div class="fact-lbl">Taxa de abertura</div><div class="fact-desc">Dos SMS são abertos pelo usuário — muito acima de qualquer outro canal</div></div>
+    <div class="fact-card rv rv2"><div class="fact-val">98%</div><div class="fact-lbl">Taxa de abertura</div><div class="fact-desc">Dos SMS são abertos pelo usuário, muito acima de qualquer outro canal</div></div>
     <div class="fact-card rv rv3"><div class="fact-val">209%</div><div class="fact-lbl">A mais que e-mail e Facebook</div><div class="fact-desc">A taxa de resposta do SMS supera em 209% o e-mail marketing e o Facebook</div></div>
     <div class="fact-card rv"><div class="fact-val">99,2%</div><div class="fact-lbl">Acessam a internet pelo celular</div><div class="fact-desc">Dos domicílios com internet utilizam o celular como principal meio de acesso</div></div>
     <div class="fact-card rv rv1"><div class="fact-val">90s</div><div class="fact-lbl">Tempo médio de resposta</div><div class="fact-desc">É o tempo médio em que uma mensagem de SMS é respondida pelo destinatário</div></div>
-    <div class="fact-card rv rv2"><div class="fact-val">10%</div><div class="fact-lbl">Considerado SPAM</div><div class="fact-desc">Apenas 10% do SMS é SPAM — contra 50% dos e-mails enviados</div></div>
+    <div class="fact-card rv rv2"><div class="fact-val">10%</div><div class="fact-lbl">Considerado SPAM</div><div class="fact-desc">Apenas 10% do SMS é SPAM, contra 50% dos e-mails enviados</div></div>
     <div class="fact-card rv rv3"><div class="fact-val" style="font-size:clamp(22px,3vw,32px);line-height:1.15">Base<br>Própria</div><div class="fact-lbl">Dados Geolocalizados</div><div class="fact-desc">Banco próprio para segmentação avançada de campanhas</div></div>
   </div>
   <div class="facts-cta rv">
@@ -1250,7 +1273,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
     <div class="faq-list rv rv2">
       <div class="faq-item">
         <div class="faq-q">O SMS precisa que o destinatário tenha internet?<span class="faq-tog">+</span></div>
-        <div class="faq-a">Não! Essa é uma das grandes vantagens do SMS. O destinatário não precisa de conexão com a internet — basta ter sinal de celular.</div>
+        <div class="faq-a">Não! Essa é uma das grandes vantagens do SMS. O destinatário não precisa de conexão com a internet, basta ter sinal de celular.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Posso usar minha própria base de contatos?<span class="faq-tog">+</span></div>
@@ -1273,7 +1296,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
 </section>
 
 <!-- ── DEPOIMENTOS ── -->
-<style is:inline>
+<style is:global>
 #depoimentos { background:#444; padding:var(--py) var(--px); text-align:center; position:relative; overflow:hidden; }
 .dep-inner { max-width:820px; margin:0 auto; position:relative; z-index:1; }
 .dep-tag-lbl { font-size:11px; font-weight:700; letter-spacing:.18em; color:var(--orange); text-transform:uppercase; margin-bottom:36px; }
@@ -1386,16 +1409,16 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
       <h3>Solicite uma proposta gratuita</h3>
       <p>Nosso time responde em até 2 horas úteis</p>
       <div class="frow">
-        <div class="fg"><label>Nome completo</label><input id="sms-nome" type="text" class="fi" placeholder="Seu nome" required></div>
-        <div class="fg"><label>Empresa</label><input id="sms-empresa" type="text" class="fi" placeholder="Nome da empresa" required></div>
+        <div class="fg"><label for="sms-nome">Nome completo</label><input id="sms-nome" type="text" class="fi" placeholder="Seu nome" required></div>
+        <div class="fg"><label for="sms-empresa">Empresa</label><input id="sms-empresa" type="text" class="fi" placeholder="Nome da empresa" required></div>
       </div>
       <div class="frow">
-        <div class="fg"><label>WhatsApp / Telefone</label><input id="sms-telefone" type="tel" class="fi" placeholder="(00) 00000-0000" required maxlength="15" autocomplete="tel-national"></div>
-        <div class="fg"><label>E-mail</label><input id="sms-email" type="email" class="fi" placeholder="seu@email.com" required></div>
+        <div class="fg"><label for="sms-telefone">WhatsApp / Telefone</label><input id="sms-telefone" type="tel" class="fi" placeholder="(00) 00000-0000" required maxlength="15" autocomplete="tel-national"></div>
+        <div class="fg"><label for="sms-email">E-mail</label><input id="sms-email" type="email" class="fi" placeholder="seu@email.com" required></div>
       </div>
       <div class="fg">
-        <label>Qual solução te interessa?</label>
-        <div class="sol-chips" id="sms-sol-chips">
+        <label id="sms-solucao-lbl">Qual solução te interessa?</label>
+        <div class="sol-chips" id="sms-sol-chips" role="group" aria-labelledby="sms-solucao-lbl">
           <button type="button" class="sol-chip" onclick="selectSol(this,'sms','SMS')">SMS</button>
           <button type="button" class="sol-chip" onclick="selectSol(this,'sms','RCS')">RCS</button>
           <button type="button" class="sol-chip" onclick="selectSol(this,'sms','WhatsApp')">WhatsApp</button>
@@ -1405,11 +1428,11 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
         <input type="hidden" id="sms-solucao" value="">
       </div>
       <div class="fg">
-        <label>Segmento da empresa</label>
+        <label for="sms-segmento">Segmento da empresa</label>
         <select id="sms-segmento" class="fi" required><option value="" disabled selected>Selecione seu segmento</option><option>Varejo / E-commerce</option><option>Saúde e Bem-estar</option><option>Educação</option><option>Financeiro / Crédito</option><option>Imobiliário</option><option>Alimentação</option><option>Serviços</option><option>Outro</option></select>
       </div>
       <div class="fg">
-        <label>Volume estimado de SMS/mês</label>
+        <label for="sms-volume">Volume estimado de SMS/mês</label>
         <select id="sms-volume" class="fi" required><option value="" disabled selected>Selecione o volume</option><option>Até 5.000</option><option>5.000 a 10.000</option><option>10.000 a 50.000</option><option>Acima de 50.000</option></select>
       </div>
       <button class="btn-lead" id="sms-btn" onclick="enviarLeadSMS(this)">Quero receber minha proposta →</button>
@@ -1555,14 +1578,31 @@ if (sb) so.observe(sb);
 
 
 /* ── MESH WAVE BACKGROUND ──
-   Loop global único → sem risco de IO cancelar o RAF antes de rodar.
+   Loop global único; o IntersectionObserver apenas marca quais camadas estão
+   na viewport, sem nunca cancelar o RAF.
    SPD=0.01 garante movimento claramente visível a 60 fps.
    Scroll parallax: grade desloca suavemente enquanto a página desce. */
 (function(){
-  const COLS=20, ROWS=11, AMP=16, SPD=0.01;
+  const COLS=20, ROWS=11, AMP=16, SPD=0.01, DOT=1.6;
   let globalT   = 0;
   let scrollOff = 0;
-  const layers  = []; /* { cvs, ctx, resize } para cada seção */
+  const layers  = new Map(); /* el → { cvs, ctx, visible } para cada seção */
+  const reduce  = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* grade alocada uma única vez e reaproveitada a cada frame */
+  const grid = [];
+  for (let r = 0; r < ROWS; r++) {
+    grid[r] = [];
+    for (let c = 0; c < COLS; c++) grid[r][c] = { x:0, y:0 };
+  }
+
+  /* canvases fora da viewport não são redesenhados */
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      const layer = layers.get(e.target);
+      if (layer) layer.visible = e.isIntersecting;
+    }
+  }, { rootMargin: '200px' });
 
   window.addEventListener('scroll', () => {
     scrollOff = window.scrollY * 0.00014;
@@ -1577,14 +1617,11 @@ if (sb) so.observe(sb);
     const T  = globalT + scrollOff;
 
     /* grade deslocada por ondas senoidais */
-    const g = [];
     for (let r = 0; r < ROWS; r++) {
-      g[r] = [];
       for (let c = 0; c < COLS; c++) {
-        g[r][c] = {
-          x: c * sx + Math.sin(c * .52 + r * .38 + T) * AMP,
-          y: r * sy + Math.cos(c * .38 + r * .52 + T * .88) * AMP
-        };
+        const p = grid[r][c];
+        p.x = c * sx + Math.sin(c * .52 + r * .38 + T) * AMP;
+        p.y = r * sy + Math.cos(c * .38 + r * .52 + T * .88) * AMP;
       }
     }
 
@@ -1594,30 +1631,35 @@ if (sb) so.observe(sb);
     ctx.lineWidth   = .65;
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLS; c++) {
-        if (c < COLS-1) { ctx.moveTo(g[r][c].x,g[r][c].y); ctx.lineTo(g[r][c+1].x,g[r][c+1].y); }
-        if (r < ROWS-1) { ctx.moveTo(g[r][c].x,g[r][c].y); ctx.lineTo(g[r+1][c].x,g[r+1][c].y); }
+        if (c < COLS-1) { ctx.moveTo(grid[r][c].x,grid[r][c].y); ctx.lineTo(grid[r][c+1].x,grid[r][c+1].y); }
+        if (r < ROWS-1) { ctx.moveTo(grid[r][c].x,grid[r][c].y); ctx.lineTo(grid[r+1][c].x,grid[r+1][c].y); }
       }
     }
     ctx.stroke();
 
-    /* pontos */
+    /* pontos: um único path para os 220 círculos */
     ctx.fillStyle = 'rgba(255,255,255,0.11)';
+    ctx.beginPath();
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLS; c++) {
-        ctx.beginPath();
-        ctx.arc(g[r][c].x, g[r][c].y, 1.6, 0, 6.283);
-        ctx.fill();
+        const p = grid[r][c];
+        ctx.moveTo(p.x + DOT, p.y);
+        ctx.arc(p.x, p.y, DOT, 0, 6.283);
       }
     }
+    ctx.fill();
   }
 
-  /* loop único — sem IntersectionObserver bloqueante */
   function loop(){
     if (!document.hidden) {
-      for (const {cvs, ctx} of layers) drawLayer(cvs, ctx);
+      for (const layer of layers.values()) if (layer.visible) drawLayer(layer.cvs, layer.ctx);
       globalT += SPD;
     }
     requestAnimationFrame(loop);
+  }
+
+  function staticFrame(){
+    for (const layer of layers.values()) drawLayer(layer.cvs, layer.ctx);
   }
 
   function meshInit(el){
@@ -1630,14 +1672,18 @@ if (sb) so.observe(sb);
     const ctx = cvs.getContext('2d');
     if (!ctx) return;
 
+    const layer = { cvs, ctx, visible: true };
+
     function resize(){
       const r = el.getBoundingClientRect();
       cvs.width  = Math.round(r.width  || el.offsetWidth  || 1);
       cvs.height = Math.round(r.height || el.offsetHeight || 1);
+      if (reduce.matches) drawLayer(cvs, ctx);
     }
     resize();
     window.addEventListener('resize', resize, {passive:true});
-    layers.push({cvs, ctx, resize});
+    layers.set(el, layer);
+    io.observe(el);
   }
 
   /* aplica ao hero + seções escuras + footer */
@@ -1647,13 +1693,12 @@ if (sb) so.observe(sb);
   const ft = document.querySelector('footer');
   if (ft) meshInit(ft);
 
-  /* inicia o loop — sem esperar IO nem evento externo */
-  requestAnimationFrame(loop);
+  requestAnimationFrame(reduce.matches ? staticFrame : loop);
 })();
 </script>
 
 <script is:inline>
-/* ── WEBHOOK LEAD FORM — SMS ── */
+/* ── WEBHOOK LEAD FORM - SMS ── */
 const WEBHOOK_URL = 'https://midas-n8n.zn6ejt.easypanel.host/webhook/d05cec8a-1849-400a-bd61-09555631f83c';
 
 function brasiliaTimestamp() {
@@ -1741,7 +1786,7 @@ async function enviarLeadSMS(btn) {
       new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
     ]);
   } catch (e) {
-    // Segue para obrigado mesmo em caso de falha/timeout — não bloqueia o usuário
+    // Segue para obrigado mesmo em caso de falha/timeout, não bloqueia o usuário
   }
 
   window.location.href = '/obrigado';

@@ -3,10 +3,18 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Drawer from '../components/Drawer.astro';
 import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import logoLavoisier from '../assets/logo-lavoisier.png';
+import logoOnodera from '../assets/logo-onodera.png';
+import logoHope from '../assets/logo-hope.png';
+import logoCury from '../assets/logo-cury.png';
+import logoBobstore from '../assets/logo-bobstore.png';
 ---
-<Base title="NEXUS — WhatsApp Marketing">
-<style is:inline slot="head">
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+<Base
+  title="NEXUS | WhatsApp Marketing"
+  description="Campanhas de WhatsApp Marketing pela API Oficial da Meta: templates aprovados, disparo em massa, chatbot e atendimento multiatendente sem risco de bloqueio da sua conta."
+>
+<style is:global>
 
 /* ─── TOKENS ─── */
 :root {
@@ -82,6 +90,23 @@ a { text-decoration:none; }
 .rv2 { transition-delay:.2s; }
 .rv3 { transition-delay:.3s; }
 .rv4 { transition-delay:.4s; }
+
+/* O hero está sempre no viewport no load: a entrada roda por keyframes, sem depender
+   do IntersectionObserver registrado no fim do documento. Mesma duração (.7s),
+   mesmo easing (ease) e mesmo deslocamento (28px) do .rv. */
+@keyframes rvEnter { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
+#hero .rv  { animation:rvEnter .7s ease both; }
+#hero .rv1 { animation-delay:.1s; }
+#hero .rv2 { animation-delay:.2s; }
+#hero .rv3 { animation-delay:.3s; }
+#hero .rv4 { animation-delay:.4s; }
+
+/* respeita quem pediu menos movimento no sistema: as animações infinitas param
+   no estado inicial. !important garante a vitória independente da ordem de bundle. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-badge-dot, .cs-track { animation:none !important; }
+}
+
 
 /* ─── NAV ─── */
 nav {
@@ -537,7 +562,7 @@ footer { background:#111; border-top:1px solid rgba(255,255,255,.06); padding:60
 
 <!-- PROCESSO -->
 <!-- ── CLIENTES ── -->
-<style is:inline>
+<style is:global>
 .cs-strip { background:var(--dark3,#565656); padding:44px var(--px) 40px; overflow:hidden; }
 .cs-label { text-align:center; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:30px; }
 .cs-wrap { overflow:hidden; mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); -webkit-mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); }
@@ -552,17 +577,17 @@ footer { background:#111; border-top:1px solid rgba(255,255,255,.06); padding:60
   <div class="cs-label">Empresas que confiam na Nexus</div>
   <div class="cs-wrap">
     <div class="cs-track">
-      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
-      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
-      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
-      <div class="cs-logo"><img src="/logo-cury.png" alt="Cury"></div>
-      <div class="cs-logo"><img src="/logo-bobstore.png" alt="Bobstore"></div>
+      <div class="cs-logo"><Image src={logoLavoisier} alt="Lavoisier" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoOnodera} alt="Onodera" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoHope} alt="HOPE" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoCury} alt="Cury" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoBobstore} alt="Bobstore" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
       <!-- duplicatas para loop contínuo -->
-      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
-      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
-      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
-      <div class="cs-logo"><img src="/logo-cury.png" alt="Cury"></div>
-      <div class="cs-logo"><img src="/logo-bobstore.png" alt="Bobstore"></div>
+      <div class="cs-logo"><Image src={logoLavoisier} alt="Lavoisier" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoOnodera} alt="Onodera" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoHope} alt="HOPE" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoCury} alt="Cury" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoBobstore} alt="Bobstore" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
     </div>
   </div>
 </div>
@@ -686,7 +711,7 @@ footer { background:#111; border-top:1px solid rgba(255,255,255,.06); padding:60
 </section>
 
 <!-- FOOTER -->
-<style is:inline>
+<style is:global>
 /* Footer unificado (CSS portado da index p/ a estrutura .footer-cols/.fc) */
 footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); padding:56px var(--px) 32px; position:relative; overflow:hidden; }
 footer > * { position:relative; z-index:1; }
@@ -696,7 +721,7 @@ footer > * { position:relative; z-index:1; }
 .soc { width:34px; height:34px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:7px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.5); font-size:12px; font-weight:700; transition:all .2s; }
 .soc:hover { background:rgba(255,124,26,.15); border-color:var(--orange); color:var(--orange); }
 .footer-cols { display:grid; grid-template-columns:1fr 1fr; gap:32px 20px; }
-.fc h4 { font-size:11px; font-weight:700; color:rgba(255,255,255,.35); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; }
+.fc h3 { font-size:11px; font-weight:700; color:rgba(255,255,255,.35); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; }
 .fc a { display:block; font-size:13px; color:rgba(255,255,255,.5); margin-bottom:9px; transition:color .2s; }
 .fc a:hover { color:var(--orange); }
 .fc-contact { font-size:13px; color:rgba(255,255,255,.5); margin-bottom:8px; line-height:1.5; }
@@ -720,31 +745,40 @@ footer > * { position:relative; z-index:1; }
   const canvas=document.getElementById('mesh'),ctx=canvas.getContext('2d');
   const COLS=20,ROWS=11,AMP=16,SPD=0.01;
   let W,H,t=0,scrollOff=0;
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  /* grade alocada uma única vez e reaproveitada a cada frame */
   const pts=[];
-  function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
-  window.addEventListener('resize',resize);resize();
+  for(let i=0;i<(ROWS+1)*(COLS+1);i++)pts.push({x:0,y:0});
+  function pt(r,c){return pts[r*(COLS+1)+c];}
+  function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;if(reduce.matches)render();}
+  window.addEventListener('resize',resize);
   window.addEventListener('scroll',()=>{scrollOff=scrollY*0.00014;},{passive:true});
-  function draw(){
+  function render(){
     ctx.clearRect(0,0,W,H);
     const cw=W/COLS,ch=H/ROWS;
-    pts.length=0;
     for(let r=0;r<=ROWS;r++)for(let c=0;c<=COLS;c++){
-      const x=c*cw,baseY=r*ch;
-      const wave=Math.sin(c*.38+r*.55+t+scrollOff)*AMP+Math.sin(c*.22-r*.3+t*.7)*AMP*.5;
-      pts.push({x,y:baseY+wave});
+      const p=pts[r*(COLS+1)+c];
+      p.x=c*cw;
+      p.y=r*ch+Math.sin(c*.38+r*.55+t+scrollOff)*AMP+Math.sin(c*.22-r*.3+t*.7)*AMP*.5;
     }
-    function pt(r,c){return pts[r*(COLS+1)+c];}
+    /* todos os segmentos em um único path: 1 stroke() por frame no lugar de ~460 */
     ctx.strokeStyle='rgba(255,124,26,0.055)';ctx.lineWidth=1;
+    ctx.beginPath();
     for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
       const p=pt(r,c),pr=pt(r,c+1),pb=pt(r+1,c),pd=pt(r+1,c+1);
-      ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(pr.x,pr.y);ctx.stroke();
-      ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(pb.x,pb.y);ctx.stroke();
-      if(c===COLS-1){ctx.beginPath();ctx.moveTo(pr.x,pr.y);ctx.lineTo(pd.x,pd.y);ctx.stroke();}
-      if(r===ROWS-1){ctx.beginPath();ctx.moveTo(pb.x,pb.y);ctx.lineTo(pd.x,pd.y);ctx.stroke();}
+      ctx.moveTo(p.x,p.y);ctx.lineTo(pr.x,pr.y);
+      ctx.moveTo(p.x,p.y);ctx.lineTo(pb.x,pb.y);
+      if(c===COLS-1){ctx.moveTo(pr.x,pr.y);ctx.lineTo(pd.x,pd.y);}
+      if(r===ROWS-1){ctx.moveTo(pb.x,pb.y);ctx.lineTo(pd.x,pd.y);}
     }
-    t+=SPD;requestAnimationFrame(draw);
+    ctx.stroke();
   }
-  draw();
+  function draw(){
+    if(!document.hidden){render();t+=SPD;}
+    requestAnimationFrame(draw);
+  }
+  resize();
+  if(reduce.matches)render();else requestAnimationFrame(draw);
 })();
 
 /* ── MOBILE DRAWER ── */

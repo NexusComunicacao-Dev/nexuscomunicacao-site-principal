@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mandato Digital | Acompanhe de perto o que acontece na sua região.</title>
-<meta name="description" content="O Mandato Digital é uma plataforma de transparência e acompanhamento.">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-<style is:inline>
+---
+import Base from '../../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import agentLogo from '../../assets/agents/logo_mandato_digital_224x224.png';
+import agentBanner from '../../assets/agents/mandato_digital_banner_rcs_1440x448.png';
+---
+<Base
+  title="Mandato Digital | Acompanhe de perto o que acontece na sua região."
+  description="O Mandato Digital é a plataforma de transparência e acompanhamento da NEXUS. Projetos, obras e ações que impactam a sua região, com atualizações periódicas e linguagem clara, direto no seu aplicativo de mensagens."
+  gtag={false}
+  font="poppins"
+>
+<style is:global>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Poppins',system-ui,sans-serif;color:#26262b;background:#fff;line-height:1.65}
 a{color:inherit}
@@ -42,13 +46,11 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-con
 footer a{color:#fff}
 @media(max-width:640px){nav{display:none}}
 </style>
-</head>
-<body>
 <header><div class="wrap">
-<div class="brand"><img src="/agents/assets/logo_mandato_digital_224x224.png" alt="Logo Mandato Digital">Mandato Digital</div>
+<div class="brand"><Image src={agentLogo} alt="Logo Mandato Digital" width={44} height={44} densities={[1, 2]} loading="eager" />Mandato Digital</div>
 <nav><a href="#sobre">O que é</a><a href="#como">Como funciona</a><a href="#recebe">O que você recebe</a><a href="#privacidade">Privacidade</a></nav>
 </div></header>
-<div class="hero"><img src="/agents/assets/mandato_digital_banner_rcs_1440x448.png" alt="Mandato Digital"></div>
+<div class="hero"><Image src={agentBanner} alt="Mandato Digital" width={1440} height={448} widths={[720, 1080, 1440]} sizes="100vw" loading="eager" fetchpriority="high" /></div>
 <div class="tag"><h1>Acompanhe de perto o que acontece na sua região.</h1></div>
 <section id="sobre"><div class="wrap">
 <h2>O que é o <span>Mandato Digital</span></h2>
@@ -75,5 +77,4 @@ footer a{color:#fff}
 <div>© 2026 Mandato Digital. Um produto <a href="https://nexuscomunicacao.com" style="font-weight:600">NEXUS Comunicação</a>.</div>
 <div>Fale com a gente: <a href="mailto:atendimento@nexuscomunicacao.com">atendimento@nexuscomunicacao.com</a></div>
 </div></footer>
-</body>
-</html>
+</Base>

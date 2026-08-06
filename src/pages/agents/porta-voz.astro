@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Porta-Voz | Comunicados oficiais, sem ruído.</title>
-<meta name="description" content="O Porta-Voz é o canal de comunicação direta entre instituições, lideranças e a comunidade.">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-<style is:inline>
+---
+import Base from '../../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import agentLogo from '../../assets/agents/logo_porta_voz_224x224.png';
+import agentBanner from '../../assets/agents/banner_porta_voz_1440x448.png';
+---
+<Base
+  title="Porta-Voz | Comunicados oficiais, sem ruído."
+  description="O Porta-Voz é o canal de comunicação direta entre instituições, lideranças e a comunidade. Comunicados oficiais, prestação de contas e agenda pública com a credibilidade de um canal verificado, no seu celular."
+  gtag={false}
+  font="poppins"
+>
+<style is:global>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Poppins',system-ui,sans-serif;color:#26262b;background:#fff;line-height:1.65}
 a{color:inherit}
@@ -42,13 +46,11 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-con
 footer a{color:#fff}
 @media(max-width:640px){nav{display:none}}
 </style>
-</head>
-<body>
 <header><div class="wrap">
-<div class="brand"><img src="/agents/assets/logo_porta_voz_224x224.png" alt="Logo Porta-Voz">Porta-Voz</div>
+<div class="brand"><Image src={agentLogo} alt="Logo Porta-Voz" width={44} height={44} densities={[1, 2]} loading="eager" />Porta-Voz</div>
 <nav><a href="#sobre">O que é</a><a href="#como">Como funciona</a><a href="#recebe">O que você recebe</a><a href="#privacidade">Privacidade</a></nav>
 </div></header>
-<div class="hero"><img src="/agents/assets/banner_porta_voz_1440x448.png" alt="Porta-Voz"></div>
+<div class="hero"><Image src={agentBanner} alt="Porta-Voz" width={1440} height={448} widths={[720, 1080, 1440]} sizes="100vw" loading="eager" fetchpriority="high" /></div>
 <div class="tag"><h1>Comunicados oficiais, sem ruído.</h1></div>
 <section id="sobre"><div class="wrap">
 <h2>O que é o <span>Porta-Voz</span></h2>
@@ -75,5 +77,4 @@ footer a{color:#fff}
 <div>© 2026 Porta-Voz. Um produto <a href="https://nexuscomunicacao.com" style="font-weight:600">NEXUS Comunicação</a>.</div>
 <div>Fale com a gente: <a href="mailto:atendimento@nexuscomunicacao.com">atendimento@nexuscomunicacao.com</a></div>
 </div></footer>
-</body>
-</html>
+</Base>

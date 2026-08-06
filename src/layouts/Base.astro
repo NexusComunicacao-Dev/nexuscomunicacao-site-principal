@@ -1,15 +1,38 @@
 ---
-// Layout base: <head> comum (charset/viewport/title/favicon/gtag) + corpo via <slot/>.
+// Layout base: <head> comum (charset/viewport/title/description/canonical/OG/
+// Twitter/favicon/fontes/gtag) + corpo via <slot/>.
 // gtag é CONDICIONAL: marketing pages = true (default); páginas legais não tinham
 // gtag e devem continuar sem (passar gtag={false}).
-// O <slot name="head"/> permite cada página injetar no <head> seu <style is:inline>
-// e, no caso da /obrigado, o snippet de conversão (na ordem certa, depois do config).
+// O <slot name="head"/> permite cada página injetar no <head> o que for próprio
+// dela e, no caso da /obrigado, o snippet de conversão (na ordem certa, depois
+// do config).
 interface Props {
   title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: string;
+  canonical?: string;
   gtag?: boolean;
   lang?: string;
+  font?: 'inter' | 'poppins';
+  noindex?: boolean;
 }
-const { title, gtag = true, lang = 'pt-BR' } = Astro.props;
+const {
+  title,
+  description,
+  ogImage = '/og-nexus.png',
+  ogType = 'website',
+  canonical,
+  gtag = true,
+  lang = 'pt-BR',
+  font = 'inter',
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://nexuscomunicacao.com');
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonicalUrl = canonical ?? new URL(path, site).href;
+const ogImageUrl = new URL(ogImage, site).href;
 ---
 
 <!DOCTYPE html>
@@ -18,10 +41,110 @@ const { title, gtag = true, lang = 'pt-BR' } = Astro.props;
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}</title>
+<meta name="description" content={description}>
+{noindex && <meta name="robots" content="noindex, follow" />}
+<link rel="canonical" href={canonicalUrl}>
+<meta property="og:site_name" content="NEXUS Comunicação">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content={ogType}>
+<meta property="og:url" content={canonicalUrl}>
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:image" content={ogImageUrl}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NEXUS Comunicação">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={description}>
+<meta name="twitter:image" content={ogImageUrl}>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+{font === 'inter' && (
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin />
+)}
+{font === 'poppins' && (
+  <>
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-400-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-600-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-800-latin.woff2" crossorigin />
+  </>
+)}
+<style is:global>
+/* Inter é variável (fvar 100..900): um arquivo por subset cobre todos os pesos,
+   inclusive o 200 usado no relógio do mock de push. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Poppins é estática: um arquivo por peso e por subset. Só as páginas /agents/*
+   a usam, e o navegador só baixa a face que o texto renderizado casar. */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/poppins-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/poppins-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/poppins-600-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/poppins-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/poppins-800-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/poppins-800-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* foco visível apenas para navegação por teclado */
+:focus-visible { outline:2px solid var(--orange, #ff7c1a); outline-offset:3px; }
+</style>
 {gtag && (
   <>
     <!-- Google tag (gtag.js) -->
+    <link rel="preconnect" href="https://www.googletagmanager.com">
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=AW-328024362"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
