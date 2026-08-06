@@ -6,12 +6,13 @@ import Base from '../layouts/Base.astro';
   description="Recebemos a sua solicitação. Um consultor da NEXUS Comunicação entra em contato em até 2 horas úteis com uma proposta personalizada."
 >
 
-<!-- Event snippet for LEAD FORM conversion page -->
 <script is:inline slot="head">
-  gtag('event', 'conversion', {
-      'send_to': 'AW-328024362/DgUjCNm725McEKqCtZwB',
-      'value': 1.0,
-      'currency': 'BRL'
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'lead_form_conversion',
+    send_to: 'AW-328024362/DgUjCNm725McEKqCtZwB',
+    value: 1.0,
+    currency: 'BRL'
   });
 </script>
 
