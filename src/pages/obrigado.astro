@@ -1,7 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="NEXUS — Obrigado pelo contato!">
+<Base
+  title="NEXUS | Obrigado pelo contato!"
+  description="Recebemos a sua solicitação. Um consultor da NEXUS Comunicação entra em contato em até 2 horas úteis com uma proposta personalizada."
+>
 
 <!-- Event snippet for LEAD FORM conversion page -->
 <script is:inline slot="head">
@@ -12,8 +15,7 @@ import Base from '../layouts/Base.astro';
   });
 </script>
 
-<style is:inline slot="head">
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+<style is:global>
 
 :root {
   --orange: #ff7c1a;
@@ -102,6 +104,12 @@ a { text-decoration:none; }
   width:80px; height:80px; border-radius:24px;
   border:2px solid var(--orange);
   animation:ringPulse 2.4s ease-in-out .5s infinite;
+}
+
+/* respeita quem pediu menos movimento no sistema: as animações infinitas param
+   no estado inicial. !important garante a vitória independente da ordem de bundle. */
+@media (prefers-reduced-motion: reduce) {
+  .check-ring { animation:none !important; }
 }
 .check-wrap-outer { position:relative; margin-bottom:28px; display:flex; align-items:center; justify-content:center; }
 @keyframes ringPulse {
@@ -248,29 +256,39 @@ a { text-decoration:none; }
   const canvas=document.getElementById('mesh'), ctx=canvas.getContext('2d');
   const COLS=20, ROWS=11, AMP=14, SPD=0.009;
   let W, H, t=0;
-  function resize(){ W=canvas.width=innerWidth; H=canvas.height=innerHeight; }
-  window.addEventListener('resize', resize); resize();
-  function draw(){
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  /* grade alocada uma única vez e reaproveitada a cada frame */
+  const pts=[];
+  for(let i=0;i<(ROWS+1)*(COLS+1);i++) pts.push({x:0,y:0});
+  function pt(r,c){ return pts[r*(COLS+1)+c]; }
+  function resize(){ W=canvas.width=innerWidth; H=canvas.height=innerHeight; if(reduce.matches) render(); }
+  window.addEventListener('resize', resize);
+  function render(){
     ctx.clearRect(0,0,W,H);
     const cw=W/COLS, ch=H/ROWS;
-    const pts=[];
     for(let r=0;r<=ROWS;r++) for(let c=0;c<=COLS;c++){
-      const x=c*cw;
-      const wave=Math.sin(c*.38+r*.55+t)*AMP + Math.sin(c*.22-r*.3+t*.7)*AMP*.5;
-      pts.push({x, y:r*ch+wave});
+      const p=pts[r*(COLS+1)+c];
+      p.x=c*cw;
+      p.y=r*ch + Math.sin(c*.38+r*.55+t)*AMP + Math.sin(c*.22-r*.3+t*.7)*AMP*.5;
     }
-    function pt(r,c){ return pts[r*(COLS+1)+c]; }
+    /* todos os segmentos em um único path: 1 stroke() por frame */
     ctx.strokeStyle='rgba(255,124,26,0.05)'; ctx.lineWidth=1;
+    ctx.beginPath();
     for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++){
       const p=pt(r,c), pr=pt(r,c+1), pb=pt(r+1,c), pd=pt(r+1,c+1);
-      ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(pr.x,pr.y); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(pb.x,pb.y); ctx.stroke();
-      if(c===COLS-1){ ctx.beginPath(); ctx.moveTo(pr.x,pr.y); ctx.lineTo(pd.x,pd.y); ctx.stroke(); }
-      if(r===ROWS-1){ ctx.beginPath(); ctx.moveTo(pb.x,pb.y); ctx.lineTo(pd.x,pd.y); ctx.stroke(); }
+      ctx.moveTo(p.x,p.y); ctx.lineTo(pr.x,pr.y);
+      ctx.moveTo(p.x,p.y); ctx.lineTo(pb.x,pb.y);
+      if(c===COLS-1){ ctx.moveTo(pr.x,pr.y); ctx.lineTo(pd.x,pd.y); }
+      if(r===ROWS-1){ ctx.moveTo(pb.x,pb.y); ctx.lineTo(pd.x,pd.y); }
     }
-    t+=SPD; requestAnimationFrame(draw);
+    ctx.stroke();
   }
-  draw();
+  function draw(){
+    if(!document.hidden){ render(); t+=SPD; }
+    requestAnimationFrame(draw);
+  }
+  resize();
+  if(reduce.matches) render(); else requestAnimationFrame(draw);
 })();
 </script>
 </Base>

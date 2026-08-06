@@ -1,9 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Política de Privacidade · NEXUS Comunicação" gtag={false}>
-<style is:inline slot="head">
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+<Base
+  title="Política de Privacidade · NEXUS Comunicação"
+  description="Como a NEXUS Comunicação coleta, usa, armazena e protege os seus dados pessoais, e quais são os seus direitos como titular segundo a LGPD (Lei nº 13.709/2018)."
+  gtag={false}
+>
+<style is:global>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { font-family:'Inter',sans-serif; background:#fff; color:#111; line-height:1.7; }

@@ -5,10 +5,18 @@ import Drawer from '../components/Drawer.astro';
 import Footer from '../components/Footer.astro';
 import Logo from '../components/Logo.astro';
 import WhatsAppFab from '../components/WhatsAppFab.astro';
+import { Image } from 'astro:assets';
+import logoLavoisier from '../assets/logo-lavoisier.png';
+import logoOnodera from '../assets/logo-onodera.png';
+import logoHope from '../assets/logo-hope.png';
+import logoCury from '../assets/logo-cury.png';
+import logoBobstore from '../assets/logo-bobstore.png';
 ---
-<Base title="NEXUS — Push Ads · Marketing de Proximidade">
-<style is:inline slot="head">
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+<Base
+  title="NEXUS | Push Ads · Marketing de Proximidade"
+  description="Impacte quem está perto da sua loja com Push Ads geolocalizados. Segmentação por raio, perfil e comportamento, com notificações em apps parceiros e cobrança por impressão entregue."
+>
+<style is:global>
 
 :root {
   --orange: #ff7c1a; --orange-d: #e06010; --orange-l: #ff9a4a;
@@ -43,6 +51,23 @@ a { text-decoration:none; }
 .rv.on { opacity:1; transform:none; }
 .rv1 { transition-delay:.1s; } .rv2 { transition-delay:.2s; }
 .rv3 { transition-delay:.3s; } .rv4 { transition-delay:.4s; }
+
+/* O hero está sempre no viewport no load: a entrada roda por keyframes, sem depender
+   do IntersectionObserver registrado no fim do documento. Mesma duração (.7s),
+   mesmo easing (ease) e mesmo deslocamento (28px) do .rv. */
+@keyframes rvEnter { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
+#hero .rv  { animation:rvEnter .7s ease both; }
+#hero .rv1 { animation-delay:.1s; }
+#hero .rv2 { animation-delay:.2s; }
+#hero .rv3 { animation-delay:.3s; }
+#hero .rv4 { animation-delay:.4s; }
+
+/* respeita quem pediu menos movimento no sistema: as animações infinitas param
+   no estado inicial. !important garante a vitória independente da ordem de bundle. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-badge-dot, .ls-pin-ring, .cs-track { animation:none !important; }
+}
+
 
 /* NAV */
 nav { position:fixed; top:0; left:0; right:0; z-index:1000; display:flex; align-items:center; justify-content:space-between; padding:16px 20px; background:rgba(45,45,45,.92); backdrop-filter:blur(18px); border-bottom:1px solid rgba(255,124,26,.1); transition:all .3s; }
@@ -251,7 +276,7 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
 .footer-brand { max-width:300px; }
 .footer-brand p { font-size:13px; color:rgba(255,255,255,.45); line-height:1.7; margin-top:14px; }
 .footer-cols { display:grid; grid-template-columns:1fr; gap:28px; }
-.fc h4 { font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:12px; }
+.fc h3 { font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:12px; }
 .fc a, .fc-contact { display:block; font-size:13px; color:rgba(255,255,255,.52); margin-bottom:8px; transition:color .2s; }
 .fc a:hover { color:var(--orange); }
 .footer-bottom { display:flex; flex-direction:column; gap:6px; padding-top:20px; font-size:12px; color:rgba(255,255,255,.28); }
@@ -309,7 +334,7 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
 
 <!-- NAV -->
 <Nav>
-  <a slot="logo" href="#" class="nav-logo" aria-label="NEXUS"><Logo text /></a>
+  <a slot="logo" href="/" class="nav-logo" aria-label="NEXUS"><Logo text /></a>
     <a href="#channel">Diferenciais</a>
     <a href="#formatos">Formatos</a>
     <a href="#o2o">O2O Report</a>
@@ -343,7 +368,7 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
   <div class="hero-text rv">
     <div class="hero-badge"><div class="hero-badge-dot"></div>Marketing de Proximidade</div>
     <h1 class="hero-title">Marketing de<br><span class="accent">Proximidade.</span></h1>
-    <p class="hero-sub-txt">Notificações mobile no momento exato em que o consumidor está próximo do seu ponto de venda. Impacto real, na hora certa — antes que a decisão de compra seja tomada.</p>
+    <p class="hero-sub-txt">Notificações mobile no momento exato em que o consumidor está próximo do seu ponto de venda. Impacto real, na hora certa, antes que a decisão de compra seja tomada.</p>
     <div class="hero-ctas">
       <a href="#lead-form" class="btn-primary">Iniciar campanha</a>
       <a href="#lead-form" class="btn-ghost">Falar com consultor</a>
@@ -405,7 +430,7 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
                   <span class="push-app-time">1 min</span>
                 </div>
                 <div class="push-title">Você está perto de nós!</div>
-                <div class="push-body">Almoço executivo com 15% off — só hoje!</div>
+                <div class="push-body">Almoço executivo com 15% off, só hoje!</div>
                 <div class="push-badge" style="background:#1a7de8;">ver cardápio →</div>
               </div>
               <div style="display:flex;align-items:center;gap:6px;padding:10px 10px 0;">
@@ -430,7 +455,7 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
 </div>
 
 <!-- CLIENTES -->
-<style is:inline>
+<style is:global>
 .cs-strip { background:var(--dark3,#565656); padding:44px var(--px) 40px; overflow:hidden; }
 .cs-label { text-align:center; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:30px; }
 .cs-wrap { overflow:hidden; mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); -webkit-mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); }
@@ -445,16 +470,16 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
   <div class="cs-label">Empresas que confiam na Nexus</div>
   <div class="cs-wrap">
     <div class="cs-track">
-      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
-      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
-      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
-      <div class="cs-logo"><img src="/logo-cury.png" alt="Cury"></div>
-      <div class="cs-logo"><img src="/logo-bobstore.png" alt="Bobstore"></div>
-      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
-      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
-      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
-      <div class="cs-logo"><img src="/logo-cury.png" alt="Cury"></div>
-      <div class="cs-logo"><img src="/logo-bobstore.png" alt="Bobstore"></div>
+      <div class="cs-logo"><Image src={logoLavoisier} alt="Lavoisier" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoOnodera} alt="Onodera" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoHope} alt="HOPE" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoCury} alt="Cury" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoBobstore} alt="Bobstore" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoLavoisier} alt="Lavoisier" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoOnodera} alt="Onodera" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoHope} alt="HOPE" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoCury} alt="Cury" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoBobstore} alt="Bobstore" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
     </div>
   </div>
 </div>
@@ -465,20 +490,20 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
     <div class="channel-text">
       <span class="tag dark">Inteligência de localização</span>
       <h2 class="h2">Por que o Push Ads vai além<br>do <span style="color:var(--orange)">anúncio comum.</span></h2>
-      <p class="sub">Enquanto outros formatos interrompem, o Push Ads entrega a mensagem certa — para a pessoa certa, no lugar certo, na hora certa.</p>
+      <p class="sub">Enquanto outros formatos interrompem, o Push Ads entrega a mensagem certa, para a pessoa certa, no lugar certo, na hora certa.</p>
       <div class="ch-tabs" id="chTabs">
         <div class="tab active" onclick="switchTab(this,0)">
           <div class="tab-n">01</div>
           <div class="tab-body">
             <span class="tab-l">Geolocalização em tempo real</span>
-            <span class="tab-desc">Dispara quando o usuário entra em um raio definido — ao redor da sua loja, de um concorrente ou de um shopping.</span>
+            <span class="tab-desc">Dispara quando o usuário entra em um raio definido: ao redor da sua loja, de um concorrente ou de um shopping.</span>
           </div>
         </div>
         <div class="tab" onclick="switchTab(this,1)">
           <div class="tab-n">02</div>
           <div class="tab-body">
             <span class="tab-l">Segmentação por histórico de locomoção</span>
-            <span class="tab-desc">Impacta quem frequenta shoppings, cinemas, estádios ou mora em bairros estratégicos — com base em onde as pessoas realmente vão.</span>
+            <span class="tab-desc">Impacta quem frequenta shoppings, cinemas, estádios ou mora em bairros estratégicos, com base em onde as pessoas realmente vão.</span>
           </div>
         </div>
         <div class="tab" onclick="switchTab(this,2)">
@@ -535,7 +560,7 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
                 <div id="chCard2" class="ch-push-card">
                   <div class="ch-push-hdr"><div class="ch-push-ico">N</div><span class="ch-push-app">NX Ads · agora</span></div>
                   <div class="ch-push-title">Match comportamental</div>
-                  <div class="ch-push-body">Apps: iFood, Shopee, Zé Delivery — perfil consumidor ativo.</div>
+                  <div class="ch-push-body">Apps: iFood, Shopee, Zé Delivery. Perfil consumidor ativo.</div>
                   <div class="ch-loc"><span class="ch-loc-txt"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:3px"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Físico + digital combinados</span></div>
                 </div>
                 <div id="chCard3" class="ch-push-card">
@@ -601,7 +626,7 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
   <div style="max-width:var(--cw);margin:0 auto;">
     <div style="text-align:center;margin-bottom:48px;" class="rv">
       <span class="tag">Recursos exclusivos</span>
-      <h2 class="h2">Mais do que impressões —<br><span style="color:var(--orange)">resultados mensuráveis.</span></h2>
+      <h2 class="h2">Mais do que impressões:<br><span style="color:var(--orange)">resultados mensuráveis.</span></h2>
     </div>
     <div class="o2o-inner">
       <div class="o2o-card rv rv1">
@@ -618,7 +643,7 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
         <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,124,26,.1);display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
         <div class="o2o-eyebrow">Amplificação</div>
         <div class="o2o-title">Extreme Reach</div>
-        <div class="o2o-desc">Os devices impactados pelo push se tornam semente para expandir a audiência em outros formatos digitais — display, vídeo, redes sociais. Sua campanha cresce além do push sem esforço adicional.</div>
+        <div class="o2o-desc">Os devices impactados pelo push se tornam semente para expandir a audiência em outros formatos digitais: display, vídeo, redes sociais. Sua campanha cresce além do push sem esforço adicional.</div>
         <div class="o2o-metrics">
           <div class="o2o-metric"><span class="o2o-metric-val">3×</span><span class="o2o-metric-lbl">alcance ampliado</span></div>
           <div class="o2o-metric"><span class="o2o-metric-val">Multi</span><span class="o2o-metric-lbl">formatos integrados</span></div>
@@ -715,16 +740,16 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
       <h3>Solicite uma proposta gratuita</h3>
       <p>Nosso time responde em até 2 horas úteis</p>
       <div class="frow">
-        <div class="fg"><label>Nome completo</label><input id="push-nome" type="text" class="fi" placeholder="Seu nome" required></div>
-        <div class="fg"><label>Empresa</label><input id="push-empresa" type="text" class="fi" placeholder="Nome da empresa" required></div>
+        <div class="fg"><label for="push-nome">Nome completo</label><input id="push-nome" type="text" class="fi" placeholder="Seu nome" required></div>
+        <div class="fg"><label for="push-empresa">Empresa</label><input id="push-empresa" type="text" class="fi" placeholder="Nome da empresa" required></div>
       </div>
       <div class="frow">
-        <div class="fg"><label>WhatsApp / Telefone</label><input id="push-telefone" type="tel" class="fi" placeholder="(00) 00000-0000" required maxlength="15" autocomplete="tel-national"></div>
-        <div class="fg"><label>E-mail</label><input id="push-email" type="email" class="fi" placeholder="seu@email.com" required></div>
+        <div class="fg"><label for="push-telefone">WhatsApp / Telefone</label><input id="push-telefone" type="tel" class="fi" placeholder="(00) 00000-0000" required maxlength="15" autocomplete="tel-national"></div>
+        <div class="fg"><label for="push-email">E-mail</label><input id="push-email" type="email" class="fi" placeholder="seu@email.com" required></div>
       </div>
       <div class="fg">
-        <label>Qual solução te interessa?</label>
-        <div class="sol-chips" id="push-sol-chips">
+        <label id="push-solucao-lbl">Qual solução te interessa?</label>
+        <div class="sol-chips" id="push-sol-chips" role="group" aria-labelledby="push-solucao-lbl">
           <button type="button" class="sol-chip" onclick="selectSol(this,'push','SMS')">SMS</button>
           <button type="button" class="sol-chip" onclick="selectSol(this,'push','RCS')">RCS</button>
           <button type="button" class="sol-chip" onclick="selectSol(this,'push','WhatsApp')">WhatsApp</button>
@@ -734,7 +759,7 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
         <input type="hidden" id="push-solucao" value="">
       </div>
       <div class="fg">
-        <label>Segmento da empresa</label>
+        <label for="push-segmento">Segmento da empresa</label>
         <select id="push-segmento" class="fi" required>
           <option value="" disabled selected>Selecione seu segmento</option>
           <option>Varejo / Redes de Lojas</option><option>Restaurantes / Food Service</option>
@@ -744,7 +769,7 @@ footer { background:var(--dark2); padding:60px var(--px) 24px; }
         </select>
       </div>
       <div class="fg">
-        <label>Investimento estimado</label>
+        <label for="push-investimento">Investimento estimado</label>
         <select id="push-investimento" class="fi" required>
           <option value="" disabled selected>Selecione o investimento</option>
           <option>R$1.000 a R$3.000</option><option>R$3.000 a R$10.000</option>
@@ -811,13 +836,18 @@ document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
 
 /* MESH */
 (function(){
-  const COLS=20,ROWS=11,AMP=16,SPD=0.01;let gT=0,sOff=0;const layers=[];
+  const COLS=20,ROWS=11,AMP=16,SPD=0.01,DOT=1.2;let gT=0,sOff=0;const layers=[];
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  /* grade alocada uma única vez e reaproveitada a cada frame */
+  const grid=[];for(let r=0;r<ROWS;r++){grid[r]=[];for(let c=0;c<COLS;c++)grid[r][c]={x:0,y:0};}
   window.addEventListener('scroll',()=>{sOff=scrollY*.00014;},{passive:true});
-  function draw(cvs,ctx){const W=cvs.width,H=cvs.height;if(W<2||H<2)return;ctx.clearRect(0,0,W,H);const sx=W/(COLS-1),sy=H/(ROWS-1),T=gT+sOff,g=[];for(let r=0;r<ROWS;r++){g[r]=[];for(let c=0;c<COLS;c++)g[r][c]={x:c*sx+Math.sin(c*.52+r*.38+T)*AMP,y:r*sy+Math.cos(c*.38+r*.52+T*.88)*AMP};}ctx.beginPath();ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=.65;for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){if(c<COLS-1){ctx.moveTo(g[r][c].x,g[r][c].y);ctx.lineTo(g[r][c+1].x,g[r][c+1].y);}if(r<ROWS-1){ctx.moveTo(g[r][c].x,g[r][c].y);ctx.lineTo(g[r+1][c].x,g[r+1][c].y);}}ctx.stroke();ctx.fillStyle='rgba(255,255,255,0.11)';for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){ctx.beginPath();ctx.arc(g[r][c].x,g[r][c].y,1.2,0,Math.PI*2);ctx.fill();}}
+  function draw(cvs,ctx){const W=cvs.width,H=cvs.height;if(W<2||H<2)return;ctx.clearRect(0,0,W,H);const sx=W/(COLS-1),sy=H/(ROWS-1),T=gT+sOff;for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){const p=grid[r][c];p.x=c*sx+Math.sin(c*.52+r*.38+T)*AMP;p.y=r*sy+Math.cos(c*.38+r*.52+T*.88)*AMP;}ctx.beginPath();ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=.65;for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){if(c<COLS-1){ctx.moveTo(grid[r][c].x,grid[r][c].y);ctx.lineTo(grid[r][c+1].x,grid[r][c+1].y);}if(r<ROWS-1){ctx.moveTo(grid[r][c].x,grid[r][c].y);ctx.lineTo(grid[r+1][c].x,grid[r+1][c].y);}}ctx.stroke();ctx.fillStyle='rgba(255,255,255,0.11)';ctx.beginPath();for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){const p=grid[r][c];ctx.moveTo(p.x+DOT,p.y);ctx.arc(p.x,p.y,DOT,0,Math.PI*2);}ctx.fill();}
   function loop(){if(!document.hidden){for(const{cvs,ctx}of layers)draw(cvs,ctx);gT+=SPD;}requestAnimationFrame(loop);}
-  function resize(){for(const{cvs}of layers){cvs.width=window.innerWidth;cvs.height=window.innerHeight;}}
+  function staticFrame(){for(const{cvs,ctx}of layers)draw(cvs,ctx);}
+  function resize(){for(const{cvs,ctx}of layers){cvs.width=window.innerWidth;cvs.height=window.innerHeight;if(reduce.matches)draw(cvs,ctx);}}
   const cvs=document.getElementById('mesh');if(cvs){const ctx=cvs.getContext('2d');layers.push({cvs,ctx});resize();}
-  window.addEventListener('resize',resize,{passive:true});loop();
+  window.addEventListener('resize',resize,{passive:true});
+  requestAnimationFrame(reduce.matches?staticFrame:loop);
 })();
 </script>
 

@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Página não encontrada · NEXUS Comunicação"
+  description="A página que você procura não existe ou foi movida. Volte para o site da NEXUS Comunicação e conheça nossas soluções de SMS, RCS, WhatsApp e Push Ads."
+  gtag={false}
+  noindex
+>
+<style is:global>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; background:#fff; color:#111; line-height:1.7; }
+img, svg { display:block; max-width:100%; }
+a { color:#111; }
+.topbar { border-bottom:1px solid #e5e5e5; }
+.topbar-inner { max-width:860px; margin:0 auto; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; }
+.topbar a.back { font-size:14px; font-weight:600; text-decoration:none; }
+.topbar a.back:hover { text-decoration:underline; }
+.wrap { max-width:860px; margin:0 auto; padding:48px 24px 80px; }
+h1 { font-size:32px; font-weight:800; line-height:1.25; margin-bottom:8px; }
+.meta { font-size:14px; color:#555; margin-bottom:32px; }
+.intro { background:#f7f7f7; border:1px solid #e5e5e5; border-radius:8px; padding:20px 24px; font-size:15px; margin-bottom:40px; }
+h2 { font-size:22px; font-weight:700; margin:40px 0 14px; }
+p { margin-bottom:14px; font-size:15.5px; }
+ul { margin:0 0 16px 22px; }
+li { margin-bottom:8px; font-size:15.5px; }
+.foot { border-top:1px solid #e5e5e5; padding:24px; text-align:center; font-size:13.5px; color:#555; }
+.foot a { color:#555; }
+@media (max-width:560px){ h1{font-size:26px;} }
+</style>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="/"><img src="/logo.svg" alt="NEXUS Comunicação" height="30"></a>
+    <a class="back" href="/">Voltar ao site</a>
+  </div>
+</div>
+
+<main class="wrap">
+  <h1>Página não encontrada</h1>
+  <p class="meta">Erro 404</p>
+
+  <div class="intro">
+    O endereço que você acessou não existe, foi movido ou o link está incorreto. Confira o endereço digitado ou use os atalhos abaixo para continuar navegando.
+  </div>
+
+  <h2>Nossas soluções</h2>
+  <ul>
+    <li><a href="/">SMS Marketing</a></li>
+    <li><a href="/rcs">RCS Business Messaging</a></li>
+    <li><a href="/whatsapp">WhatsApp Marketing</a></li>
+    <li><a href="/push">Push Ads e Marketing de Proximidade</a></li>
+  </ul>
+
+  <h2>Precisa de ajuda?</h2>
+  <p>Fale com a nossa equipe pelo e-mail <a href="mailto:atendimento@nexuscomunicacao.com">atendimento@nexuscomunicacao.com</a> ou pelos telefones (11) 3569-4630 e (11) 9 7094-4446, de segunda a sexta, das 9h às 18h (horário de Brasília).</p>
+</main>
+
+<footer class="foot">
+  <p>© 2026 NEXUS Comunicação. Todos os direitos reservados. · marcelo@nexuscomunicacao.com</p>
+  <p><a href="/politica-de-privacidade">Política de Privacidade</a> · <a href="/termos-de-servico">Termos de Uso</a></p>
+</footer>
+
+</Base>

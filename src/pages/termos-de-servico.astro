@@ -1,9 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Termos de Uso · NEXUS Comunicação" gtag={false}>
-<style is:inline slot="head">
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+<Base
+  title="Termos de Uso · NEXUS Comunicação"
+  description="Termos e condições de uso do site e das plataformas de mensageria da NEXUS Comunicação: responsabilidades, regras de contratação e limites de utilização dos serviços."
+  gtag={false}
+>
+<style is:global>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { font-family:'Inter',sans-serif; background:#fff; color:#111; line-height:1.7; }

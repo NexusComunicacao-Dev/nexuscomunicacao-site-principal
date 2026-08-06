@@ -5,10 +5,18 @@ import Drawer from '../components/Drawer.astro';
 import Footer from '../components/Footer.astro';
 import Logo from '../components/Logo.astro';
 import WhatsAppFab from '../components/WhatsAppFab.astro';
+import { Image } from 'astro:assets';
+import logoLavoisier from '../assets/logo-lavoisier.png';
+import logoOnodera from '../assets/logo-onodera.png';
+import logoHope from '../assets/logo-hope.png';
+import logoCury from '../assets/logo-cury.png';
+import logoBobstore from '../assets/logo-bobstore.png';
 ---
-<Base title="NEXUS — RCS Business Messaging">
-<style is:inline slot="head">
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+<Base
+  title="NEXUS | RCS Business Messaging"
+  description="RCS Business Messaging com marca verificada, carrosséis, botões e vídeos direto no app de mensagens nativo do Android. Confirmação de leitura e métricas em tempo real."
+>
+<style is:global>
 
 /* ─── TOKENS ─── */
 :root {
@@ -94,6 +102,23 @@ a { text-decoration:none; }
 .rv2 { transition-delay:.2s; }
 .rv3 { transition-delay:.3s; }
 .rv4 { transition-delay:.4s; }
+
+/* O hero está sempre no viewport no load: a entrada roda por keyframes, sem depender
+   do IntersectionObserver registrado no fim do documento. Mesma duração (.7s),
+   mesmo easing (ease) e mesmo deslocamento (28px) do .rv. */
+@keyframes rvEnter { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
+#hero .rv  { animation:rvEnter .7s ease both; }
+#hero .rv1 { animation-delay:.1s; }
+#hero .rv2 { animation-delay:.2s; }
+#hero .rv3 { animation-delay:.3s; }
+#hero .rv4 { animation-delay:.4s; }
+
+/* respeita quem pediu menos movimento no sistema: as animações infinitas param
+   no estado inicial. !important garante a vitória independente da ordem de bundle. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-badge-dot, .rcs-dot, .phone-float, .gv-pulse, .cs-track { animation:none !important; }
+}
+
 
 /* ──────────────────────────────────────────
    NAV
@@ -749,7 +774,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
 .soc { width:34px; height:34px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:7px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.5); font-size:12px; font-weight:700; transition:all .2s; }
 .soc:hover { background:rgba(255,124,26,.15); border-color:var(--orange); color:var(--orange); }
 .footer-cols { display:grid; grid-template-columns:1fr 1fr; gap:32px 20px; }
-.fc h4 { font-size:11px; font-weight:700; color:rgba(255,255,255,.35); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; }
+.fc h3 { font-size:11px; font-weight:700; color:rgba(255,255,255,.35); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; }
 .fc a { display:block; font-size:13px; color:rgba(255,255,255,.5); margin-bottom:9px; transition:color .2s; }
 .fc a:hover { color:var(--orange); }
 .fc-contact { font-size:13px; color:rgba(255,255,255,.5); margin-bottom:8px; line-height:1.5; }
@@ -894,7 +919,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
 
 <!-- ── NAV ── -->
 <Nav>
-  <a slot="logo" href="#" class="nav-logo" aria-label="NEXUS"><Logo text /></a>
+  <a slot="logo" href="/" class="nav-logo" aria-label="NEXUS"><Logo text /></a>
     <a href="#channel">Como funciona</a>
     <a href="#comparativo">RCS vs SMS</a>
     <a href="#faq">Suporte</a>
@@ -932,7 +957,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
   <div class="hero-text rv">
     <div class="hero-badge"><div class="hero-badge-dot"></div>RCS Business Messaging</div>
     <h1 class="hero-title">Mensagens<br><span class="accent">Ricas.</span><br>Resultados Reais.</h1>
-    <p class="hero-sub-txt">Leve sua comunicação além do texto. Com RCS, envie imagens, vídeos, botões interativos e carrosséis — diretamente no app de mensagens nativo dos seus clientes.</p>
+    <p class="hero-sub-txt">Leve sua comunicação além do texto. Com RCS, envie imagens, vídeos, botões interativos e carrosséis, diretamente no app de mensagens nativo dos seus clientes.</p>
     <div class="hero-ctas">
       <a href="#lead-form" class="btn-primary">Quero usar o RCS</a>
       <a href="#lead-form" class="btn-ghost">Falar com consultor</a>
@@ -977,7 +1002,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
                   <div class="rcs-img-lbl">Oferta exclusiva · Hoje</div>
                 </div>
                 <div class="rcs-card-body">
-                  <div class="rcs-card-title">40% OFF — Somente hoje!</div>
+                  <div class="rcs-card-title">40% OFF - Somente hoje!</div>
                   <div class="rcs-card-desc">Aproveite nossa maior promoção do ano. Frete grátis para todo o Brasil.</div>
                 </div>
                 <div class="rcs-actions">
@@ -1015,7 +1040,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
 </div>
 
 <!-- ── CLIENTES ── -->
-<style is:inline>
+<style is:global>
 .cs-strip { background:var(--dark3,#565656); padding:44px var(--px) 40px; overflow:hidden; }
 .cs-label { text-align:center; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:30px; }
 .cs-wrap { overflow:hidden; mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); -webkit-mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent); }
@@ -1030,17 +1055,17 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
   <div class="cs-label">Empresas que confiam na Nexus</div>
   <div class="cs-wrap">
     <div class="cs-track">
-      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
-      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
-      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
-      <div class="cs-logo"><img src="/logo-cury.png" alt="Cury"></div>
-      <div class="cs-logo"><img src="/logo-bobstore.png" alt="Bobstore"></div>
+      <div class="cs-logo"><Image src={logoLavoisier} alt="Lavoisier" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoOnodera} alt="Onodera" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoHope} alt="HOPE" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoCury} alt="Cury" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoBobstore} alt="Bobstore" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
       <!-- duplicatas para loop contínuo -->
-      <div class="cs-logo"><img src="/logo-lavoisier.png" alt="Lavoisier"></div>
-      <div class="cs-logo"><img src="/logo-onodera.png" alt="Onodera"></div>
-      <div class="cs-logo"><img src="/logo-hope.png" alt="HOPE"></div>
-      <div class="cs-logo"><img src="/logo-cury.png" alt="Cury"></div>
-      <div class="cs-logo"><img src="/logo-bobstore.png" alt="Bobstore"></div>
+      <div class="cs-logo"><Image src={logoLavoisier} alt="Lavoisier" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoOnodera} alt="Onodera" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoHope} alt="HOPE" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoCury} alt="Cury" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
+      <div class="cs-logo"><Image src={logoBobstore} alt="Bobstore" widths={[160, 320]} sizes="160px" loading="lazy" decoding="async" /></div>
     </div>
   </div>
 </div>
@@ -1054,7 +1079,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
     <div class="channel-text">
       <div class="tag rv">Como funciona</div>
       <h2 class="h2 rv rv1">RCS: a <span style="color:var(--orange)">evolução</span> das mensagens de texto.</h2>
-      <p class="sub rv rv2">O RCS (Rich Communication Services) é a nova geração da mensagem de texto. Com ele, sua marca se comunica com experiências visuais ricas, direto no app nativo de mensagens do cliente — sem precisar baixar nada.</p>
+      <p class="sub rv rv2">O RCS (Rich Communication Services) é a nova geração da mensagem de texto. Com ele, sua marca se comunica com experiências visuais ricas, direto no app nativo de mensagens do cliente, sem precisar baixar nada.</p>
       <div class="ch-tabs rv rv3">
         <div class="tab active" data-tab="campanha"><div class="tab-n">01</div><div class="tab-body"><div class="tab-l">Campanhas com mídia</div><div class="tab-desc">Imagens e vídeos que convertem mais</div></div></div>
         <div class="tab" data-tab="cta"><div class="tab-n">02</div><div class="tab-body"><div class="tab-l">Botões de ação</div><div class="tab-desc">CTA direto, ligar, acessar URL</div></div></div>
@@ -1091,7 +1116,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
                   <div class="rcs-ch-card">
                     <div class="rcs-ch-img" style="background:linear-gradient(135deg,rgba(255,124,26,.45),rgba(255,80,10,.25))">🛍️</div>
                     <div class="rcs-ch-body">
-                      <div class="rcs-ch-title">Liquidacao de Verao — 40% OFF</div>
+                      <div class="rcs-ch-title">Liquidacao de Verao - 40% OFF</div>
                       <div class="rcs-ch-desc">Selecao exclusiva com frete gratis. So hoje!</div>
                     </div>
                     <div class="rcs-ch-btns"><div class="rcs-ch-btn">Ver Produtos</div><div class="rcs-ch-btn">Ligar</div></div>
@@ -1131,7 +1156,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
                   <div class="rcs-ch-card">
                     <div class="rcs-ch-img" style="background:linear-gradient(135deg,rgba(76,175,80,.35),rgba(27,94,32,.2))">📦</div>
                     <div class="rcs-ch-body">
-                      <div class="rcs-ch-title">Pedido #38291 — Saiu para entrega!</div>
+                      <div class="rcs-ch-title">Pedido #38291 - Saiu para entrega!</div>
                       <div class="rcs-ch-desc">Previsao: hoje entre 14h e 18h. Fique em casa!</div>
                     </div>
                     <div class="rcs-ch-btns"><div class="rcs-ch-btn">Rastrear</div><div class="rcs-ch-btn">Suporte</div></div>
@@ -1182,7 +1207,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
   <div class="diff-layout">
     <div class="tag rv">Recursos exclusivos</div>
     <h2 class="h2 rv rv1">O que o RCS oferece que o <span style="color:var(--orange)">SMS não consegue.</span></h2>
-    <p class="sub rv rv2">Com o RCS, sua comunicação ganha superpoderes. Crie experiências que engajam, convertem e fidelizam — com recursos que apenas o canal mais moderno do mercado entrega.</p>
+    <p class="sub rv rv2">Com o RCS, sua comunicação ganha superpoderes. Crie experiências que engajam, convertem e fidelizam, com recursos que apenas o canal mais moderno do mercado entrega.</p>
 
     <div class="diff-grid">
       <div class="diff-card rv">
@@ -1193,7 +1218,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
       <div class="diff-card rv rv1">
         <div class="diff-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l7 18 3-7 7-3z"/></svg></div>
         <div class="diff-title">Botões Interativos</div>
-        <div class="diff-desc">Adicione botões de ação rápida — acessar URL, ligar, salvar contato, localização — sem o cliente precisar digitar nada.</div>
+        <div class="diff-desc">Adicione botões de ação rápida (acessar URL, ligar, salvar contato, localização) sem o cliente precisar digitar nada.</div>
       </div>
       <div class="diff-card rv rv2">
         <div class="diff-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
@@ -1208,7 +1233,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
       <div class="diff-card rv rv4">
         <div class="diff-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
         <div class="diff-title">Carrossel de Cards</div>
-        <div class="diff-desc">Apresente múltiplos produtos, planos ou promoções em cards deslizáveis — como um e-commerce dentro de uma mensagem.</div>
+        <div class="diff-desc">Apresente múltiplos produtos, planos ou promoções em cards deslizáveis, como um e-commerce dentro de uma mensagem.</div>
       </div>
       <div class="diff-card rv">
         <div class="diff-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
@@ -1224,7 +1249,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
   <div class="cmp-layout">
     <div class="tag rv">Comparativo</div>
     <h2 class="h2 rv rv1" style="color:#111">Por que o RCS vai além <span style="color:var(--orange)">do SMS.</span></h2>
-    <p class="sub rv rv2" style="color:#666;max-width:560px">O RCS mantém tudo que você já ama no SMS — simplicidade, alcance, entregabilidade — e adiciona uma camada de experiência rica que eleva seus resultados.</p>
+    <p class="sub rv rv2" style="color:#666;max-width:560px">O RCS mantém tudo que você já ama no SMS (simplicidade, alcance, entregabilidade) e adiciona uma camada de experiência rica que eleva seus resultados.</p>
 
     <div class="cmp-table-wrap rv rv2">
       <div class="cmp-table">
@@ -1279,7 +1304,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
         </div>
         <div class="cmp-tr">
           <div class="cmp-td td-feat">Fallback automático para SMS</div>
-          <div class="cmp-td td-sms"><span class="ico-no">—</span></div>
+          <div class="cmp-td td-sms"><span class="ico-no">-</span></div>
           <div class="cmp-td td-rcs"><span class="val-rcs">Automático</span></div>
         </div>
 
@@ -1383,7 +1408,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
     <div class="faq-list rv rv2">
       <div class="faq-item">
         <div class="faq-q">O que é RCS e como é diferente do SMS?<span class="faq-tog">+</span></div>
-        <div class="faq-a">RCS (Rich Communication Services) é a evolução do SMS. Enquanto o SMS suporta apenas texto simples com 160 caracteres, o RCS permite imagens, vídeos, botões interativos, carrosséis e confirmação de leitura — tudo dentro do app nativo de mensagens.</div>
+        <div class="faq-a">RCS (Rich Communication Services) é a evolução do SMS. Enquanto o SMS suporta apenas texto simples com 160 caracteres, o RCS permite imagens, vídeos, botões interativos, carrosséis e confirmação de leitura, tudo dentro do app nativo de mensagens.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">O destinatário precisa instalar algum app?<span class="faq-tog">+</span></div>
@@ -1410,7 +1435,7 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
 </section>
 
 <!-- ── DEPOIMENTOS ── -->
-<style is:inline>
+<style is:global>
 #depoimentos { background:#444; padding:var(--py) var(--px); text-align:center; position:relative; overflow:hidden; }
 .dep-inner { max-width:820px; margin:0 auto; position:relative; z-index:1; }
 .dep-tag-lbl { font-size:11px; font-weight:700; letter-spacing:.18em; color:var(--orange); text-transform:uppercase; margin-bottom:36px; }
@@ -1501,16 +1526,16 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
       <h3>Solicite uma proposta gratuita</h3>
       <p>Nosso time responde em até 2 horas úteis</p>
       <div class="frow">
-        <div class="fg"><label>Nome completo</label><input id="rcs-nome" type="text" class="fi" placeholder="Seu nome" required></div>
-        <div class="fg"><label>Empresa</label><input id="rcs-empresa" type="text" class="fi" placeholder="Nome da empresa" required></div>
+        <div class="fg"><label for="rcs-nome">Nome completo</label><input id="rcs-nome" type="text" class="fi" placeholder="Seu nome" required></div>
+        <div class="fg"><label for="rcs-empresa">Empresa</label><input id="rcs-empresa" type="text" class="fi" placeholder="Nome da empresa" required></div>
       </div>
       <div class="frow">
-        <div class="fg"><label>WhatsApp / Telefone</label><input id="rcs-telefone" type="tel" class="fi" placeholder="(00) 00000-0000" required maxlength="15" autocomplete="tel-national"></div>
-        <div class="fg"><label>E-mail</label><input id="rcs-email" type="email" class="fi" placeholder="seu@email.com" required></div>
+        <div class="fg"><label for="rcs-telefone">WhatsApp / Telefone</label><input id="rcs-telefone" type="tel" class="fi" placeholder="(00) 00000-0000" required maxlength="15" autocomplete="tel-national"></div>
+        <div class="fg"><label for="rcs-email">E-mail</label><input id="rcs-email" type="email" class="fi" placeholder="seu@email.com" required></div>
       </div>
       <div class="fg">
-        <label>Qual solução te interessa?</label>
-        <div class="sol-chips" id="rcs-sol-chips">
+        <label id="rcs-solucao-lbl">Qual solução te interessa?</label>
+        <div class="sol-chips" id="rcs-sol-chips" role="group" aria-labelledby="rcs-solucao-lbl">
           <button type="button" class="sol-chip" onclick="selectSol(this,'rcs','SMS')">SMS</button>
           <button type="button" class="sol-chip" onclick="selectSol(this,'rcs','RCS')">RCS</button>
           <button type="button" class="sol-chip" onclick="selectSol(this,'rcs','WhatsApp')">WhatsApp</button>
@@ -1520,11 +1545,11 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.06); pad
         <input type="hidden" id="rcs-solucao" value="">
       </div>
       <div class="fg">
-        <label>Segmento da empresa</label>
+        <label for="rcs-segmento">Segmento da empresa</label>
         <select id="rcs-segmento" class="fi" required><option value="" disabled selected>Selecione seu segmento</option><option>Varejo / E-commerce</option><option>Saúde e Bem-estar</option><option>Educação</option><option>Financeiro / Crédito</option><option>Imobiliário</option><option>Alimentação</option><option>Serviços</option><option>Outro</option></select>
       </div>
       <div class="fg">
-        <label>Volume estimado de mensagens/mês</label>
+        <label for="rcs-volume">Volume estimado de mensagens/mês</label>
         <select id="rcs-volume" class="fi" required><option value="" disabled selected>Selecione o volume</option><option>Até 5.000</option><option>5.000 a 10.000</option><option>10.000 a 50.000</option><option>Acima de 50.000</option></select>
       </div>
       <button class="btn-lead" id="rcs-btn" onclick="enviarLeadRCS(this)">Quero receber minha proposta →</button>
@@ -1664,12 +1689,30 @@ const so = new IntersectionObserver(entries => {
 const sb = document.querySelector('.stats-bar');
 if (sb) so.observe(sb);
 
-/* ── MESH WAVE BACKGROUND ── */
+/* ── MESH WAVE BACKGROUND ──
+   Loop global único; o IntersectionObserver apenas marca quais camadas estão
+   na viewport, sem nunca cancelar o RAF. */
 (function(){
-  const COLS=20, ROWS=11, AMP=16, SPD=0.01;
+  const COLS=20, ROWS=11, AMP=16, SPD=0.01, DOT=1.2;
   let globalT   = 0;
   let scrollOff = 0;
-  const layers  = [];
+  const layers  = new Map();
+  const reduce  = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* grade alocada uma única vez e reaproveitada a cada frame */
+  const grid = [];
+  for (let r = 0; r < ROWS; r++) {
+    grid[r] = [];
+    for (let c = 0; c < COLS; c++) grid[r][c] = { x:0, y:0 };
+  }
+
+  /* canvases fora da viewport não são redesenhados */
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      const layer = layers.get(e.target);
+      if (layer) layer.visible = e.isIntersecting;
+    }
+  }, { rootMargin: '200px' });
 
   window.addEventListener('scroll', () => {
     scrollOff = window.scrollY * 0.00014;
@@ -1682,14 +1725,11 @@ if (sb) so.observe(sb);
     const sx = W / (COLS - 1);
     const sy = H / (ROWS - 1);
     const T  = globalT + scrollOff;
-    const g = [];
     for (let r = 0; r < ROWS; r++) {
-      g[r] = [];
       for (let c = 0; c < COLS; c++) {
-        g[r][c] = {
-          x: c * sx + Math.sin(c * .52 + r * .38 + T) * AMP,
-          y: r * sy + Math.cos(c * .38 + r * .52 + T * .88) * AMP
-        };
+        const p = grid[r][c];
+        p.x = c * sx + Math.sin(c * .52 + r * .38 + T) * AMP;
+        p.y = r * sy + Math.cos(c * .38 + r * .52 + T * .88) * AMP;
       }
     }
     ctx.beginPath();
@@ -1697,27 +1737,34 @@ if (sb) so.observe(sb);
     ctx.lineWidth   = .65;
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLS; c++) {
-        if (c < COLS-1) { ctx.moveTo(g[r][c].x,g[r][c].y); ctx.lineTo(g[r][c+1].x,g[r][c+1].y); }
-        if (r < ROWS-1) { ctx.moveTo(g[r][c].x,g[r][c].y); ctx.lineTo(g[r+1][c].x,g[r+1][c].y); }
+        if (c < COLS-1) { ctx.moveTo(grid[r][c].x,grid[r][c].y); ctx.lineTo(grid[r][c+1].x,grid[r][c+1].y); }
+        if (r < ROWS-1) { ctx.moveTo(grid[r][c].x,grid[r][c].y); ctx.lineTo(grid[r+1][c].x,grid[r+1][c].y); }
       }
     }
     ctx.stroke();
+    /* pontos: um único path para os 220 círculos */
     ctx.fillStyle = 'rgba(255,255,255,0.11)';
+    ctx.beginPath();
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLS; c++) {
-        ctx.beginPath();
-        ctx.arc(g[r][c].x, g[r][c].y, 1.2, 0, Math.PI * 2);
-        ctx.fill();
+        const p = grid[r][c];
+        ctx.moveTo(p.x + DOT, p.y);
+        ctx.arc(p.x, p.y, DOT, 0, Math.PI * 2);
       }
     }
+    ctx.fill();
   }
 
   function loop(){
     if (!document.hidden) {
-      for(const {cvs,ctx} of layers) drawLayer(cvs,ctx);
+      for (const layer of layers.values()) if (layer.visible) drawLayer(layer.cvs, layer.ctx);
       globalT += SPD;
     }
     requestAnimationFrame(loop);
+  }
+
+  function staticFrame(){
+    for (const layer of layers.values()) drawLayer(layer.cvs, layer.ctx);
   }
 
   function meshInit(el){
@@ -1725,19 +1772,20 @@ if (sb) so.observe(sb);
     const cvs = document.createElement('canvas');
     cvs.className = 'mesh-cvs'; el.prepend(cvs);
     const ctx = cvs.getContext('2d'); if(!ctx) return;
-    function resize(){ const r=el.getBoundingClientRect(); cvs.width=Math.round(r.width||1); cvs.height=Math.round(r.height||1); }
-    resize(); window.addEventListener('resize', resize, {passive:true}); layers.push({cvs,ctx,resize});
+    function resize(){ const r=el.getBoundingClientRect(); cvs.width=Math.round(r.width||1); cvs.height=Math.round(r.height||1); if (reduce.matches) drawLayer(cvs, ctx); }
+    resize(); window.addEventListener('resize', resize, {passive:true});
+    layers.set(el, {cvs, ctx, visible:true}); io.observe(el);
   }
 
   const hero = document.getElementById('hero'); if(hero) meshInit(hero);
   document.querySelectorAll('.sec-dark,.sec-dark2').forEach(meshInit);
   const ft = document.querySelector('footer'); if(ft) meshInit(ft);
-  requestAnimationFrame(loop);
+  requestAnimationFrame(reduce.matches ? staticFrame : loop);
 })();
 </script>
 
 <script is:inline>
-/* ── WEBHOOK LEAD FORM — RCS ── */
+/* ── WEBHOOK LEAD FORM - RCS ── */
 const WEBHOOK_URL = 'https://midas-n8n.zn6ejt.easypanel.host/webhook/d05cec8a-1849-400a-bd61-09555631f83c';
 
 function brasiliaTimestamp() {
@@ -1825,7 +1873,7 @@ async function enviarLeadRCS(btn) {
       new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
     ]);
   } catch (e) {
-    // Segue para obrigado mesmo em caso de falha/timeout — não bloqueia o usuário
+    // Segue para obrigado mesmo em caso de falha/timeout, não bloqueia o usuário
   }
 
   window.location.href = '/obrigado';
