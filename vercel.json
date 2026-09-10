@@ -8,6 +8,22 @@
     { "source": "/push.html", "destination": "/push", "permanent": true },
     { "source": "/obrigado.html", "destination": "/obrigado", "permanent": true },
     { "source": "/politica-de-privacidade.html", "destination": "/politica-de-privacidade", "permanent": true },
-    { "source": "/termos-de-servico.html", "destination": "/termos-de-servico", "permanent": true }
+    { "source": "/termos-de-servico.html", "destination": "/termos-de-servico", "permanent": true },
+    { "source": "/whatsclub", "destination": "/", "permanent": true },
+    { "source": "/whatsclub/", "destination": "/", "permanent": true },
+    { "source": "/chatbot", "destination": "/", "permanent": true },
+    { "source": "/chatbot/", "destination": "/", "permanent": true },
+    { "source": "/sobre-nos", "destination": "/", "permanent": true },
+    { "source": "/sobre-nos/", "destination": "/", "permanent": true },
+    { "source": "/marketing-de-proximidade", "destination": "/", "permanent": true },
+    { "source": "/marketing-de-proximidade/", "destination": "/", "permanent": true },
+    { "source": "/semana-black", "destination": "/", "permanent": true },
+    { "source": "/semana-black/", "destination": "/", "permanent": true },
+    { "source": "/sms-shortcode", "destination": "/", "permanent": true },
+    { "source": "/sms-shortcode/", "destination": "/", "permanent": true },
+    { "source": "/portfolio/dell-audience-monitoring", "destination": "/", "permanent": true },
+    { "source": "/portfolio/dell-audience-monitoring/", "destination": "/", "permanent": true },
+    { "source": "/portfolio/:path*", "destination": "/", "permanent": true },
+    { "source": "/blog/:path*", "destination": "/", "permanent": true }
   ]
 }
