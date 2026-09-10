@@ -1,0 +1,430 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Drawer from '../components/Drawer.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base
+  title="Sobre Nós · NEXUS Comunicação"
+  description="Conheça a NEXUS Comunicação, nome fantasia da COMUNIKA SERVIÇOS EM COMUNICAÇÃO LTDA (CNPJ 51.767.476/0001-93): quem somos, o que fazemos e como falar com a gente."
+>
+<style is:global>
+
+/* ─── TOKENS ─── */
+:root {
+  --orange: #ff7c1a;
+  --orange-d: #e06010;
+  --orange-l: #ff9a4a;
+  --dark: #4a4a4a;
+  --dark2: #3d3d3d;
+  --dark3: #565656;
+  --light: #f7f7f7;
+  --light2: #ffffff;
+  --cw: 1200px;
+  --px: 24px;
+  --py: 80px;
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; -webkit-tap-highlight-color:transparent; }
+body { font-family:'Inter',sans-serif; background:var(--dark); color:#fff; overflow-x:hidden; }
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-thumb { background:var(--orange); border-radius:2px; }
+img, svg { display:block; max-width:100%; }
+a { text-decoration:none; }
+
+/* ─── CONTAINER ─── */
+.about-layout,
+.footer-grid,
+.footer-bottom {
+  max-width: var(--cw);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* ─── UTILITIES ─── */
+.btn-primary {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 28px; background:var(--orange); color:#fff;
+  border:none; border-radius:10px; font-size:15px; font-weight:700;
+  cursor:pointer; font-family:inherit;
+  box-shadow:0 6px 24px rgba(255,124,26,.4); transition:all .22s;
+}
+.btn-primary:hover { background:var(--orange-l); transform:translateY(-2px); box-shadow:0 10px 36px rgba(255,124,26,.55); }
+
+.tag {
+  display:inline-block; padding:5px 14px;
+  background:rgba(255,124,26,.1); border:1px solid rgba(255,124,26,.28);
+  border-radius:100px; font-size:11px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--orange); margin-bottom:18px;
+}
+.tag.dark { background:rgba(255,124,26,.12); }
+
+.h2 { font-size:clamp(28px,4vw,50px); font-weight:900; letter-spacing:-.03em; line-height:1.08; }
+.sub { font-size:clamp(15px,1.8vw,17px); color:rgba(255,255,255,.5); line-height:1.8; margin-top:16px; max-width:620px; }
+.sub.light-text { color:#666; }
+
+/* reveal */
+.rv { opacity:0; transform:translateY(28px); transition:opacity .7s ease,transform .7s ease; }
+.rv.on { opacity:1; transform:none; }
+.rv1 { transition-delay:.1s; }
+.rv2 { transition-delay:.2s; }
+.rv3 { transition-delay:.3s; }
+
+@keyframes rvEnter { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
+#about-hero .rv  { animation:rvEnter .7s ease both; }
+#about-hero .rv1 { animation-delay:.1s; }
+#about-hero .rv2 { animation-delay:.2s; }
+
+/* ─── NAV ─── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 20px;
+  background:rgba(45,45,45,.92); backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,124,26,.1); transition:all .3s;
+}
+nav.scrolled { padding:10px 20px; background:rgba(45,45,45,.99); }
+.nav-logo svg { height:30px; }
+.nav-links { display:none; align-items:center; gap:28px; }
+.nav-links a { color:rgba(255,255,255,.72); font-size:14px; font-weight:500; transition:color .2s; }
+.nav-links a:hover { color:var(--orange); }
+.btn-nav {
+  padding:9px 18px; background:var(--orange); color:#fff; border:none;
+  border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;
+  font-family:inherit; box-shadow:0 4px 18px rgba(255,124,26,.35);
+  transition:all .2s; white-space:nowrap;
+}
+.btn-nav:hover { background:var(--orange-l); transform:translateY(-1px); }
+
+/* ─── SECTIONS ─── */
+.sec { padding:var(--py) var(--px); }
+.sec-light { background:var(--light); color:#111; }
+.sec-dark { background:var(--dark); }
+.sec-dark2 { background:var(--dark2); }
+.sec-light .sub { color:#666; }
+.sec-light .tag { background:rgba(255,124,26,.1); border-color:rgba(255,124,26,.28); }
+
+/* ─── HERO ─── */
+#about-hero {
+  padding:140px var(--px) 80px;
+  text-align:center;
+  display:flex; flex-direction:column; align-items:center;
+  position:relative; overflow:hidden;
+}
+#about-hero .about-layout { display:flex; flex-direction:column; align-items:center; }
+.about-hero-glow {
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,124,26,.14) 0%, transparent 70%);
+}
+#about-hero h1 { position:relative; z-index:1; }
+#about-hero .sub { position:relative; z-index:1; margin-left:auto; margin-right:auto; }
+#about-hero .tag { position:relative; z-index:1; }
+
+/* ─── MISSION ─── */
+.mission-grid {
+  display:grid; grid-template-columns:1fr; gap:24px;
+  margin-top:16px;
+}
+.mission-card {
+  background:#fff; border-radius:20px; padding:32px 28px;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 4px 24px rgba(0,0,0,.06);
+}
+.mission-card-icon {
+  width:52px; height:52px; border-radius:14px;
+  background:rgba(255,124,26,.1); border:1.5px solid rgba(255,124,26,.2);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:18px;
+}
+.mission-card-title { font-size:17px; font-weight:800; color:#111; margin-bottom:10px; }
+.mission-card-desc { font-size:14px; color:#666; line-height:1.7; }
+
+/* ─── DADOS / INFO CARD ─── */
+.info-card {
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+  border-radius:20px; padding:36px 32px;
+  display:grid; grid-template-columns:1fr; gap:24px;
+}
+.info-item { display:flex; gap:14px; align-items:flex-start; }
+.info-icon {
+  width:40px; height:40px; border-radius:11px; flex-shrink:0;
+  background:rgba(255,124,26,.12); border:1.5px solid rgba(255,124,26,.25);
+  display:flex; align-items:center; justify-content:center;
+}
+.info-label { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:4px; }
+.info-value { font-size:15px; font-weight:600; color:#fff; line-height:1.5; }
+.info-value a { color:var(--orange); }
+
+/* ─── FOOTER ─── */
+footer { background:#111; border-top:1px solid rgba(255,255,255,.06); padding:60px var(--px) 0; }
+.footer-grid {
+  display:grid; grid-template-columns:1fr; gap:40px;
+  padding-bottom:48px; border-bottom:1px solid rgba(255,255,255,.06);
+}
+.footer-brand .nav-logo svg { height:28px; margin-bottom:16px; }
+.footer-brand p { font-size:13px; color:rgba(255,255,255,.4); line-height:1.75; max-width:280px; }
+.fc h3 { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:16px; }
+.fc { display:flex; flex-direction:column; gap:10px; }
+.fc a { font-size:13px; color:rgba(255,255,255,.55); transition:color .2s; }
+.fc a:hover { color:var(--orange); }
+.fc-contact { font-size:13px; color:rgba(255,255,255,.55); line-height:1.5; }
+.footer-bottom {
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+  padding:20px 0; text-align:center;
+}
+.footer-bottom p { font-size:12px; color:rgba(255,255,255,.22); }
+.footer-socials { display:flex; gap:12px; }
+.footer-socials a {
+  width:34px; height:34px; border-radius:10px; background:rgba(255,255,255,.06);
+  display:flex; align-items:center; justify-content:center;
+  color:rgba(255,255,255,.45); transition:all .2s;
+}
+.footer-socials a:hover { background:var(--orange); color:#fff; }
+
+/* ─── MESH BG ─── */
+#mesh { position:fixed; inset:0; z-index:-1; pointer-events:none; }
+
+/* ─── HAMBURGER / MOBILE DRAWER ─── */
+.nav-ham {
+  display:flex; flex-direction:column; justify-content:center; gap:5px;
+  width:40px; height:40px; padding:6px;
+  background:transparent; border:none; cursor:pointer; z-index:1002; flex-shrink:0;
+}
+.nav-ham span {
+  display:block; width:22px; height:2px;
+  background:rgba(255,255,255,.85); border-radius:2px;
+  transition:all .28s cubic-bezier(.22,1,.36,1); transform-origin:center;
+}
+.nav-ham.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+.nav-ham.open span:nth-child(2) { opacity:0; width:0; }
+.nav-ham.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+.nav-drawer {
+  position:fixed; top:0; left:0; right:0; bottom:0; z-index:1001;
+  background:rgba(42,42,42,.98); backdrop-filter:blur(20px);
+  display:flex; flex-direction:column; align-items:flex-start;
+  padding:84px 32px 48px; gap:0;
+  transform:translateX(100%); transition:transform .35s cubic-bezier(.22,1,.36,1);
+  pointer-events:none; overflow-y:auto;
+}
+.nav-drawer.open { transform:none; pointer-events:auto; }
+.nav-drawer a {
+  display:block; color:rgba(255,255,255,.78); font-size:20px; font-weight:700;
+  padding:16px 0; width:100%; border-bottom:1px solid rgba(255,255,255,.08); transition:color .2s;
+}
+.nav-drawer a:last-of-type { border-bottom:none; }
+.nav-drawer a:hover { color:var(--orange); }
+.drawer-cta {
+  margin-top:28px !important; width:100%; font-size:16px !important;
+  padding:16px !important; text-align:center; justify-content:center;
+  border-radius:12px !important; border:none !important; cursor:pointer; font-family:inherit !important;
+}
+
+/* respeita quem pediu menos movimento no sistema */
+@media (prefers-reduced-motion: reduce) {
+  .rv, #about-hero .rv { animation:none !important; transition:none !important; opacity:1 !important; transform:none !important; }
+}
+
+/* ─── RESPONSIVE ─── */
+@media(min-width:640px) {
+  .nav-ham { display:none; }
+  .nav-drawer { display:none; }
+  .nav-links { display:flex; }
+  .mission-grid { grid-template-columns:repeat(3,1fr); }
+}
+@media(min-width:1024px) {
+  .footer-grid { grid-template-columns:1.6fr 1fr 1.4fr; }
+  .footer-bottom { flex-direction:row; justify-content:space-between; }
+  .info-card { grid-template-columns:1fr 1fr; }
+}
+</style>
+
+<canvas id="mesh"></canvas>
+
+<!-- NAV -->
+<Nav id="mainNav">
+  <a slot="logo" href="/" class="nav-logo">
+    <img src="/logo-white.svg" alt="NEXUS Comunicação" height="30" style="display:block;">
+  </a>
+  <a href="/">SMS</a>
+  <a href="/rcs">RCS</a>
+  <a href="/whatsapp">WhatsApp</a>
+  <a href="/push">Push Ads</a>
+  <a href="#dados">Sobre a empresa</a>
+  <button class="btn-nav" onclick="window.location.href='https://nexuscomunicacao.com'">Acessar plataforma</button>
+</Nav>
+
+<!-- MOBILE DRAWER -->
+<Drawer>
+  <a href="/" onclick="closeDrawer()">SMS</a>
+  <a href="/rcs" onclick="closeDrawer()">RCS</a>
+  <a href="/whatsapp" onclick="closeDrawer()">WhatsApp</a>
+  <a href="/push" onclick="closeDrawer()">Push Ads</a>
+  <a href="#dados" onclick="closeDrawer()">Sobre a empresa</a>
+  <button class="btn-nav drawer-cta" onclick="window.location.href='https://nexuscomunicacao.com'">Acessar plataforma</button>
+</Drawer>
+
+<!-- HERO -->
+<section id="about-hero">
+  <div class="about-hero-glow"></div>
+  <div class="about-layout">
+    <span class="tag rv">Sobre nós</span>
+    <h1 class="h2 rv rv1">Quem é a <span style="color:var(--orange)">NEXUS Comunicação</span></h1>
+    <p class="sub rv rv2">Somos uma empresa brasileira de infraestrutura de comunicação digital. Ajudamos marcas a se comunicarem com seus próprios clientes de forma clara, oficial e responsável — por SMS, RCS, WhatsApp e Push.</p>
+  </div>
+</section>
+
+<!-- MISSÃO / HISTÓRIA -->
+<section class="sec sec-light">
+  <div class="about-layout">
+    <span class="tag dark rv">Nossa missão</span>
+    <h2 class="h2 rv rv1" style="color:#111">O que nos move</h2>
+    <p class="sub light-text rv rv2">Nascemos para simplificar a comunicação entre empresas e seus clientes. Acreditamos que mensagem relevante, enviada por canal oficial e com o consentimento de quem recebe, é o que gera resultado de verdade — e é assim que construímos cada produto da NEXUS.</p>
+    <div class="mission-grid">
+      <div class="mission-card rv">
+        <div class="mission-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <div class="mission-card-title">Canais oficiais</div>
+        <div class="mission-card-desc">Operamos sempre dentro das regras das operadoras e das plataformas (Meta, SMS, RCS), sem atalhos que coloquem a conta do cliente em risco.</div>
+      </div>
+      <div class="mission-card rv rv1">
+        <div class="mission-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="mission-card-title">Consentimento em primeiro lugar</div>
+        <div class="mission-card-desc">Trabalhamos com a base do próprio cliente e com parceiros homologados que atuam com opt-in — nunca com disparo para quem não autorizou o contato.</div>
+      </div>
+      <div class="mission-card rv rv2">
+        <div class="mission-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div class="mission-card-title">Relação de longo prazo</div>
+        <div class="mission-card-desc">Preferimos crescer junto com quem já é nosso cliente a prometer números que não conseguimos sustentar no dia a dia.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DADOS DA EMPRESA -->
+<section id="dados" class="sec sec-dark2">
+  <div class="about-layout">
+    <span class="tag rv">Dados da empresa</span>
+    <h2 class="h2 rv rv1">Quem está por trás da NEXUS</h2>
+    <p class="sub rv rv2">A NEXUS Comunicação é o nome fantasia utilizado pela pessoa jurídica abaixo. Estes são os dados oficiais para fins de contato, contratação e verificação.</p>
+    <div class="info-card rv rv2" style="margin-top:32px">
+      <div class="info-item">
+        <div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg></div>
+        <div>
+          <div class="info-label">Razão social</div>
+          <div class="info-value">COMUNIKA SERVIÇOS EM COMUNICAÇÃO LTDA</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg></div>
+        <div>
+          <div class="info-label">CNPJ</div>
+          <div class="info-value">51.767.476/0001-93</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div>
+          <div class="info-label">Endereço</div>
+          <div class="info-value">R Orfanato 760, Loja 44, Vila Prudente<br>São Paulo/SP · CEP 03131-010</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+        <div>
+          <div class="info-label">Telefone</div>
+          <div class="info-value"><a href="tel:+5511943786960">(11) 94378-6960</a></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div>
+          <div class="info-label">E-mail</div>
+          <div class="info-value"><a href="mailto:atendimento@nexuscomunicacao.com">atendimento@nexuscomunicacao.com</a></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:32px">
+      <a href="#lead-form" class="btn-primary" onclick="window.location.href='/'">Falar com um especialista</a>
+    </div>
+  </div>
+</section>
+
+<Footer />
+
+<script is:inline>
+/* ── MESH WAVE ── */
+(function(){
+  const canvas=document.getElementById('mesh'),ctx=canvas.getContext('2d');
+  const COLS=20,ROWS=11,AMP=16,SPD=0.01;
+  let W,H,t=0,scrollOff=0;
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const pts=[];
+  for(let i=0;i<(ROWS+1)*(COLS+1);i++)pts.push({x:0,y:0});
+  function pt(r,c){return pts[r*(COLS+1)+c];}
+  function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;if(reduce.matches)render();}
+  window.addEventListener('resize',resize);
+  window.addEventListener('scroll',()=>{scrollOff=scrollY*0.00014;},{passive:true});
+  function render(){
+    ctx.clearRect(0,0,W,H);
+    const cw=W/COLS,ch=H/ROWS;
+    for(let r=0;r<=ROWS;r++)for(let c=0;c<=COLS;c++){
+      const p=pts[r*(COLS+1)+c];
+      p.x=c*cw;
+      p.y=r*ch+Math.sin(c*.38+r*.55+t+scrollOff)*AMP+Math.sin(c*.22-r*.3+t*.7)*AMP*.5;
+    }
+    ctx.strokeStyle='rgba(255,124,26,0.055)';ctx.lineWidth=1;
+    ctx.beginPath();
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+      const p=pt(r,c),pr=pt(r,c+1),pb=pt(r+1,c),pd=pt(r+1,c+1);
+      ctx.moveTo(p.x,p.y);ctx.lineTo(pr.x,pr.y);
+      ctx.moveTo(p.x,p.y);ctx.lineTo(pb.x,pb.y);
+      if(c===COLS-1){ctx.moveTo(pr.x,pr.y);ctx.lineTo(pd.x,pd.y);}
+      if(r===ROWS-1){ctx.moveTo(pb.x,pb.y);ctx.lineTo(pd.x,pd.y);}
+    }
+    ctx.stroke();
+  }
+  function draw(){
+    if(!document.hidden){render();t+=SPD;}
+    requestAnimationFrame(draw);
+  }
+  resize();
+  if(reduce.matches)render();else requestAnimationFrame(draw);
+})();
+
+/* ── MOBILE DRAWER ── */
+function toggleDrawer() {
+  const d = document.getElementById('navDrawer');
+  const h = document.getElementById('navHam');
+  const open = d.classList.toggle('open');
+  h.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeDrawer() {
+  document.getElementById('navDrawer').classList.remove('open');
+  document.getElementById('navHam').classList.remove('open');
+  document.body.style.overflow = '';
+}
+window.addEventListener('resize', () => { if(window.innerWidth >= 640) closeDrawer(); });
+
+/* ── NAV ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',scrollY>60);
+},{passive:true});
+
+/* ── SCROLL REVEAL ── */
+(function(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});
+  },{threshold:.15});
+  document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+})();
+</script>
+</Base>
