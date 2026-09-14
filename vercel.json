@@ -13,8 +13,6 @@
     { "source": "/whatsclub/", "destination": "/", "permanent": true },
     { "source": "/chatbot", "destination": "/", "permanent": true },
     { "source": "/chatbot/", "destination": "/", "permanent": true },
-    { "source": "/sobre-nos", "destination": "/", "permanent": true },
-    { "source": "/sobre-nos/", "destination": "/", "permanent": true },
     { "source": "/marketing-de-proximidade", "destination": "/", "permanent": true },
     { "source": "/marketing-de-proximidade/", "destination": "/", "permanent": true },
     { "source": "/semana-black", "destination": "/", "permanent": true },
