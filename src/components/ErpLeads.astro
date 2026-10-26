@@ -1,0 +1,37 @@
+---
+const erpLeadsUrl = import.meta.env.ERP_LEADS_URL || 'https://leads.mgroup.solutions/api/leads/ingerir';
+const erpLeadsToken = import.meta.env.LEAD_TOKEN_NEXUS || '';
+---
+<script is:inline define:vars={{ erpLeadsUrl, erpLeadsToken }}>
+window.enviarLeadErp = function (lead) {
+  if (!erpLeadsToken) return Promise.resolve();
+  const params = new URLSearchParams(window.location.search);
+  const utm = (chave) => params.get(chave) || undefined;
+  const mensagem = Object.entries(lead.detalhes || {})
+    .filter(([, valor]) => valor)
+    .map(([rotulo, valor]) => rotulo + ': ' + valor)
+    .join(' | ');
+  const corpo = {
+    token:        erpLeadsToken,
+    nome:         lead.nome,
+    email:        lead.email || undefined,
+    telefone:     lead.telefone || undefined,
+    mensagem:     mensagem || undefined,
+    paginaOrigem: lead.paginaOrigem,
+    urlOrigem:    window.location.href,
+    utmSource:    utm('utm_source'),
+    utmMedium:    utm('utm_medium'),
+    utmCampaign:  utm('utm_campaign'),
+    utmTerm:      utm('utm_term'),
+    utmContent:   utm('utm_content')
+  };
+  return Promise.race([
+    fetch(erpLeadsUrl, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(corpo)
+    }),
+    new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
+  ]);
+};
+</script>
