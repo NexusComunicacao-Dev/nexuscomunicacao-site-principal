@@ -5,6 +5,7 @@ import Drawer from '../components/Drawer.astro';
 import Footer from '../components/Footer.astro';
 import Logo from '../components/Logo.astro';
 import WhatsAppFab from '../components/WhatsAppFab.astro';
+import ErpLeads from '../components/ErpLeads.astro';
 import { Image } from 'astro:assets';
 import logoLavoisier from '../assets/logo-lavoisier.png';
 import logoOnodera from '../assets/logo-onodera.png';
@@ -1428,6 +1429,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
 <Footer />
 
 <WhatsAppFab />
+<ErpLeads />
 
 <script is:inline>
 /* ── MOBILE DRAWER ── */
@@ -1760,13 +1762,28 @@ async function enviarLeadSMS(btn) {
   };
 
   try {
-    await Promise.race([
-      fetch(WEBHOOK_URL, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(payload)
-      }),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
+    await Promise.allSettled([
+      Promise.race([
+        fetch(WEBHOOK_URL, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload)
+        }),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
+      ]),
+      typeof enviarLeadErp === 'function' ? enviarLeadErp({
+        nome,
+        email,
+        telefone,
+        paginaOrigem: payload.origem,
+        detalhes: {
+          'Empresa':               empresa,
+          'Solução de interesse':  solucao,
+          'Segmento':              segmento,
+          'Volume de SMS/mês':     volume,
+          'Data/hora de Brasília': payload.data_hora_brasilia
+        }
+      }) : Promise.resolve()
     ]);
   } catch (e) {
     // Segue para obrigado mesmo em caso de falha/timeout, não bloqueia o usuário
