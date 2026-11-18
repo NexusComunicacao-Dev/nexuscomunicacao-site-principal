@@ -752,6 +752,13 @@ select.fi option { background:#1a1a1a; color:#fff; }
   box-shadow:0 6px 22px rgba(255,124,26,.4); transition:all .25s; letter-spacing:.02em;
 }
 .btn-lead:hover { background:var(--orange-l,#ff9a4a); transform:translateY(-2px); box-shadow:0 10px 34px rgba(255,124,26,.55); }
+.lf-optin { display:flex; flex-wrap:wrap; gap:10px; align-items:flex-start; margin:4px 0 10px; font-size:12px; line-height:1.55; color:rgba(255,255,255,.6); cursor:pointer; }
+.lf-optin input { flex:none; width:16px; height:16px; margin-top:2px; accent-color:var(--orange); cursor:pointer; }
+.lf-optin span { flex:1; min-width:0; }
+.lf-optin a { color:var(--orange); text-decoration:underline; }
+.lf-optin.error { color:#e57373; }
+.lf-optin.error input { outline:2px solid #e53935; outline-offset:1px; }
+.lf-optin.error::after { content:'Marque para continuar'; width:100%; padding-left:26px; font-size:11px; font-weight:600; }
 .lf-priv { font-size:11px; color:rgba(255,255,255,.25); text-align:center; margin-top:12px; }
 
 /* ──────────────────────────────────────────
@@ -1419,6 +1426,7 @@ footer > *:not(.mesh-cvs) { position:relative; z-index:1; }
         <label for="sms-volume">Volume estimado de SMS/mês</label>
         <select id="sms-volume" class="fi" required><option value="" disabled selected>Selecione o volume</option><option>Até 5.000</option><option>5.000 a 10.000</option><option>10.000 a 50.000</option><option>Acima de 50.000</option></select>
       </div>
+      <label class="lf-optin" id="sms-optin-wrap"><input type="checkbox" id="sms-optin" onchange="this.parentElement.classList.remove('error')"><span>Autorizo a Nexus Comunicação a enviar comunicações sobre suas soluções por SMS, RCS e WhatsApp. Posso cancelar a qualquer momento respondendo SAIR. Li e concordo com a <a href="https://nexuscomunicacao.com/politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a>.</span></label>
       <button class="btn-lead" id="sms-btn" onclick="enviarLeadSMS(this)">Quero receber minha proposta →</button>
       <p class="lf-priv"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:4px;margin-bottom:1px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Seus dados estão seguros. Não enviamos spam.</p>
     </div>
@@ -1686,8 +1694,8 @@ if (sb) so.observe(sb);
 /* ── WEBHOOK LEAD FORM - SMS ── */
 const WEBHOOK_URL = 'https://midas-n8n.zn6ejt.easypanel.host/webhook/d05cec8a-1849-400a-bd61-09555631f83c';
 
-function brasiliaTimestamp() {
-  return new Date().toLocaleString('pt-BR', {
+function brasiliaTimestamp(d) {
+  return (d || new Date()).toLocaleString('pt-BR', {
     timeZone: 'America/Sao_Paulo',
     day:    '2-digit',
     month:  '2-digit',
@@ -1745,6 +1753,9 @@ async function enviarLeadSMS(btn) {
   if (!solucao)                           { document.getElementById('sms-sol-chips').classList.add('chips-error'); document.getElementById('sms-sol-chips').scrollIntoView({behavior:'smooth',block:'center'}); return; }
   if (!segmento)                          { markErr('sms-segmento');  return; }
   if (!volume)                            { markErr('sms-volume');    return; }
+  const optinEl = document.getElementById('sms-optin');
+  if (!optinEl.checked)                   { document.getElementById('sms-optin-wrap').classList.add('error'); optinEl.focus(); return; }
+  const optinEm = new Date();
 
   btn.disabled = true;
   btn.textContent = 'Enviando…';
@@ -1758,7 +1769,11 @@ async function enviarLeadSMS(btn) {
     solucao_interesse: solucao,
     segmento,
     volume_sms_mes:    volume,
-    data_hora_brasilia: brasiliaTimestamp()
+    data_hora_brasilia: brasiliaTimestamp(),
+    optin:              true,
+    optin_data_hora:    brasiliaTimestamp(optinEm),
+    optin_data_hora_iso: optinEm.toISOString(),
+    optin_texto:        'Autorizo a Nexus Comunicação a enviar comunicações sobre suas soluções por SMS, RCS e WhatsApp. Posso cancelar a qualquer momento respondendo SAIR. Li e concordo com a Política de Privacidade.'
   };
 
   try {
@@ -1781,6 +1796,7 @@ async function enviarLeadSMS(btn) {
           'Solução de interesse':  solucao,
           'Segmento':              segmento,
           'Volume de SMS/mês':     volume,
+          'Consentimento (opt-in)': 'Sim, em ' + payload.optin_data_hora,
           'Data/hora de Brasília': payload.data_hora_brasilia
         }
       }) : Promise.resolve()
