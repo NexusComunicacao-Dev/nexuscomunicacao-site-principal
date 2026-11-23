@@ -1691,8 +1691,6 @@ if (sb) so.observe(sb);
 </script>
 
 <script is:inline>
-/* ── WEBHOOK LEAD FORM - SMS ── */
-const WEBHOOK_URL = 'https://midas-n8n.zn6ejt.easypanel.host/webhook/d05cec8a-1849-400a-bd61-09555631f83c';
 
 function brasiliaTimestamp(d) {
   return (d || new Date()).toLocaleString('pt-BR', {
@@ -1778,14 +1776,6 @@ async function enviarLeadSMS(btn) {
 
   try {
     await Promise.allSettled([
-      Promise.race([
-        fetch(WEBHOOK_URL, {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify(payload)
-        }),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
-      ]),
       typeof enviarLeadErp === 'function' ? enviarLeadErp({
         nome,
         email,
